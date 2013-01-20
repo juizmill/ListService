@@ -16,7 +16,7 @@ Instalação do Sistema
 ---------------------
 Para instalar é bastante simples, no Terminal digite o seguinte comando:
 
-    git clone https://github.com/janainapaixao/sortear.git
+    git clone https://github.com/juizmill/ListService.git
 
 Após ter feito uma copia do projeto, navegue até a pasta do mesmo, onde na 
 qual terá um arquivo composer.phar, este arquivo é responsável por baixar 
