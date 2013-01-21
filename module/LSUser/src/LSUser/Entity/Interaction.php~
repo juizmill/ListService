@@ -1,0 +1,59 @@
+<?php
+
+namespace LSUser\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Interaction
+ *
+ * @ORM\Table(name="interaction")
+ * @ORM\Entity
+ */
+class Interaction
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_posted", type="datetime", nullable=false)
+     */
+    private $datePosted;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="text", nullable=false)
+     */
+    private $description;
+
+    /**
+     * @var \Ticket
+     *
+     * @ORM\ManyToOne(targetEntity="Ticket")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="ticket_id", referencedColumnName="id")
+     * })
+     */
+    private $ticket;
+
+    /**
+     * @var \User
+     *
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * })
+     */
+    private $user;
+
+
+}

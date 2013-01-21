@@ -1,0 +1,84 @@
+<?php
+
+namespace LSUser\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * User
+ *
+ * @ORM\Table(name="user")
+ * @ORM\Entity
+ */
+class User
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=80, nullable=false)
+     */
+    private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="login", type="string", length=255, nullable=false)
+     */
+    private $login;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="password", type="string", length=255, nullable=false)
+     */
+    private $password;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="image", type="string", length=50, nullable=true)
+     */
+    private $image;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_registry", type="datetime", nullable=false)
+     */
+    private $dateRegistry;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="active", type="boolean", nullable=false)
+     */
+    private $active;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="salt", type="string", length=255, nullable=false)
+     */
+    private $salt;
+
+    /**
+     * @var \TypeUser
+     *
+     * @ORM\ManyToOne(targetEntity="TypeUser")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="type_use_id", referencedColumnName="id")
+     * })
+     */
+    private $typeUse;
+
+
+}
