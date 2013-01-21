@@ -12,6 +12,7 @@ return array(
         'LSTicket',
         'LSTypeuser',
         'LSUser',
+        'LSHome',
     ),
     'module_listener_options' => array(
         'config_glob_paths' => array(
