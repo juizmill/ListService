@@ -3,6 +3,9 @@
 namespace LSUser\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Zend\Math\Rand,
+    Zend\Crypt\Key\Derivation\Pbkdf2,
+    Zend\Stdlib\Hydrator;
 
 /**
  * User
@@ -10,270 +13,308 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="user")
  * @ORM\Entity
  * @ORM\Entity(repositoryClass="LSUser\Entity\Repository\UserRepository")
+ * @ORM\HasLifecycleCallbacks 
  */
 class User
 {
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=80, nullable=false)
-     */
-    private $name;
+  /**
+   * @var integer
+   *
+   * @ORM\Column(name="id", type="integer", nullable=false)
+   * @ORM\Id
+   * @ORM\GeneratedValue(strategy="IDENTITY")
+   */
+  private $id;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="login", type="string", length=255, nullable=false)
-     */
-    private $login;
+  /**
+   * @var string
+   *
+   * @ORM\Column(name="name", type="string", length=80, nullable=false)
+   */
+  private $name;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="password", type="string", length=255, nullable=false)
-     */
-    private $password;
+  /**
+   * @var string
+   *
+   * @ORM\Column(name="login", type="string", length=255, nullable=false)
+   */
+  private $login;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="image", type="string", length=50, nullable=true)
-     */
-    private $image;
+  /**
+   * @var string
+   *
+   * @ORM\Column(name="password", type="string", length=255, nullable=false)
+   */
+  private $password;
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="date_registry", type="datetime", nullable=false)
-     */
-    private $dateRegistry;
+  /**
+   * @var string
+   *
+   * @ORM\Column(name="image", type="string", length=50, nullable=true)
+   */
+  private $image;
 
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="active", type="boolean", nullable=false)
-     */
-    private $active;
+  /**
+   * @var \DateTime
+   *
+   * @ORM\Column(name="date_registry", type="datetime", nullable=false)
+   */
+  private $dateRegistry;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="salt", type="string", length=255, nullable=false)
-     */
-    private $salt;
+  /**
+   * @var boolean
+   *
+   * @ORM\Column(name="active", type="boolean", nullable=false)
+   */
+  private $active;
 
-    /**
-     * @var \TypeUser
-     *
-     * @ORM\ManyToOne(targetEntity="LSTypeuser\Entity\TypeUser")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="type_use_id", referencedColumnName="id")
-     * })
-     */
-    private $typeUse;
+  /**
+   * @var string
+   *
+   * @ORM\Column(name="salt", type="string", length=255, nullable=false)
+   */
+  private $salt;
 
+  /**
+   * @var \TypeUser
+   *
+   * @ORM\ManyToOne(targetEntity="LSTypeuser\Entity\TypeUser")
+   * @ORM\JoinColumns({
+   *   @ORM\JoinColumn(name="type_use_id", referencedColumnName="id")
+   * })
+   */
+  private $typeUse;
 
+  /**
+   * __construct
+   * 
+   * @param array $options
+   */
+  public function __construct(array $options = array())
+  {
+    $hydrator = new Hydrator\ClassMethods;
+    $hydrator->hydrate($options, $this);
 
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
+    $this->salt = base64_encode(Rand::getBytes(30, true));
+  }
 
-    /**
-     * Set name
-     *
-     * @param string $name
-     * @return User
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
+  /**
+   * Get id
+   *
+   * @return integer 
+   */
+  public function getId()
+  {
+    return $this->id;
+  }
 
-        return $this;
-    }
+  /**
+   * Set name
+   *
+   * @param string $name
+   * @return User
+   */
+  public function setName($name)
+  {
+    $this->name = $name;
 
-    /**
-     * Get name
-     *
-     * @return string 
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
+    return $this;
+  }
 
-    /**
-     * Set login
-     *
-     * @param string $login
-     * @return User
-     */
-    public function setLogin($login)
-    {
-        $this->login = $login;
+  /**
+   * Get name
+   *
+   * @return string 
+   */
+  public function getName()
+  {
+    return $this->name;
+  }
 
-        return $this;
-    }
+  /**
+   * Set login
+   *
+   * @param string $login
+   * @return User
+   */
+  public function setLogin($login)
+  {
+    $this->login = $this->encryptLoginAndPassword($login, 10000);
 
-    /**
-     * Get login
-     *
-     * @return string 
-     */
-    public function getLogin()
-    {
-        return $this->login;
-    }
+    return $this;
+  }
 
-    /**
-     * Set password
-     *
-     * @param string $password
-     * @return User
-     */
-    public function setPassword($password)
-    {
-        $this->password = $password;
+  /**
+   * Get login
+   *
+   * @return string 
+   */
+  public function getLogin()
+  {
+    return $this->login;
+  }
 
-        return $this;
-    }
+  /**
+   * Set password
+   *
+   * @param string $password
+   * @return User
+   */
+  public function setPassword($password)
+  {
+    $this->password = $this->encryptLoginAndPassword($password, 150000);
 
-    /**
-     * Get password
-     *
-     * @return string 
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
+    return $this;
+  }
 
-    /**
-     * Set image
-     *
-     * @param string $image
-     * @return User
-     */
-    public function setImage($image)
-    {
-        $this->image = $image;
+  /**
+   * Get password
+   *
+   * @return string 
+   */
+  public function getPassword()
+  {
+    return $this->password;
+  }
 
-        return $this;
-    }
+  /**
+   * Set image
+   *
+   * @param string $image
+   * @return User
+   */
+  public function setImage($image)
+  {
+    $this->image = $image;
 
-    /**
-     * Get image
-     *
-     * @return string 
-     */
-    public function getImage()
-    {
-        return $this->image;
-    }
+    return $this;
+  }
 
-    /**
-     * Set dateRegistry
-     *
-     * @param \DateTime $dateRegistry
-     * @return User
-     */
-    public function setDateRegistry($dateRegistry)
-    {
-        $this->dateRegistry = $dateRegistry;
+  /**
+   * Get image
+   *
+   * @return string 
+   */
+  public function getImage()
+  {
+    return $this->image;
+  }
 
-        return $this;
-    }
+  /**
+   * Set dateRegistry
+   *
+   * @ORM\PrePersist
+   * @param \DateTime $dateRegistry
+   * @return User
+   */
+  public function setDateRegistry($dateRegistry)
+  {
+    $this->dateRegistry = $dateRegistry;
 
-    /**
-     * Get dateRegistry
-     *
-     * @return \DateTime 
-     */
-    public function getDateRegistry()
-    {
-        return $this->dateRegistry;
-    }
+    return $this;
+  }
 
-    /**
-     * Set active
-     *
-     * @param boolean $active
-     * @return User
-     */
-    public function setActive($active)
-    {
-        $this->active = $active;
+  /**
+   * Get dateRegistry
+   *
+   * @return \DateTime 
+   */
+  public function getDateRegistry()
+  {
+    return $this->dateRegistry;
+  }
 
-        return $this;
-    }
+  /**
+   * Set active
+   *
+   * @param boolean $active
+   * @return User
+   */
+  public function setActive($active)
+  {
+    $this->active = $active;
 
-    /**
-     * Get active
-     *
-     * @return boolean 
-     */
-    public function getActive()
-    {
-        return $this->active;
-    }
+    return $this;
+  }
 
-    /**
-     * Set salt
-     *
-     * @param string $salt
-     * @return User
-     */
-    public function setSalt($salt)
-    {
-        $this->salt = $salt;
+  /**
+   * Get active
+   *
+   * @return boolean 
+   */
+  public function getActive()
+  {
+    return $this->active;
+  }
 
-        return $this;
-    }
+  /**
+   * Set salt
+   *
+   * @param string $salt
+   * @return User
+   */
+  public function setSalt($salt)
+  {
+    $this->salt = $salt;
 
-    /**
-     * Get salt
-     *
-     * @return string 
-     */
-    public function getSalt()
-    {
-        return $this->salt;
-    }
+    return $this;
+  }
 
-    /**
-     * Set typeUse
-     *
-     * @param \LSTypeuser\Entity\TypeUser $typeUse
-     * @return User
-     */
-    public function setTypeUse(\LSTypeuser\Entity\TypeUser $typeUse = null)
-    {
-        $this->typeUse = $typeUse;
+  /**
+   * Get salt
+   *
+   * @return string 
+   */
+  public function getSalt()
+  {
+    return $this->salt;
+  }
 
-        return $this;
-    }
+  /**
+   * Set typeUse
+   *
+   * @param \LSTypeuser\Entity\TypeUser $typeUse
+   * @return User
+   */
+  public function setTypeUse(\LSTypeuser\Entity\TypeUser $typeUse = null)
+  {
+    $this->typeUse = $typeUse;
 
-    /**
-     * Get typeUse
-     *
-     * @return \LSTypeuser\Entity\TypeUser 
-     */
-    public function getTypeUse()
-    {
-        return $this->typeUse;
-    }
+    return $this;
+  }
+
+  /**
+   * Get typeUse
+   *
+   * @return \LSTypeuser\Entity\TypeUser 
+   */
+  public function getTypeUse()
+  {
+    return $this->typeUse;
+  }
+
+  /**
+   * encryptLoginAndPassword
+   * 
+   * @param string $senhaOrPassword
+   * @param integer $iterations
+   * @return string hash
+   */
+  public function encryptLoginAndPassword($senhaOrPassword, $iterations)
+  {
+    return base64_encode(Pbkdf2::calc('sha256', $senhaOrPassword, $this->salt, $iterations, strlen($senhaOrPassword * 2)));
+  }
+
+  /**
+   * toArray
+   * 
+   * @return array
+   */
+  public function toArray()
+  {
+    $hydrator = new Hydrator\ClassMethods;
+    return $hydrator->extract($this);
+  }
+
 }
