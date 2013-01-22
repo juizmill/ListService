@@ -10,10 +10,11 @@
 
 namespace LSCategoryticket\Fixture;
 
-use Doctrine\Common\DataFixtures\AbstractFixture;
+use Doctrine\Common\DataFixtures\AbstractFixture,
+    Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use LSCategoryticket\Entity\CategoryTicket;
 
-class LoadCategoryTicket extends AbstractFixture
+class LoadCategoryTicket extends AbstractFixture implements OrderedFixtureInterface
 {
 
   /**
@@ -40,6 +41,15 @@ class LoadCategoryTicket extends AbstractFixture
     $manager->persist($categoryTicket3);
 
     $manager->flush();
+  }
+
+  /**
+   * Ordena a execução de cada Fixture
+   * @return int
+   */
+  public function getOrder()
+  {
+    return 3;
   }
 
 }

@@ -10,10 +10,11 @@
 
 namespace LSTypeuser\Fixture;
 
-use Doctrine\Common\DataFixtures\AbstractFixture;
+use Doctrine\Common\DataFixtures\AbstractFixture,
+    Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use LSTypeuser\Entity\TypeUser;
 
-class LoadTypeUser extends AbstractFixture
+class LoadTypeUser extends AbstractFixture implements OrderedFixtureInterface
 {
 
   /**
@@ -37,6 +38,15 @@ class LoadTypeUser extends AbstractFixture
 
 
     $manager->flush();
+  }
+
+  /**
+   * Ordena a execução de cada Fixture
+   * @return int
+   */
+  public function getOrder()
+  {
+    return 2;
   }
 
 }
