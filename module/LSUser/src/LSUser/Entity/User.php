@@ -208,9 +208,9 @@ class User
    * @param \DateTime $dateRegistry
    * @return User
    */
-  public function setDateRegistry($dateRegistry)
+  public function setDateRegistry()
   {
-    $this->dateRegistry = $dateRegistry;
+    $this->dateRegistry = new \DateTime('now');
 
     return $this;
   }

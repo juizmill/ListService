@@ -16,6 +16,11 @@ use LSCategoryticket\Entity\CategoryTicket;
 class LoadCategoryTicket extends AbstractFixture
 {
 
+  /**
+   * Carrega o dispositivo de dados com o EntityManager
+   * 
+   * @param \Doctrine\Common\Persistence\ObjectManager $manager
+   */
   public function load(\Doctrine\Common\Persistence\ObjectManager $manager)
   {
     $categoryTicket = new CategoryTicket;
