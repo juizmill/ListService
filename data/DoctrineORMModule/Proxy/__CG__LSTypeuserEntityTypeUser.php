@@ -75,6 +75,12 @@ class TypeUser extends \LSTypeuser\Entity\TypeUser implements \Doctrine\ORM\Prox
         return parent::getActive();
     }
 
+    public function toArray()
+    {
+        $this->__load();
+        return parent::toArray();
+    }
+
 
     public function __sleep()
     {
