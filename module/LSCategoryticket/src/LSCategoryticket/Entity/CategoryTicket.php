@@ -3,6 +3,7 @@
 namespace LSCategoryticket\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Zend\Stdlib\Hydrator;
 
 /**
  * CategoryTicket
@@ -13,6 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class CategoryTicket
 {
+
     /**
      * @var integer
      *
@@ -36,7 +38,16 @@ class CategoryTicket
      */
     private $active;
 
-
+    /**
+     * __construct
+     * 
+     * @param array $options
+     */
+    public function __construct(array $options = array())
+    {
+        $hydrator = new Hydrator\ClassMethods;
+        $hydrator->hydrate($options, $this);
+    }
 
     /**
      * Get id
@@ -93,4 +104,16 @@ class CategoryTicket
     {
         return $this->active;
     }
+
+    /**
+     * toArray
+     * 
+     * @return array
+     */
+    public function toArray()
+    {
+        $hydrator = new Hydrator\ClassMethods;
+        return $hydrator->extract($this);
+    }
+
 }
