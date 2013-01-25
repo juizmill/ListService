@@ -21,4 +21,15 @@ class Module
         );
     }
 
+    public function getServiceConfig()
+    {
+        return array(
+            'factories' => array(
+                'LSPriority\Service\Priority' => function($em) {
+                    return new Service\Priority($em->get('Doctrine\ORM\EntityManager'));
+                }
+            )
+        );
+    }
+
 }

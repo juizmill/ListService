@@ -3,6 +3,7 @@
 namespace LSPriority\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Zend\Stdlib\Hydrator;
 
 /**
  * Priority
@@ -13,6 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Priority
 {
+
     /**
      * @var integer
      *
@@ -36,7 +38,16 @@ class Priority
      */
     private $active;
 
-
+    /**
+     * __construct
+     * 
+     * @param array $options
+     */
+    public function __construct(array $options = array())
+    {
+        $hydrator = new Hydrator\ClassMethods;
+        $hydrator->hydrate($options, $this);
+    }
 
     /**
      * Get id
@@ -93,4 +104,16 @@ class Priority
     {
         return $this->active;
     }
+
+    /**
+     * toArray
+     * 
+     * @return array
+     */
+    public function toArray()
+    {
+        $hydrator = new Hydrator\ClassMethods;
+        return $hydrator->extract($this);
+    }
+
 }

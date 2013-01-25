@@ -1,24 +1,24 @@
 <?php
-namespace LSTypeuser\Service;
+namespace LSPriority\Service;
 
 use Doctrine\ORM\EntityManager;
 
 use LSBase\Service\AbstractService;
 
 /**
- * TypeUser
+ * Priority
  *
- * Classe Service TypeUser
+ * Classe Service Priority
  *
- * @package LSTypeuser\Service
+ * @package LSPriority\Service
  * @author Jesus Vieira <jesusvieiradelima@gmail.com>
  * @version  v1.0
  */
-class TypeUser extends AbstractService
+class Priority extends AbstractService
 {
   public function __construct(EntityManager $em)
   {
     parent::__construct($em);
-    $this->entity = 'LSTypeuser\Entity\TypeUser';
+    $this->entity = 'LSPriority\Entity\Priority';
   }
 }
