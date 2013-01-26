@@ -47,6 +47,8 @@ class TypeUser
   {
     $hydrator = new Hydrator\ClassMethods;
     $hydrator->hydrate($options, $this);
+    
+    $this->active = true;
   }
 
   /**

@@ -2,6 +2,7 @@
 
 namespace LSTypeuser\Controller;
 
+use Zend\View\Model\ViewModel;
 use LSBase\Controller\CrudController;
 
 /**
@@ -16,13 +17,53 @@ use LSBase\Controller\CrudController;
 class TypeUserController extends CrudController
 {
 
-  public function __construct()
-  {
-    $this->controller = 'type-user';
-    $this->entity = 'LSTypeuser\Entity\TypeUser';
-    $this->form = 'LSTypeuser\Form\TypeUser';
-    $this->service = 'LSTypeuser\Service\TypeUser';
-    $this->route = 'typeuser';
-  }
-  
+    public function __construct()
+    {
+        $this->controller = 'type-user';
+        $this->entity = 'LSTypeuser\Entity\TypeUser';
+        $this->form = 'LSTypeuser\Form\TypeUser';
+        $this->service = 'LSTypeuser\Service\TypeUser';
+        $this->route = 'type-user';
+    }
+
+    /**
+     * newAction
+     * 
+     * Exibe pagina de cadastro.
+     * 
+     * @author Jesus Vieira <jesusvieiradelima@gmail.com>
+     * @access public
+     * @return \Zend\View\Model\ViewModel
+     */
+    public function newAction()
+    {
+
+        $form = new $this->form();
+
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+
+            $form->setData($request->getPost());
+
+            $data = $request->getPost()->toArray();
+
+            $duplicate = $this->getEm()->getRepository($this->entity)->findOneBy(array('description' => $data['description']));
+
+            if ($duplicate) {
+                return new ViewModel(array('form' => $form, 'duplicate' => 'Já existe um cadastrado com este nome!'));
+            }
+
+            if ($form->isValid()) {
+
+                $service = $this->getServiceLocator()->get($this->service);
+                $service->insert($data);
+
+                return $this->redirect()->toRoute($this->route, array('controller' => $this->controller));
+            }
+        }
+
+        return new ViewModel(array('form' => $form));
+    }
+
 }

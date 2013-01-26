@@ -32,12 +32,14 @@ class TypeUser extends Form
         ),
         'attributes' => array(
             'id' => 'description',
+            'placeholder' => 'Entre com uma descrição.',
+            'maxlength' => 30,
         )
     ));
 
     //Input Submit
     $this->add(array(
-        'name' => 'salval',
+        'name' => 'submit',
         'type' => 'Zend\Form\Element\Submit',
         'attributes' => array(
             'value' => 'Salvar',
