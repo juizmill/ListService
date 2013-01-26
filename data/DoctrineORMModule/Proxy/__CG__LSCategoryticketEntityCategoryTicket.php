@@ -75,6 +75,12 @@ class CategoryTicket extends \LSCategoryticket\Entity\CategoryTicket implements 
         return parent::getActive();
     }
 
+    public function toArray()
+    {
+        $this->__load();
+        return parent::toArray();
+    }
+
 
     public function __sleep()
     {

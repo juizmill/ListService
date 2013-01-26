@@ -1,6 +1,6 @@
 <?php
 
-namespace LSUser\Entity\Repository;
+namespace LSTicket\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
