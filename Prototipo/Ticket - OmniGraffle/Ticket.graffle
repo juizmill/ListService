@@ -47,8 +47,6 @@
 	<string>Todd Moy</string>
 	<key>DisplayScale</key>
 	<string>1 pt = 1 px</string>
-	<key>FileType</key>
-	<string>auto</string>
 	<key>GraphDocumentVersion</key>
 	<integer>8</integer>
 	<key>GraphicsList</key>
@@ -6062,20 +6060,20 @@
 				<data>
 				BAtzdHJlYW10eXBlZIHoA4QBQISEhBJOU0F0dHJpYnV0
 				ZWRTdHJpbmcAhIQITlNPYmplY3QAhZKEhIQITlNTdHJp
-				bmcBlIQBKxBMaXN0YSBkZSBUaWNrZXRzhoQCaUkBEJKE
-				hIQMTlNEaWN0aW9uYXJ5AJSEAWkEkoSWlhBOU1BhcmFn
-				cmFwaFN0eWxlhpKEhIQQTlNQYXJhZ3JhcGhTdHlsZQCU
-				hARDQ0BTAACEhIQHTlNBcnJheQCUmQyShISECU5TVGV4
-				dFRhYgCUhAJDZgAchpKEn54AOIaShJ+eAFSGkoSfngBw
-				hpKEn54AgYwAhpKEn54AgagAhpKEn54AgcQAhpKEn54A
-				geAAhpKEn54AgfwAhpKEn54AgRgBhpKEn54AgTQBhpKE
-				n54AgVABhoYAhpKElpYHTlNDb2xvcoaShISEB05TQ29s
-				b3IAlIQBYwKEBGZmZmaDiYgIPoOJiAg+g4mICD4BhpKE
-				lpYGTlNGb250hpKEhIQGTlNGb250HpSZKIQFWzQwY10G
-				AAAAHgAAAP/+SABlAGwAdgBlAHQAaQBjAGEALQBCAG8A
-				bABkAAAAhAFmGKAAoAGgAKAAhpKElpYGTlNLZXJuhpKE
-				hIQITlNOdW1iZXIAhIQHTlNWYWx1ZQCUhAEqhIQBZKiD
-				AAAAAAAA4L+GhoY=
+				bmcBlIQBKxJMaXN0YSBkZSBDYXRlZ29yaWGGhAJpSQES
+				koSEhAxOU0RpY3Rpb25hcnkAlIQBaQSShJaWEE5TUGFy
+				YWdyYXBoU3R5bGWGkoSEhBBOU1BhcmFncmFwaFN0eWxl
+				AJSEBENDQFMAAISEhAdOU0FycmF5AJSZDJKEhIQJTlNU
+				ZXh0VGFiAJSEAkNmAByGkoSfngA4hpKEn54AVIaShJ+e
+				AHCGkoSfngCBjACGkoSfngCBqACGkoSfngCBxACGkoSf
+				ngCB4ACGkoSfngCB/ACGkoSfngCBGAGGkoSfngCBNAGG
+				koSfngCBUAGGhgCGkoSWlgdOU0NvbG9yhpKEhIQHTlND
+				b2xvcgCUhAFjAoQEZmZmZoOJiAg+g4mICD6DiYgIPgGG
+				koSWlgZOU0ZvbnSGkoSEhAZOU0ZvbnQelJkohAVbNDBj
+				XQYAAAAeAAAA//5IAGUAbAB2AGUAdABpAGMAYQAtAEIA
+				bwBsAGQAAACEAWYYoACgAaAAoACGkoSWlgZOU0tlcm6G
+				koSEhAhOU051bWJlcgCEhAdOU1ZhbHVlAJSEASqEhAFk
+				qIMAAAAAAADgv4aGhg==
 				</data>
 				<key>Text</key>
 				<string>{\rtf1\ansi\ansicpg1252\cocoartf1187\cocoasubrtf340
@@ -6084,7 +6082,7 @@
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720
 
 \f0\b\fs48 \cf2 \kerning1\expnd-2\expndtw-10
-Lista de Tickets}</string>
+Lista de Categoria}</string>
 				<key>VerticalPad</key>
 				<integer>0</integer>
 			</dict>
@@ -11952,7 +11950,7 @@ Lista de Tickets}</string>
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2013-01-25 13:00:33 +0000</string>
+	<string>2013-01-26 04:49:05 +0000</string>
 	<key>Modifier</key>
 	<string>Jesus Vieira de Lima</string>
 	<key>NotesVisible</key>
@@ -12064,6 +12062,8 @@ Lista de Tickets}</string>
 				<string>Canvas</string>
 			</dict>
 		</array>
+		<key>Frame</key>
+		<string>{{52, 4}, {993, 774}}</string>
 		<key>ListView</key>
 		<true/>
 		<key>OutlineWidth</key>
@@ -12077,7 +12077,7 @@ Lista de Tickets}</string>
 		<key>SidebarWidth</key>
 		<integer>145</integer>
 		<key>VisibleRegion</key>
-		<string>{{-216, 0}, {1412, 719}}</string>
+		<string>{{0, 0}, {965, 604}}</string>
 		<key>Zoom</key>
 		<real>1</real>
 		<key>ZoomValues</key>
