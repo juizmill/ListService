@@ -12,4 +12,24 @@ use Doctrine\ORM\EntityRepository;
  */
 class TypeUserRepository extends EntityRepository
 {
+
+    /**
+     * fetchPairs
+     * 
+     * Monta um array com o ID e a descrição,
+     * 
+     * @return array
+     */
+    public function fetchPairs ()
+    {
+        $typeUsers = $this->findAll ();
+        $array = array();
+
+        foreach ( $typeUsers as $typeUser )
+            $array[$typeUser->getId ()] = $typeUser->getDescription ();
+
+        return $array;
+
+    }
+
 }

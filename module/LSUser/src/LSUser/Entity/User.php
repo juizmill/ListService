@@ -97,6 +97,7 @@ class User
     $hydrator->hydrate($options, $this);
 
     $this->salt = base64_encode(Rand::getBytes(30, true));
+    $this->active = true;
   }
 
   /**
