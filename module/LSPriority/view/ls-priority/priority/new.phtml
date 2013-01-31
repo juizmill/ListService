@@ -1,1 +1,29 @@
-New Priority
+<h2>Cadastrar - Priority</h2>
+
+<?php
+
+$form = $this->form;
+$formLabel = $this->plugin('formLabel');
+
+echo $this->formElementErrors()
+->setMessageOpenFormat('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">×</button>')
+->setMessageCloseString('</div>')
+->render($form);
+
+if ($this->duplicate)
+    echo '<div class="alert alert-error">'.$this->duplicate.'<button type="button" class="close" data-dismiss="alert">×</button></div>';
+
+$form->setAttribute('action', $this->url('priority/default', array('controller' => 'priority', 'action' => 'new')));
+
+$form->prepare();
+ 
+echo $this->form()->openTag($form);
+
+echo $formLabel->openTag() . $form->get('description')->getOption('label');
+echo $this->formText($form->get('description'));
+echo $formLabel->closeTag();
+
+echo $this->formSubmit($form->get('submit'));
+echo $this->form()->closeTag();
+
+?>

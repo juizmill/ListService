@@ -32,12 +32,13 @@ class Priority extends Form
         ),
         'attributes' => array(
             'id' => 'description',
+            'maxlength' => 45,
         )
     ));
 
     //Input Submit
     $this->add(array(
-        'name' => 'salval',
+        'name' => 'submit',
         'type' => 'Zend\Form\Element\Submit',
         'attributes' => array(
             'value' => 'Salvar',

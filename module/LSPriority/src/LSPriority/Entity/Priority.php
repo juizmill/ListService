@@ -47,6 +47,8 @@ class Priority
     {
         $hydrator = new Hydrator\ClassMethods;
         $hydrator->hydrate($options, $this);
+        
+        $this->active = true;
     }
 
     /**
