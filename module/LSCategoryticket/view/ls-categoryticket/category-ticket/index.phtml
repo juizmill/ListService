@@ -2,6 +2,9 @@ GRID - Category Ticket
 
 <ul>
 <?php foreach ($this->data as $categoryTicket): ?>
-    <li><?php echo $categoryTicket->getDescription() ; ?> | <a href="<?php echo $this->url('category-ticket/default', array('controller' => 'category-ticket', 'action' => 'delete', 'id' => $categoryTicket->getId())); ?>">Deletar</a> | <a href="<?php echo $this->url('category-ticket/default', array('controller' => 'category-ticket', 'action' => 'edit', 'id' => $categoryTicket->getId())); ?>">Editar</a> </li>
+    <li><?php echo $categoryTicket->getDescription() ; ?> | 
+        <a href="<?php echo $this->url('category-ticket/default', array('controller' => 'category-ticket', 'action' => 'delete', 'id' => $categoryTicket->getId())); ?>">Deletar</a> | 
+        <a href="<?php echo $this->url('category-ticket/default', array('controller' => 'category-ticket', 'action' => 'edit', 'id' => $categoryTicket->getId())); ?>">Editar</a> | 
+        <a href="<?php echo $this->url('category-ticket/default', array('controller' => 'category-ticket', 'action' => 'active', 'id' => $categoryTicket->getId())); ?>">Ativar</a> </li>
 <?php endforeach; ?>
 </ul>
