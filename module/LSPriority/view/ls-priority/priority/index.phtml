@@ -2,6 +2,9 @@ GRID - Priority
 
 <ul>
 <?php foreach ($this->data as $typeUser): ?>
-    <li><?php echo $typeUser->getDescription() ; ?> | <a href="<?php echo $this->url('priority/default', array('controller' => 'priority', 'action' => 'delete', 'id' => $typeUser->getId())); ?>">Deletar</a> | <a href="<?php echo $this->url('priority/default', array('controller' => 'priority', 'action' => 'edit', 'id' => $typeUser->getId())); ?>">Editar</a> </li>
+    <li><?php echo $typeUser->getDescription() ; ?> | 
+        <a href="<?php echo $this->url('priority/default', array('controller' => 'priority', 'action' => 'delete', 'id' => $typeUser->getId())); ?>">Deletar</a> | 
+        <a href="<?php echo $this->url('priority/default', array('controller' => 'priority', 'action' => 'edit', 'id' => $typeUser->getId())); ?>">Editar</a> |
+        <a href="<?php echo $this->url('priority/default', array('controller' => 'priority', 'action' => 'active', 'id' => $typeUser->getId())); ?>">Ativar</a> |</li>
 <?php endforeach; ?>
 </ul>
