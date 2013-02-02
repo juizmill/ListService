@@ -19,163 +19,184 @@ use Zend\Paginator\Paginator,
 abstract class CrudController extends AbstractActionController
 {
 
-  protected $em;
-  protected $service;
-  protected $entity;
-  protected $form;
-  protected $route;
-  protected $controller;
-  protected $limitPaginator = 10;
+    protected $em;
+    protected $service;
+    protected $entity;
+    protected $form;
+    protected $route;
+    protected $controller;
+    protected $limitPaginator = 10;
 
-  /**
-   * indexAction
-   * 
-   * Exibe pagina principal.
-   * 
-   * @author Jesus Vieira <jesusvieiradelima@gmail.com>
-   * @access public
-   * @return \Zend\View\Model\ViewModel
-   */
-  public function indexAction()
-  {
-    
-    $list = $this->getEm()
-            ->getRepository($this->entity)
-            ->findAll();
+    /**
+     * indexAction
+     * 
+     * Exibe pagina principal.
+     * 
+     * @author Jesus Vieira <jesusvieiradelima@gmail.com>
+     * @access public
+     * @return \Zend\View\Model\ViewModel
+     */
+    public function indexAction()
+    {
 
-    $page = $this->params()->fromRoute('page');
+        $list = $this->getEm()
+                ->getRepository($this->entity)
+                ->findAll();
 
-    $paginator = new Paginator(new ArrayAdapter($list));
-    $paginator->setCurrentPageNumber($page)
-            ->setDefaultItemCountPerPage($this->limitPaginator);
+        $page = $this->params()->fromRoute('page');
 
-    return new ViewModel(array('data' => $paginator, 'page' => $page));
-  }
+        $paginator = new Paginator(new ArrayAdapter($list));
+        $paginator->setCurrentPageNumber($page)
+                ->setDefaultItemCountPerPage($this->limitPaginator);
 
-  /**
-   * newAction
-   * 
-   * Exibe pagina de cadastro.
-   * 
-   * @author Jesus Vieira <jesusvieiradelima@gmail.com>
-   * @access public
-   * @return \Zend\View\Model\ViewModel
-   */
-  public function newAction()
-  {
-    $form = new $this->form();
+        return new ViewModel(array('data' => $paginator, 'page' => $page));
 
-    $request = $this->getRequest();
-
-    if ($request->isPost()) {
-
-      $form->setData($request->getPost());
-
-      if ($form->isValid()) {
-
-        $service = $this->getServiceLocator()->get($this->service);
-        $service->insert($request->getPost()->toArray());
-
-        return $this->redirect()->toRoute($this->route, array('controller' => $this->controller));
-      }
     }
 
-    return new ViewModel(array('form' => $form));
-  }
+    /**
+     * newAction
+     * 
+     * Exibe pagina de cadastro.
+     * 
+     * @author Jesus Vieira <jesusvieiradelima@gmail.com>
+     * @access public
+     * @return \Zend\View\Model\ViewModel
+     */
+    public function newAction()
+    {
+        $form = new $this->form();
 
-  /**
-   * editAction
-   * 
-   * Exibe pagina para editar o registro.
-   * 
-   * @author Jesus Vieira <jesusvieiradelima@gmail.com>
-   * @access public
-   * @return \Zend\View\Model\ViewModel
-   */
-  public function editAction()
-  {
-    $form = new $this->form();
+        $request = $this->getRequest();
 
-    $request = $this->getRequest();
-    $param = $this->params()->fromRoute('id', 0);
+        if( $request->isPost() ) {
 
-    $repository = $this->getEm()->getRepository($this->entity);
-    $entity = $repository->find($param);
+            $form->setData($request->getPost());
 
-    if ($entity) {
+            if( $form->isValid() ) {
 
-      $form->setData($entity->toArray());
+                $service = $this->getServiceLocator()->get($this->service);
+                $service->insert($request->getPost()->toArray());
 
-      if ($request->isPost()) {
-
-        $form->setData($request->getPost());
-
-        if ($form->isValid()) {
-
-          $service = $this->getServiceLocator()->get($this->service);
-          $service->update($request->getPost()->toArray());
-
-          return $this->redirect()->toRoute($this->route, array('controller' => $this->controller));
+                return $this->redirect()->toRoute($this->route, array('controller' => $this->controller));
+            }
         }
-      }
-    } else {
-      return $this->redirect()->toRoute($this->route, array('controller' => $this->controller));
+
+        return new ViewModel(array('form' => $form));
+
     }
 
-    return new ViewModel(array('form' => $form, 'id' => $param));
-  }
+    /**
+     * editAction
+     * 
+     * Exibe pagina para editar o registro.
+     * 
+     * @author Jesus Vieira <jesusvieiradelima@gmail.com>
+     * @access public
+     * @return \Zend\View\Model\ViewModel
+     */
+    public function editAction()
+    {
+        $form = new $this->form();
 
-  /**
-   * deleteAction
-   * 
-   * Deleta um registo.
-   * 
-   * @author Jesus Vieira <jesusvieiradelima@gmail.com>
-   * @access public
-   * @return redirect current controller
-   */
-  public function deleteAction()
-  {
-    $service = $this->getServiceLocator()->get($this->service);
-    if ($service->delete($this->params()->fromRoute('id', 0)))
-      return $this->redirect()->toRoute($this->route, array('controller' => $this->controller));
-    else
-      $this->getResponse()->setStatusCode(404);
-  }
-  
-  /**
-   * activeAction
-   * 
-   * Ativa e desativa
-   * 
-   * @author Jesus Vieira <jesusvieiradelima@gmail.com>
-   * @access public
-   */
-  public function activeAction()
-  {
-    $param = $this->params()->fromRoute('id', 0);
-    $entity = $this->getEm()->getRepository($this->entity)->findOneBy(array('id' => $param));
-    
-    if ($entity){
-      \Zend\Debug\Debug::dump('Desenvolver activeAction');die;
+        $request = $this->getRequest();
+        $param = $this->params()->fromRoute('id', 0);
+
+        $repository = $this->getEm()->getRepository($this->entity);
+        $entity = $repository->find($param);
+
+        if( $entity ) {
+
+            $form->setData($entity->toArray());
+
+            if( $request->isPost() ) {
+
+                $form->setData($request->getPost());
+
+                if( $form->isValid() ) {
+
+                    $service = $this->getServiceLocator()->get($this->service);
+                    $service->update($request->getPost()->toArray());
+
+                    return $this->redirect()->toRoute($this->route, array('controller' => $this->controller));
+                }
+            }
+        } else {
+            return $this->redirect()->toRoute($this->route, array('controller' => $this->controller));
+        }
+
+        return new ViewModel(array('form' => $form, 'id' => $param));
+
     }
-  }
 
-  /**
-   * getEm
-   * 
-   * Prepara o EntityManager
-   * 
-   * @author Jesus Vieira <jesusvieiradelima@gmail.com>
-   * @access public
-   * @return EntityManager
-   */
-  public function getEm()
-  {
-    if (null === $this->em)
-      $this->em = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+    /**
+     * deleteAction
+     * 
+     * Deleta um registo.
+     * 
+     * @author Jesus Vieira <jesusvieiradelima@gmail.com>
+     * @access public
+     * @return redirect current controller
+     */
+    public function deleteAction()
+    {
+        $service = $this->getServiceLocator()->get($this->service);
+        if( $service->delete($this->params()->fromRoute('id', 0)) )
+            return $this->redirect()->toRoute($this->route, array('controller' => $this->controller));
+        else
+            $this->getResponse()->setStatusCode(404);
 
-    return $this->em;
-  }
+    }
+
+    /**
+     * activeAction
+     * 
+     * Ativa ou desativa o registro
+     * 
+     * @author Jesus Vieira <jesusvieiradelima@gmail.com>
+     * @access public
+     * @return redirect current controller
+     */
+    public function activeAction()
+    {
+        $id = $this->params()->fromRoute('id', 0);
+
+        $entity = $this->getEm()->getRepository($this->entity)->findOneBy(array('id' => $id));
+
+        if( $entity ) {
+
+            $data = $entity->toArray();
+
+            if( $data['active'] == 1 )
+                $data['active'] = 0;
+            else
+                $data['active'] = 1;
+
+            $service = $this->getServiceLocator()->get($this->service);
+
+            if( $service->update($data) )
+                return $this->redirect()->toRoute($this->route, array('controller' => $this->controller));
+            else
+                $this->getResponse()->setStatusCode(404);
+        }
+
+    }
+
+    /**
+     * getEm
+     * 
+     * Prepara o EntityManager
+     * 
+     * @author Jesus Vieira <jesusvieiradelima@gmail.com>
+     * @access public
+     * @return EntityManager
+     */
+    public function getEm()
+    {
+        if( null === $this->em )
+            $this->em = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+
+        return $this->em;
+
+    }
 
 }

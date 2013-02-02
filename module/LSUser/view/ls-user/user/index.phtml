@@ -1,1 +1,13 @@
-Index User
+GRID - User
+
+<br />
+<br />
+
+<ul>
+<?php foreach ($this->data as $user): ?>
+    <li><?php echo $user->getName() ; ?> | 
+        <a href="<?php echo $this->url('user/default', array('controller' => 'user', 'action' => 'delete', 'id' => $user->getId())); ?>">Deletar</a> | 
+        <a href="<?php echo $this->url('user/default', array('controller' => 'user', 'action' => 'edit', 'id' => $user->getId())); ?>">Editar</a> |
+        <a href="<?php echo $this->url('user/default', array('controller' => 'user', 'action' => 'active', 'id' => $user->getId())); ?>">Ativar</a> </li>
+<?php endforeach; ?>
+</ul>
