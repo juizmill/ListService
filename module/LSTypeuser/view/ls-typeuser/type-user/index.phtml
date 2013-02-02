@@ -2,6 +2,9 @@ GRID - Type User
 
 <ul>
 <?php foreach ($this->data as $typeUser): ?>
-    <li><?php echo $typeUser->getDescription() ; ?> | <a href="<?php echo $this->url('type-user/default', array('controller' => 'type-user', 'action' => 'delete', 'id' => $typeUser->getId())); ?>">Deletar</a> | <a href="<?php echo $this->url('type-user/default', array('controller' => 'type-user', 'action' => 'edit', 'id' => $typeUser->getId())); ?>">Editar</a> </li>
+    <li><?php echo $typeUser->getDescription() ; ?> | 
+        <a href="<?php echo $this->url('type-user/default', array('controller' => 'type-user', 'action' => 'delete', 'id' => $typeUser->getId())); ?>">Deletar</a> | 
+        <a href="<?php echo $this->url('type-user/default', array('controller' => 'type-user', 'action' => 'edit', 'id' => $typeUser->getId())); ?>">Editar</a> | 
+        <a href="<?php echo $this->url('type-user/default', array('controller' => 'type-user', 'action' => 'active', 'id' => $typeUser->getId())); ?>">Ativar</a> | </li>
 <?php endforeach; ?>
 </ul>
