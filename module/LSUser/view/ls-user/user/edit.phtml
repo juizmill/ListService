@@ -1,1 +1,53 @@
-edit User
+<h2>Editar - User</h2>
+
+<?php
+
+$form = $this->form;
+$formLabel = $this->plugin('formLabel');
+
+
+echo $this->formElementErrors ()
+        ->setMessageOpenFormat ('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">×</button>')
+        ->setMessageCloseString ('</div>')
+        ->render ($form);
+
+$form->setAttribute ('action', $this->url ('user/default', array('controller' => 'user', 'action' => 'edit', 'id' => $this->id)));
+
+$form->prepare ();
+
+echo $this->form ()->openTag ($form);
+
+
+echo $formLabel->openTag() . $form->get('name')->getOption('label');
+echo $this->formText($form->get('name'));
+echo $formLabel->closeTag();
+
+echo $formLabel->openTag() . $form->get('login')->getOption('label');
+echo $this->formText($form->get('login'));
+echo $formLabel->closeTag();
+
+echo $formLabel->openTag() . $form->get('password')->getOption('label');
+echo $this->formPassword($form->get('password'));
+echo $formLabel->closeTag();
+
+echo $formLabel->openTag() . $form->get('confirmation')->getOption('label');
+echo $this->formPassword($form->get('confirmation'));
+echo $formLabel->closeTag();
+
+echo $formLabel->openTag() . $form->get('image')->getOption('label');
+echo $this->formFile($form->get('image'));
+echo $formLabel->closeTag();
+
+echo $formLabel->openTag() . $form->get('TypeUse')->getOption('label');
+echo $this->formSelect($form->get('TypeUse'));
+echo $formLabel->closeTag();
+
+
+echo $this->formSubmit($form->get('submit'));
+
+
+//echo $this->formCollection ($form);
+
+echo $this->form ()->closeTag ();
+
+?>

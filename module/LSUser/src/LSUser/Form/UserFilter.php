@@ -18,14 +18,14 @@ class UserFilter extends InputFilter
 
     protected $typeUser;
 
-    public function __construct ( array $typeUser = null )
+    public function __construct( array $typeUser = null )
     {
-        $this->typeUser = array_keys ($typeUser);
+        $this->typeUser = array_keys($typeUser);
 
         /**
          * Validando o campo Nome
          */
-        $this->add (array(
+        $this->add(array(
             'name' => 'name',
             'required' => true,
             'filters' => array(
@@ -33,15 +33,15 @@ class UserFilter extends InputFilter
                 array('name' => 'StringTrim'),
             ),
             'validators' => array(
-                $this->notEmpty ('Nome'),
-                $this->stringLength (4, 80, 'Nome'),
+                $this->notEmpty('Nome'),
+                $this->stringLength(4, 80, 'Nome'),
             ),
         ));
 
         /**
          * Validando o campo login
          */
-        $this->add (array(
+        $this->add(array(
             'name' => 'login',
             'required' => true,
             'filters' => array(
@@ -49,15 +49,15 @@ class UserFilter extends InputFilter
                 array('name' => 'StringTrim'),
             ),
             'validators' => array(
-                $this->notEmpty ('Login'),
-                $this->stringLength (4, 20, 'Login'),
+                $this->notEmpty('Login'),
+                $this->stringLength(4, 20, 'Login'),
             )
         ));
 
         /**
          * Validando o campo Senha
          */
-        $this->add (array(
+        $this->add(array(
             'name' => 'password',
             'required' => true,
             'filters' => array(
@@ -65,15 +65,15 @@ class UserFilter extends InputFilter
                 array('name' => 'StringTrim'),
             ),
             'validators' => array(
-                $this->notEmpty ('Senha'),
-                $this->stringLength (4, 15, 'Senha')
+                $this->notEmpty('Senha'),
+                $this->stringLength(4, 15, 'Senha')
             )
         ));
 
         /**
          * Validando o campo Confirmação
          */
-        $this->add (array(
+        $this->add(array(
             'name' => 'confirmation',
             'required' => true,
             'filters' => array(
@@ -81,14 +81,14 @@ class UserFilter extends InputFilter
                 array('name' => 'StringTrim'),
             ),
             'validators' => array(
-                $this->notEmpty ('Confirmar Senha'),
-                $this->stringLength (4, 15, 'Confirmar Senha'),
-                $this->identical ('Senha', 'password'),
+                $this->notEmpty('Confirmar Senha'),
+                $this->stringLength(4, 15, 'Confirmar Senha'),
+                $this->identical('Senha', 'password'),
             )
         ));
 
         //Validando campo select
-        $this->add (array(
+        $this->add(array(
             'name' => 'TypeUse',
             'required' => true,
             'validators' => array(
@@ -103,6 +103,7 @@ class UserFilter extends InputFilter
                 ),
             ),
         ));
+
     }
 
     /**
@@ -115,13 +116,13 @@ class UserFilter extends InputFilter
      * @param String $inputName
      * @return \Zend\Validator\StringLength
      */
-    protected function stringLength ( $min, $max, $inputName )
+    protected function stringLength( $min, $max, $inputName )
     {
 
         $stringLength = new \Zend\Validator\StringLength();
-        $stringLength->setOptions (array('min' => $min, 'max' => $max))
-                ->setMessage ("{$inputName} não pode ter menos que {$min} caracter.", \Zend\Validator\StringLength::TOO_SHORT)
-                ->setMessage ("{$inputName} não pode ter mais que {$max} caracter.", \Zend\Validator\StringLength::TOO_LONG);
+        $stringLength->setOptions(array('min' => $min, 'max' => $max))
+                ->setMessage("{$inputName} não pode ter menos que {$min} caracter.", \Zend\Validator\StringLength::TOO_SHORT)
+                ->setMessage("{$inputName} não pode ter mais que {$max} caracter.", \Zend\Validator\StringLength::TOO_LONG);
 
         return $stringLength;
 
@@ -135,10 +136,10 @@ class UserFilter extends InputFilter
      * @param String $inputName
      * @return \Zend\Validator\NotEmpty
      */
-    protected function notEmpty ( $inputName )
+    protected function notEmpty( $inputName )
     {
         $notEmpty = new \Zend\Validator\NotEmpty();
-        $notEmpty->setMessage ("{$inputName} não pode estar em branco", \Zend\Validator\NotEmpty::IS_EMPTY);
+        $notEmpty->setMessage("{$inputName} não pode estar em branco", \Zend\Validator\NotEmpty::IS_EMPTY);
 
         return $notEmpty;
 
@@ -153,12 +154,12 @@ class UserFilter extends InputFilter
      * @param String $compare
      * @return \Zend\Validator\Identical
      */
-    protected function identical ( $inputName, $compare )
+    protected function identical( $inputName, $compare )
     {
         $identical = new \Zend\Validator\Identical();
-        $identical->setOptions (array('token' => $compare))
-                ->setMessage ("As {$inputName} não conferem.", \Zend\Validator\Identical::NOT_SAME)
-                ->setMessage ("As {$inputName} não combinam.", \Zend\Validator\Identical::MISSING_TOKEN);
+        $identical->setOptions(array('token' => $compare))
+                ->setMessage("As {$inputName} não conferem.", \Zend\Validator\Identical::NOT_SAME)
+                ->setMessage("As {$inputName} não combinam.", \Zend\Validator\Identical::MISSING_TOKEN);
 
         return $identical;
 

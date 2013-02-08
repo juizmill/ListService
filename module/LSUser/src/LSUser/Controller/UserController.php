@@ -17,7 +17,7 @@ use LSBase\Controller\CrudController;
 class UserController extends CrudController
 {
 
-    public function __construct ()
+    public function __construct()
     {
         $this->controller = 'user';
         $this->entity = 'LSUser\Entity\User';
@@ -36,26 +36,73 @@ class UserController extends CrudController
      * @access public
      * @return \Zend\View\Model\ViewModel
      */
-    public function newAction ()
+    public function newAction()
     {
-        $form = $this->getServiceLocator ()->get ($this->form);
+        $form = $this->getServiceLocator()->get($this->form);
 
-        $request = $this->getRequest ();
+        $request = $this->getRequest();
 
-        if ( $request->isPost () ) {
+        if( $request->isPost() ) {
 
-            $form->setData ($request->getPost ());
+            $form->setData($request->getPost());
 
-            if ( $form->isValid () ) {
+            if( $form->isValid() ) {
 
-                $service = $this->getServiceLocator ()->get ($this->service);
-                $service->insert ($request->getPost ()->toArray ());
+                $service = $this->getServiceLocator()->get($this->service);
+                $service->insert($request->getPost()->toArray());
 
-                return $this->redirect ()->toRoute ($this->route, array('controller' => $this->controller));
+                return $this->redirect()->toRoute($this->route, array('controller' => $this->controller));
             }
         }
 
-        return new ViewModel (array('form' => $form));
+        return new ViewModel(array('form' => $form));
+
+    }
+
+    /**
+     * editAction
+     * 
+     * Exibe pagina para editar o registro.
+     * 
+     * @author Jesus Vieira <jesusvieiradelima@gmail.com>
+     * @access public
+     * @return \Zend\View\Model\ViewModel
+     */
+    public function editAction()
+    {
+        $form = $this->getServiceLocator()->get($this->form);
+
+        $param = $this->params()->fromRoute('id', 0);
+
+        $repository = $this->getEm()->getRepository($this->entity);
+        $entity = $repository->find($param);
+
+        if( $entity ) {
+
+            $form->setData($entity->toArray());
+
+            if( $this->getRequest()->isPost() ) {
+
+                $data = $this->getRequest()->getPost()->toArray();
+
+                if( empty($data['password']) )
+                    unset($data['password']);
+
+                $form->setData($data);
+
+                if( $form->isValid() ) {
+
+                    $service = $this->getServiceLocator()->get($this->service);
+                    $service->update($data);
+
+                    return $this->redirect()->toRoute($this->route, array('controller' => $this->controller));
+                }
+            }
+        } else {
+            return $this->redirect()->toRoute($this->route, array('controller' => $this->controller));
+        }
+
+        return new ViewModel(array('form' => $form, 'id' => $param));
 
     }
 

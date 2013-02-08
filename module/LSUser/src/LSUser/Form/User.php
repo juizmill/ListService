@@ -20,6 +20,7 @@ class User extends Form
     
     public function __construct (array $typeUser = null)
     {
+      
         parent::__construct ('user', array());
 
         $this->typeUser = $typeUser;

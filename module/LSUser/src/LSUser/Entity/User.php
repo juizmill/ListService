@@ -141,7 +141,7 @@ class User
    */
   public function setLogin($login)
   {
-    $this->login = $this->encryptLoginAndPassword($login, 10000);
+    $this->login = $login;
 
     return $this;
   }
@@ -164,7 +164,7 @@ class User
    */
   public function setPassword($password)
   {
-    $this->password = $this->encryptLoginAndPassword($password, 150000);
+    $this->password = $this->encryptPassword($password);
 
     return $this;
   }
@@ -302,9 +302,9 @@ class User
    * @param integer $iterations
    * @return string hash
    */
-  public function encryptLoginAndPassword($senhaOrPassword, $iterations)
+  public function encryptPassword($password)
   {
-    return base64_encode(Pbkdf2::calc('sha256', $senhaOrPassword, $this->salt, $iterations, strlen($senhaOrPassword * 2)));
+    return base64_encode(Pbkdf2::calc('sha256', $password, $this->salt, 15000, strlen($password * 2)));
   }
 
   /**
