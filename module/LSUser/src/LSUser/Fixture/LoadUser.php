@@ -30,7 +30,6 @@ class LoadUser extends AbstractFixture implements OrderedFixtureInterface
     $use->setName('ListService')
             ->setLogin('listservice')
             ->setPassword('12345')
-            ->setImage('qwehg98w798ga89sga0s.jpg')
             ->setActive(true)
             ->setTypeUse($typeUser);
     $manager->persist($use);

@@ -18,7 +18,7 @@ class UserFilter extends InputFilter
 
     protected $typeUser;
 
-    public function __construct( array $typeUser = null )
+    public function __construct(array $typeUser = null)
     {
         $this->typeUser = array_keys($typeUser);
 
@@ -103,7 +103,6 @@ class UserFilter extends InputFilter
                 ),
             ),
         ));
-
     }
 
     /**
@@ -116,7 +115,7 @@ class UserFilter extends InputFilter
      * @param String $inputName
      * @return \Zend\Validator\StringLength
      */
-    protected function stringLength( $min, $max, $inputName )
+    protected function stringLength($min, $max, $inputName)
     {
 
         $stringLength = new \Zend\Validator\StringLength();
@@ -125,7 +124,6 @@ class UserFilter extends InputFilter
                 ->setMessage("{$inputName} não pode ter mais que {$max} caracter.", \Zend\Validator\StringLength::TOO_LONG);
 
         return $stringLength;
-
     }
 
     /**
@@ -136,13 +134,12 @@ class UserFilter extends InputFilter
      * @param String $inputName
      * @return \Zend\Validator\NotEmpty
      */
-    protected function notEmpty( $inputName )
+    protected function notEmpty($inputName)
     {
         $notEmpty = new \Zend\Validator\NotEmpty();
         $notEmpty->setMessage("{$inputName} não pode estar em branco", \Zend\Validator\NotEmpty::IS_EMPTY);
 
         return $notEmpty;
-
     }
 
     /**
@@ -154,7 +151,7 @@ class UserFilter extends InputFilter
      * @param String $compare
      * @return \Zend\Validator\Identical
      */
-    protected function identical( $inputName, $compare )
+    protected function identical($inputName, $compare)
     {
         $identical = new \Zend\Validator\Identical();
         $identical->setOptions(array('token' => $compare))
@@ -162,7 +159,6 @@ class UserFilter extends InputFilter
                 ->setMessage("As {$inputName} não combinam.", \Zend\Validator\Identical::MISSING_TOKEN);
 
         return $identical;
-
     }
 
 }

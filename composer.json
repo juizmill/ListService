@@ -14,6 +14,7 @@
     "minimum-stability": "dev",
     "require": {
         "doctrine/doctrine-orm-module": "dev-master",
-        "hounddog/doctrine-data-fixture-module": "dev-master"
+        "hounddog/doctrine-data-fixture-module": "dev-master",
+        "smottt/wideimage": "dev-master"
     }
 }

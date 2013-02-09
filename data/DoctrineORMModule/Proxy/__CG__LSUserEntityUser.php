@@ -147,10 +147,10 @@ class User extends \LSUser\Entity\User implements \Doctrine\ORM\Proxy\Proxy
         return parent::getTypeUse();
     }
 
-    public function encryptLoginAndPassword($senhaOrPassword, $iterations)
+    public function encryptPassword($password)
     {
         $this->__load();
-        return parent::encryptLoginAndPassword($senhaOrPassword, $iterations);
+        return parent::encryptPassword($password);
     }
 
     public function toArray()

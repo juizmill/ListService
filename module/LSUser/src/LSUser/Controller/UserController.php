@@ -4,6 +4,8 @@ namespace LSUser\Controller;
 
 use Zend\View\Model\ViewModel;
 use LSBase\Controller\CrudController;
+use LSBase\Utils\HandlesDirectory;
+use \WideImage\WideImage;
 
 /**
  * UserController
@@ -24,7 +26,6 @@ class UserController extends CrudController
         $this->form = 'LSUser\Form\User';
         $this->service = 'LSUser\Service\User';
         $this->route = 'user';
-
     }
 
     /**
@@ -42,21 +43,23 @@ class UserController extends CrudController
 
         $request = $this->getRequest();
 
-        if( $request->isPost() ) {
+        if ($request->isPost()) {
 
             $form->setData($request->getPost());
 
-            if( $form->isValid() ) {
+            if ($form->isValid()) {
 
                 $service = $this->getServiceLocator()->get($this->service);
-                $service->insert($request->getPost()->toArray());
+                $data = $service->insert($request->getPost()->toArray());
+
+                $this->HandlesImage($data);
+
 
                 return $this->redirect()->toRoute($this->route, array('controller' => $this->controller));
             }
         }
 
         return new ViewModel(array('form' => $form));
-
     }
 
     /**
@@ -73,27 +76,35 @@ class UserController extends CrudController
         $form = $this->getServiceLocator()->get($this->form);
 
         $param = $this->params()->fromRoute('id', 0);
+        $request = $this->getRequest();
 
         $repository = $this->getEm()->getRepository($this->entity);
         $entity = $repository->find($param);
+        
+        if ($entity) {
 
-        if( $entity ) {
+            $array = $entity->toArray();
+            $array['TypeUse'] = $array['type_use'];
+            unset($array['type_use'], $array['password'], $array['confirmation']);
+            
+            $form->setData($array);
 
-            $form->setData($entity->toArray());
+            if ($request->isPost()) {
 
-            if( $this->getRequest()->isPost() ) {
+                $data = $request->getPost();
 
-                $data = $this->getRequest()->getPost()->toArray();
-
-                if( empty($data['password']) )
+                if (empty($data['password']))
                     unset($data['password']);
 
-                $form->setData($data);
+                if (empty($data['confirmation']))
+                    unset($data['confirmation']);
 
-                if( $form->isValid() ) {
+                $form->setData($data);
+                
+                if ($form->isValid()) {
 
                     $service = $this->getServiceLocator()->get($this->service);
-                    $service->update($data);
+                    $service->update($data->toArray());
 
                     return $this->redirect()->toRoute($this->route, array('controller' => $this->controller));
                 }
@@ -103,7 +114,38 @@ class UserController extends CrudController
         }
 
         return new ViewModel(array('form' => $form, 'id' => $param));
+    }
 
+    /**
+     * HandlesImage
+     * 
+     * Manipula a imagen avatar.
+     * 
+     * @param Object $entity
+     */
+    protected function HandlesImage($entity)
+    {
+
+        if ($entity) {
+
+            $dir = new HandlesDirectory('img_user', $entity->getId());
+            $dir->createOrigin()->createIdentity();
+
+            if ($_FILES['image']['name']) {
+
+                $name = $_FILES['image']['name'];
+                $tmp = $_FILES['image']['tmp_name'];
+
+                $name = \substr(\sha1(\uniqid(rand(), true)), -10) . '.jpg';
+
+                $img = WideImage::loadFromFile($tmp);
+                $avatar = $img->resize(28, 28, 'outside')->crop('50% - 14', '50% - 14', 28, 28);
+                $medio = $img->resize(96, 96, 'outside')->crop('50% - 48', '50% - 48', 96, 96);
+
+                $avatar->saveToFile($dir->getOrigin() . $dir->getIdentity() . 'a_' . $name, 100);
+                $medio->saveToFile($dir->getOrigin() . $dir->getIdentity() . 'm_' . $name, 100);
+            }
+        }
     }
 
 }
