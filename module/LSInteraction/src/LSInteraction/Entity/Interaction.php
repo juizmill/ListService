@@ -61,7 +61,7 @@ class Interaction
 
   /**
    * __construct
-   * 
+   *
    * @param array $options
    */
   public function __construct(array $options = array())
@@ -73,7 +73,7 @@ class Interaction
   /**
    * Get id
    *
-   * @return integer 
+   * @return integer
    */
   public function getId()
   {
@@ -97,7 +97,7 @@ class Interaction
   /**
    * Get datePosted
    *
-   * @return \DateTime 
+   * @return \DateTime
    */
   public function getDatePosted()
   {
@@ -120,7 +120,7 @@ class Interaction
   /**
    * Get description
    *
-   * @return string 
+   * @return string
    */
   public function getDescription()
   {
@@ -143,7 +143,7 @@ class Interaction
   /**
    * Get ticket
    *
-   * @return \LSTicket\Entity\Ticket 
+   * @return \LSTicket\Entity\Ticket
    */
   public function getTicket()
   {
@@ -166,7 +166,7 @@ class Interaction
   /**
    * Get user
    *
-   * @return \LSUser\Entity\User 
+   * @return \LSUser\Entity\User
    */
   public function getUser()
   {
@@ -175,7 +175,7 @@ class Interaction
 
   /**
    * toArray
-   * 
+   *
    * @return array
    */
   public function toArray()

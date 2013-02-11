@@ -25,9 +25,9 @@ class User extends AbstractService
 
     /**
      * insert
-     * 
+     *
      * Insere um registro.
-     * 
+     *
      * @author Jesus Vieira <jesusvieiradelima@gmail.com>
      * @param array $data
      * @access public
@@ -49,9 +49,9 @@ class User extends AbstractService
 
     /**
      * update
-     * 
+     *
      * Atualiza um registro
-     * 
+     *
      * @author Jesus Vieira <jesusvieiradelima@gmail.com>
      * @param array $data
      * @access public
@@ -64,14 +64,10 @@ class User extends AbstractService
         if (get_class($typeUser) == 'LSTypeuser\\Entity\\TypeUser') {
 
             $data['TypeUse'] = $typeUser;
-            
             parent::update($data);
-            
         } else {
             return false;
         }
     }
-    
-    
 
 }

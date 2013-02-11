@@ -17,14 +17,14 @@ class User extends Form
 {
 
     protected $typeUser;
-    
+
     public function __construct (array $typeUser = null)
     {
-      
+
         parent::__construct ('user', array());
 
         $this->typeUser = $typeUser;
-        
+
         $this->setInputFilter (new UserFilter ($this->typeUser));
         $this->setAttribute ('method', 'post');
 
@@ -97,7 +97,7 @@ class User extends Form
             'type' => 'Zend\Form\Element\Select',
             'name' => 'TypeUse',
             'options' => array(
-                'label' => 'Evento',
+                'label' => 'Tipo de usuário',
                 'value_options' => $this->typeUserSelect (),
             ),
             'attributes' => array(
@@ -129,11 +129,11 @@ class User extends Form
 
     /**
      * ticketTypeSelect
-     * 
+     *
      * Faz o tratamento dos tipos de ticket que vem no formato de array
      * adiciona no primeiro índice do array o "--Selecione--"
      * e retorna o array com todos os tipos de ticket mais o "--Selecione--"
-     * 
+     *
      * @return array
      */
     protected function typeUserSelect ()

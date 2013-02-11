@@ -87,18 +87,6 @@ class User extends \LSUser\Entity\User implements \Doctrine\ORM\Proxy\Proxy
         return parent::getPassword();
     }
 
-    public function setImage($image)
-    {
-        $this->__load();
-        return parent::setImage($image);
-    }
-
-    public function getImage()
-    {
-        $this->__load();
-        return parent::getImage();
-    }
-
     public function setDateRegistry()
     {
         $this->__load();
@@ -162,7 +150,7 @@ class User extends \LSUser\Entity\User implements \Doctrine\ORM\Proxy\Proxy
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'name', 'login', 'password', 'image', 'dateRegistry', 'active', 'salt', 'typeUse');
+        return array('__isInitialized__', 'id', 'name', 'login', 'password', 'dateRegistry', 'active', 'salt', 'typeUse');
     }
 
     public function __clone()

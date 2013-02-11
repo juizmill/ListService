@@ -1,1 +1,22 @@
-New Ticket
+<h2>Cadastrar - Ticket</h2>
+
+<?php
+
+$form = $this->form;
+
+$this->formElementErrors ()
+        ->setMessageOpenFormat ('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">×</button>')
+        ->setMessageCloseString ('</div>')
+        ->render ($form);
+
+$form->setAttribute ('action', $this->url ('ticket/default', array('controller' => 'ticket', 'action' => 'new')));
+
+$form->prepare ();
+
+echo $this->form ()->openTag ($form);
+
+echo $this->formCollection ($form);
+
+echo $this->form ()->closeTag ();
+
+?>

@@ -99,19 +99,20 @@ class Ticket
 
   /**
    * __construct
-   * 
+   *
    * @param array $options
    */
   public function __construct(array $options = array())
   {
     $hydrator = new Hydrator\ClassMethods;
     $hydrator->hydrate($options, $this);
+    $this->active = true;
   }
 
   /**
    * Get id
    *
-   * @return integer 
+   * @return integer
    */
   public function getId()
   {
@@ -134,7 +135,7 @@ class Ticket
   /**
    * Get title
    *
-   * @return string 
+   * @return string
    */
   public function getTitle()
   {
@@ -158,7 +159,7 @@ class Ticket
   /**
    * Get dateBegin
    *
-   * @return \DateTime 
+   * @return \DateTime
    */
   public function getDateBegin()
   {
@@ -181,7 +182,7 @@ class Ticket
   /**
    * Get dateEnd
    *
-   * @return \DateTime 
+   * @return \DateTime
    */
   public function getDateEnd()
   {
@@ -204,7 +205,7 @@ class Ticket
   /**
    * Get dateEstimated
    *
-   * @return \DateTime 
+   * @return \DateTime
    */
   public function getDateEstimated()
   {
@@ -227,7 +228,7 @@ class Ticket
   /**
    * Get sought
    *
-   * @return string 
+   * @return string
    */
   public function getSought()
   {
@@ -250,7 +251,7 @@ class Ticket
   /**
    * Get active
    *
-   * @return boolean 
+   * @return boolean
    */
   public function getActive()
   {
@@ -273,7 +274,7 @@ class Ticket
   /**
    * Get categoryTicket
    *
-   * @return \LSCategoryticket\Entity\CategoryTicket 
+   * @return \LSCategoryticket\Entity\CategoryTicket
    */
   public function getCategoryTicket()
   {
@@ -296,7 +297,7 @@ class Ticket
   /**
    * Get priority
    *
-   * @return \LSPriority\Entity\Priority 
+   * @return \LSPriority\Entity\Priority
    */
   public function getPriority()
   {
@@ -319,7 +320,7 @@ class Ticket
   /**
    * Get user
    *
-   * @return \LSUser\Entity\User 
+   * @return \LSUser\Entity\User
    */
   public function getUser()
   {
@@ -328,7 +329,7 @@ class Ticket
 
   /**
    * toArray
-   * 
+   *
    * @return array
    */
   public function toArray()

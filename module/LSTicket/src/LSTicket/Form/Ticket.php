@@ -15,12 +15,15 @@ use Zend\Form\Form;
  */
 class Ticket extends Form
 {
+    protected $typeTicket;
 
-    public function __construct()
+    public function __construct(array $typeTicket = array())
     {
         parent::__construct('ticket', array());
 
-        $this->setInputFilter(new TicketFilter());
+        $this->typeTicket = $typeTicket;
+
+        $this->setInputFilter(new TicketFilter($this->typeTicket));
         $this->setAttribute('method', 'post');
 
         //Input Titulo
@@ -32,6 +35,58 @@ class Ticket extends Form
             ),
             'attributes' => array(
                 'id' => 'title',
+                'maxlenght' => 60,
+            )
+        ));
+
+        //Input Solicitante
+        $this->add(array(
+            'name' => 'sought',
+            'type' => 'Zend\Form\Element\Text',
+            'options' => array(
+                'label' => 'Solicitante'
+            ),
+            'attributes' => array(
+                'id' => 'sought',
+                'maxlenght' => 45,
+            )
+        ));
+
+        //Select categoria de ticket
+        $this->add (array(
+            'type' => 'Zend\Form\Element\Select',
+            'name' => 'categoryTicket',
+            'options' => array(
+                'label' => 'Categoria',
+                'value_options' => $this->typeTicketSelect(),
+            ),
+            'attributes' => array(
+                'value' => '0',
+                'id' => 'categoryTicket',
+            ),
+        ));
+
+        //Input Descricao
+        $this->add(array(
+            'name' => 'description',
+            'type' => 'Zend\Form\Element\TextArea',
+            'options' => array(
+                'label' => 'Descrição'
+            ),
+            'attributes' => array(
+                'id' => 'description',
+            )
+        ));
+
+        //Input Descricao
+        $this->add(array(
+            'name' => 'archive',
+            'type' => 'Zend\Form\Element\File',
+            'options' => array(
+                'label' => 'Anexo'
+            ),
+            'attributes' => array(
+                'id' => 'archive',
             )
         ));
 
@@ -49,6 +104,27 @@ class Ticket extends Form
                 'value' => 'Salvar',
             )
         ));
+    }
+
+    /**
+     * typeTicketSelect
+     *
+     * Faz o tratamento dos tipos de usuarios que vem no formato de array
+     * adiciona no primeiro índice do array o "--Selecione--"
+     * e retorna o array com todos os tipos de usuarios mais o "--Selecione--"
+     *
+     * @return array
+     */
+    protected function typeTicketSelect ()
+    {
+        $keys = array_keys ($this->typeTicket);
+        array_unshift ($keys, 0);
+
+        $values = array_values ($this->typeTicket);
+        array_unshift ($values, '--Selecione--');
+
+        return array_combine ($keys, $values);
+
     }
 
 }

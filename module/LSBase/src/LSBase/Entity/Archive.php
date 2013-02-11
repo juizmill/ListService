@@ -43,7 +43,7 @@ class Archive
 
   /**
    * __construct
-   * 
+   *
    * @param array $options
    */
   public function __construct(array $options = array())
@@ -55,7 +55,7 @@ class Archive
   /**
    * Get id
    *
-   * @return integer 
+   * @return integer
    */
   public function getId()
   {
@@ -78,7 +78,7 @@ class Archive
   /**
    * Get pathFile
    *
-   * @return string 
+   * @return string
    */
   public function getPathFile()
   {
@@ -101,7 +101,7 @@ class Archive
   /**
    * Get intereaction
    *
-   * @return \LSInteraction\Entity\Interaction 
+   * @return \LSInteraction\Entity\Interaction
    */
   public function getIntereaction()
   {
@@ -110,7 +110,7 @@ class Archive
 
   /**
    * toArray
-   * 
+   *
    * @return array
    */
   public function toArray()

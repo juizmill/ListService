@@ -21,4 +21,23 @@ class Module
         );
     }
 
+    public function getServiceConfig ()
+    {
+        return array(
+            'factories' => array(
+                'LSTicket\Service\Ticket' => function($em) {
+                    return new Service\Ticket ($em->get ('Doctrine\ORM\EntityManager'));
+                },
+                'LSTicket\Form\Ticket' => function($service) {
+                    $em = $service->get ('Doctrine\ORM\EntityManager');
+
+                    $categoryTicket = $em->getRepository ('LSCategoryticket\Entity\CategoryTicket');
+                    $result = $categoryTicket->fetchPairs ();
+
+                    return new Form\Ticket ($result);
+                },
+            )
+        );
+    }
+
 }
