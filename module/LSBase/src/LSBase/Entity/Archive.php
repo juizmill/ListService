@@ -36,10 +36,10 @@ class Archive
    *
    * @ORM\ManyToOne(targetEntity="LSInteraction\Entity\Interaction")
    * @ORM\JoinColumns({
-   *   @ORM\JoinColumn(name="intereaction_id", referencedColumnName="id")
+   *   @ORM\JoinColumn(name="interaction_id", referencedColumnName="id")
    * })
    */
-  private $intereaction;
+  private $interaction;
 
   /**
    * __construct
@@ -91,9 +91,9 @@ class Archive
    * @param \LSInteraction\Entity\Interaction $intereaction
    * @return Archive
    */
-  public function setIntereaction(\LSInteraction\Entity\Interaction $intereaction = null)
+  public function setInteraction(\LSInteraction\Entity\Interaction $interaction = null)
   {
-    $this->intereaction = $intereaction;
+    $this->interaction = $interaction;
 
     return $this;
   }

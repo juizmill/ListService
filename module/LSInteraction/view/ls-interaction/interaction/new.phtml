@@ -1,1 +1,22 @@
-New Interaction
+<h2>Cadastrar - Interação</h2>
+
+<?php
+
+$form = $this->form;
+
+$this->formElementErrors ()
+        ->setMessageOpenFormat ('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">×</button>')
+        ->setMessageCloseString ('</div>')
+        ->render ($form);
+
+$form->setAttribute ('action', $this->url ('interaction/default', array('controller' => 'user', 'action' => 'new', 'id' => $this->ticketId)));
+
+$form->prepare ();
+
+echo $this->form ()->openTag ($form);
+
+echo $this->formCollection ($form);
+
+echo $this->form ()->closeTag ();
+
+?>

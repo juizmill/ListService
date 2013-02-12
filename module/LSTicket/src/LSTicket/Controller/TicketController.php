@@ -44,39 +44,45 @@ class TicketController extends CrudController
      */
     public function newAction()
     {
+        $user = $this->getEm()->getReference('LSUser\Entity\User', 1);//REMOVER DEPOIS QUE CRIAR O AUTENTICATION
+
         $form = $this->getServiceLocator()->get($this->form);
 
-        $request = $this->getRequest();
+        if ($this->getRequest()->isPost()) {
 
-        if ($request->isPost()) {
-
-            $form->setData($request->getPost());
-
-            //\Zend\Debug\Debug::dump($_FILES);
-
-        if ($_FILES['archive']['name']) {
-
-            $upload = new UploadFile(new Http(), 'archives', 2);
-
-
-        }
-
-        die;
-
-
-
-
-
-
-
-
-
-
+            $form->setData($this->getRequest()->getPost());
 
             if ($form->isValid()) {
 
+                //Registra o User
+                $data = $this->getRequest()->getPost()->toArray();
+                $data['user'] = $user;
+
+                //Registra o ticket
                 $service = $this->getServiceLocator()->get($this->service);
-                $data = $service->insert($request->getPost()->toArray());
+                $ticket = $service->insert($data);
+
+                //Registra a Interação
+                if ($ticket){
+                    $service2 = $this->getServiceLocator()->get('LSInteraction\Service\Interaction');
+                    $interaction = $service2->insert(array(
+                                                'description' => $data['description'],
+                                                'ticket' => $ticket,
+                                                'user' => $user));
+                }
+
+                //Registra o arquivo
+                if ($_FILES['archive']['name'] && $interaction){
+
+                    $upload = new UploadFile(new Http(), 'archives', $ticket->getId(), $interaction->getId());
+
+                    //Registra o Arquivo
+                    $service3 = $this->getServiceLocator()->get('LSBase\Service\Archive');
+                    $archive = $service3->insert(array(
+                                                'pathFile' => $upload->getFileName(),
+                                                'interaction' => $interaction));
+                }
+
 
                 return $this->redirect()->toRoute($this->route, array('controller' => $this->controller));
             }
@@ -84,4 +90,5 @@ class TicketController extends CrudController
 
         return new ViewModel(array('form' => $form));
     }
+
 }

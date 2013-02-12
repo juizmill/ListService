@@ -25,13 +25,25 @@ class Interaction extends Form
 
         //Input Descrição
         $this->add(array(
-            'name' => 'desctiption',
+            'name' => 'description',
             'type' => 'Zend\Form\Element\TextArea',
             'options' => array(
-                'label' => 'description'
+                'label' => 'Descrição'
             ),
             'attributes' => array(
                 'id' => 'description',
+            )
+        ));
+
+        //Input Senha
+        $this->add (array(
+            'name' => 'archive',
+            'type' => 'Zend\Form\Element\File',
+            'options' => array(
+                'label' => 'Anexo'
+            ),
+            'attributes' => array(
+                'id' => 'archive',
             )
         ));
 

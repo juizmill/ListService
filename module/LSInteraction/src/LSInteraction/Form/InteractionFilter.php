@@ -33,7 +33,6 @@ class InteractionFilter extends InputFilter
                 array('name' => 'NotEmpty', 'options' => array('messages' => array('isEmpty' => 'Descrição não pode estar em branco')))
             )
         ));
-        
     }
 
 }

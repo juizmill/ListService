@@ -21,4 +21,15 @@ class Module
         );
     }
 
+    public function getServiceConfig ()
+    {
+        return array(
+            'factories' => array(
+                'LSBase\Service\Archive' => function($em) {
+                    return new Service\Archive($em->get ('Doctrine\ORM\EntityManager'));
+                }
+            )
+        );
+    }
+
 }

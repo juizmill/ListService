@@ -35,32 +35,13 @@ class Ticket extends AbstractService
      */
     public function insert(array $data)
     {
-
         $categoryTicket = $this->em->getReference('LSCategoryticket\Entity\CategoryTicket', $data['categoryTicket']);
-        $user = $this->em->getReference('LSUser\Entity\User', 1);
 
         if (get_class($categoryTicket) == 'LSCategoryticket\\Entity\\CategoryTicket') {
 
             $data['categoryTicket'] = $categoryTicket;
-            $data['user'] = $user;
 
-            $ticket = parent::insert($data);
-
-            $interaction = new Interaction(array(
-                'description' => $data['description'],
-                'ticket' => $ticket,
-                'user' => $user)
-            );
-
-            $this->em->persist($interaction);
-            $this->em->flush($interaction);
-
-
-
-
-
-
-            return $ticket;
+            return parent::insert($data);
 
         } else {
             return false;

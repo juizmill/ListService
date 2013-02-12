@@ -48,22 +48,16 @@ class UploadFile
 {
     protected $destination;
     protected $ticket;
+    protected $path;
     protected $http;
+    protected $fileName;
 
-    public function __construct(Http $http, $destination = null, $ticket = null )
+    public function __construct(Http $http, $destination = null, $ticket = null, $path = null )
     {
-        $this->http = $http;
+        $this->http        = $http;
         $this->destination = $destination;
         $this->ticket      = $ticket;
-
-        //Cria a pasta de destino
-        if (!\file_exists($this->destination.DIRECTORY_SEPARATOR.$this->ticket)) {
-            if (\mkdir($this->destination.DIRECTORY_SEPARATOR.$this->ticket)) {
-                \chmod($this->destination.DIRECTORY_SEPARATOR.$this->ticket, 0777);
-            } else {
-                throw new Exception('Não foi possível criar a pasta do Ticket.');
-            }
-        }
+        $this->path        = $path;
 
         //Cria a pasta do ticket
         if (!\file_exists($this->destination)) {
@@ -74,14 +68,32 @@ class UploadFile
             }
         }
 
+        //Cria a pasta de destino
+        if (!\file_exists($this->destination.DIRECTORY_SEPARATOR.$this->ticket)) {
+            if (\mkdir($this->destination.DIRECTORY_SEPARATOR.$this->ticket)) {
+                \chmod($this->destination.DIRECTORY_SEPARATOR.$this->ticket, 0777);
+            } else {
+                throw new Exception('Não foi possível criar a pasta do Ticket.');
+            }
+        }
+
+        //Cria a pasta de destino
+        if (!\file_exists($this->destination.DIRECTORY_SEPARATOR.$this->ticket.DIRECTORY_SEPARATOR.$this->path)) {
+            if (\mkdir($this->destination.DIRECTORY_SEPARATOR.$this->ticket.DIRECTORY_SEPARATOR.$this->path)) {
+                \chmod($this->destination.DIRECTORY_SEPARATOR.$this->ticket.DIRECTORY_SEPARATOR.$this->path, 0777);
+            } else {
+                throw new Exception('Não foi possível criar a pasta de interação.');
+            }
+        }
+
         //Indica a pasta de destino do arquivo
-        $http->setDestination($this->destination.DIRECTORY_SEPARATOR.$this->ticket);
+        $http->setDestination($this->destination.DIRECTORY_SEPARATOR.$this->ticket.DIRECTORY_SEPARATOR.$this->path);
 
         $newName = $this->removerCaracter($_FILES['archive']['name']);
 
         //Renomeia o arquivo
         $http->addFilter('Rename', array('target' =>
-            $this->destination.DIRECTORY_SEPARATOR.$this->ticket.DIRECTORY_SEPARATOR.$newName, 'overwrite' => true));
+            $this->destination.DIRECTORY_SEPARATOR.$this->ticket.DIRECTORY_SEPARATOR.$this->path.DIRECTORY_SEPARATOR.$newName, 'overwrite' => true));
 
 
         $files = $http->getFileInfo();
@@ -95,10 +107,22 @@ class UploadFile
             }
         }
 
-
         $http->receive();// Salva o arquivo
 
+        $this->fileName = $newName;
 
+    }
+
+    /**
+     * getFileName
+     *
+     * Retorna o nome do arquivo
+     *
+     * @return String
+     */
+    public function getFileName()
+    {
+        return $this->fileName;
     }
 
     /**
@@ -111,7 +135,7 @@ class UploadFile
      */
     public function removerCaracter($str){
 
-        $aaa = array('/(à|á|â|ã|ä|å|æ)/','/(è|é|ê|ë)/','/(ì|í|î|ï)/','/(ð|ò|ó|ô|õ|ö|ø)/','/(ù|ú|û|ü)/','/ç/','/þ/','/ñ/','/ß/','/(ý|ÿ)/','/(=|\+|\/|\\\|\.|\'|\_|\\n| |\(|\))/','/[^a-z0-9_ -]/s');
+        $aaa = array('/(à|á|â|ã|ä|å|æ|Á|Ã|Â|À|Ä)/','/(è|é|ê|ë|É|Ê|È|Ë)/','/(ì|í|î|ï|Í|Î|Ì|Ï)/','/(ð|ò|ó|ô|õ|ö|ø|Õ|Ó|Ò|Ö)/','/(ù|ú|û|ü|Ú|Ù|Ü)/','/ç/','/þ/','/ñ/','/ß/','/(ý|ÿ)/','/(=|\+|\/|\'|\_|\\n| |\(|\))/');
 
         $bbb = array('a','e','i','o','u','c','d','n','s','y','-','');
 

@@ -21,4 +21,15 @@ class Module
         );
     }
 
+    public function getServiceConfig ()
+    {
+        return array(
+            'factories' => array(
+                'LSInteraction\Service\Interaction' => function($em) {
+                    return new Service\Interaction ($em->get ('Doctrine\ORM\EntityManager'));
+                }
+            )
+        );
+    }
+
 }
