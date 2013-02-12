@@ -30,9 +30,9 @@ class UserController extends CrudController
 
     /**
      * newAction
-     * 
+     *
      * Exibe pagina de cadastro.
-     * 
+     *
      * @author Jesus Vieira <jesusvieiradelima@gmail.com>
      * @access public
      * @return \Zend\View\Model\ViewModel
@@ -64,9 +64,9 @@ class UserController extends CrudController
 
     /**
      * editAction
-     * 
+     *
      * Exibe pagina para editar o registro.
-     * 
+     *
      * @author Jesus Vieira <jesusvieiradelima@gmail.com>
      * @access public
      * @return \Zend\View\Model\ViewModel
@@ -76,31 +76,28 @@ class UserController extends CrudController
         $form = $this->getServiceLocator()->get($this->form);
 
         $param = $this->params()->fromRoute('id', 0);
-        $request = $this->getRequest();
 
         $repository = $this->getEm()->getRepository($this->entity);
         $entity = $repository->find($param);
-        
+
         if ($entity) {
 
             $array = $entity->toArray();
             $array['TypeUse'] = $array['type_use'];
-            unset($array['type_use'], $array['password'], $array['confirmation']);
-            
+
             $form->setData($array);
 
-            if ($request->isPost()) {
+            if ($this->getRequest()->isPost()) {
 
-                $data = $request->getPost();
+                $data = $this->getRequest()->getPost();
 
-                if (empty($data['password']))
-                    unset($data['password']);
-
-                if (empty($data['confirmation']))
-                    unset($data['confirmation']);
+                //Caso o campo senha ou o campo confirmar senha não seja preenchidos
+                //É informado para validar somente os campos nome, login e tipo de usuário
+                if (! ($data['confirmation'] || $data['password']) )
+                    $form->setValidationGroup('name', 'login', 'TypeUse');
 
                 $form->setData($data);
-                
+
                 if ($form->isValid()) {
 
                     $service = $this->getServiceLocator()->get($this->service);
@@ -118,9 +115,9 @@ class UserController extends CrudController
 
     /**
      * HandlesImage
-     * 
+     *
      * Manipula a imagen avatar.
-     * 
+     *
      * @param Object $entity
      */
     protected function HandlesImage($entity)

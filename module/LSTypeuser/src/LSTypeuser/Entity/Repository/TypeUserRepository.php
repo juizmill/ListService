@@ -12,4 +12,23 @@ use Doctrine\ORM\EntityRepository;
  */
 class TypeUserRepository extends EntityRepository
 {
+
+    /**
+     * fetchPairs
+     *
+     * Monta um array com o ID e a descrição,
+     *
+     * @return array
+     */
+    public function fetchPairs ()
+    {
+        $categoryTickets = $this->findAll ();
+        $array = array();
+
+        foreach ( $categoryTickets as $categoryTicket )
+            $array[$categoryTicket->getId ()] = $categoryTicket->getDescription ();
+
+        return $array;
+
+    }
 }

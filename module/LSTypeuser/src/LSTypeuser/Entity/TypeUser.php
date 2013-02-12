@@ -40,21 +40,21 @@ class TypeUser
 
   /**
    * __construct
-   * 
+   *
    * @param array $options
    */
   public function __construct(array $options = array())
   {
     $hydrator = new Hydrator\ClassMethods;
     $hydrator->hydrate($options, $this);
-    
+
     $this->active = true;
   }
 
   /**
    * Get id
    *
-   * @return integer 
+   * @return integer
    */
   public function getId()
   {
@@ -77,7 +77,7 @@ class TypeUser
   /**
    * Get description
    *
-   * @return string 
+   * @return string
    */
   public function getDescription()
   {
@@ -100,7 +100,7 @@ class TypeUser
   /**
    * Get active
    *
-   * @return boolean 
+   * @return boolean
    */
   public function getActive()
   {
@@ -109,7 +109,7 @@ class TypeUser
 
   /**
    * toArray
-   * 
+   *
    * @return array
    */
   public function toArray()
