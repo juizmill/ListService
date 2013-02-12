@@ -91,4 +91,55 @@ class TicketController extends CrudController
         return new ViewModel(array('form' => $form));
     }
 
+    /**
+     * deleteAction
+     *
+     * Deleta um registo.
+     *
+     * @author Jesus Vieira <jesusvieiradelima@gmail.com>
+     * @access public
+     * @return redirect current controller
+     */
+    public function deleteAction()
+    {
+
+      $param = $this->params()->fromRoute('id', 0);
+
+        $service = $this->getServiceLocator()->get($this->service);
+        $delete = $service->delete($param);
+
+        if($delete){
+
+            $this->delTree('archives'.DIRECTORY_SEPARATOR.$param);
+
+            return $this->redirect()->toRoute($this->route, array('controller' => $this->controller));
+        }else{
+            $this->getResponse()->setStatusCode(404);
+        }
+
+    }
+
+    /**
+     * delTree
+     *
+     * Deleta arquivos e subpastas.
+     *
+     * @author Jesus Vieira <jesusvieiradelima@gmail.com>
+     * @access public
+     * @param  String $dir
+     */
+    public static function delTree($dir)
+    {
+        $files = glob($dir . '*' , GLOB_MARK);
+        foreach ($files as $file) {
+            if (substr($file, -1) == '/')
+                self::delTree($file);
+            else
+                unlink($file);
+        }
+
+        if (is_dir($dir))
+            rmdir($dir);
+    }
+
 }

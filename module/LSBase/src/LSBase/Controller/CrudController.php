@@ -29,9 +29,9 @@ abstract class CrudController extends AbstractActionController
 
     /**
      * indexAction
-     * 
+     *
      * Exibe pagina principal.
-     * 
+     *
      * @author Jesus Vieira <jesusvieiradelima@gmail.com>
      * @access public
      * @return \Zend\View\Model\ViewModel
@@ -55,9 +55,9 @@ abstract class CrudController extends AbstractActionController
 
     /**
      * newAction
-     * 
+     *
      * Exibe pagina de cadastro.
-     * 
+     *
      * @author Jesus Vieira <jesusvieiradelima@gmail.com>
      * @access public
      * @return \Zend\View\Model\ViewModel
@@ -87,9 +87,9 @@ abstract class CrudController extends AbstractActionController
 
     /**
      * editAction
-     * 
+     *
      * Exibe pagina para editar o registro.
-     * 
+     *
      * @author Jesus Vieira <jesusvieiradelima@gmail.com>
      * @access public
      * @return \Zend\View\Model\ViewModel
@@ -130,9 +130,9 @@ abstract class CrudController extends AbstractActionController
 
     /**
      * deleteAction
-     * 
+     *
      * Deleta um registo.
-     * 
+     *
      * @author Jesus Vieira <jesusvieiradelima@gmail.com>
      * @access public
      * @return redirect current controller
@@ -149,9 +149,9 @@ abstract class CrudController extends AbstractActionController
 
     /**
      * activeAction
-     * 
+     *
      * Ativa ou desativa o registro
-     * 
+     *
      * @author Jesus Vieira <jesusvieiradelima@gmail.com>
      * @access public
      * @return redirect current controller
@@ -183,9 +183,9 @@ abstract class CrudController extends AbstractActionController
 
     /**
      * getEm
-     * 
+     *
      * Prepara o EntityManager
-     * 
+     *
      * @author Jesus Vieira <jesusvieiradelima@gmail.com>
      * @access public
      * @return EntityManager
