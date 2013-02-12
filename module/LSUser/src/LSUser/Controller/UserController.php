@@ -83,7 +83,8 @@ class UserController extends CrudController
         if ($entity) {
 
             $array = $entity->toArray();
-            $array['TypeUse'] = $array['type_use'];
+
+            $array['TypeUse'] = $array['type_use']->getId();
 
             $form->setData($array);
 
@@ -103,6 +104,9 @@ class UserController extends CrudController
                     $service = $this->getServiceLocator()->get($this->service);
                     $service->update($data->toArray());
 
+                    $this->HandlesImage($entity, true);
+
+
                     return $this->redirect()->toRoute($this->route, array('controller' => $this->controller));
                 }
             }
@@ -117,18 +121,22 @@ class UserController extends CrudController
      * HandlesImage
      *
      * Manipula a imagen avatar.
-     *
+     * @author Jesus Vieira <jesusvieiradelima@gmail.com>
+     * @access public
      * @param Object $entity
      */
-    protected function HandlesImage($entity)
+    protected function HandlesImage($entity, $option = false)
     {
 
-        if ($entity) {
+        if ($_FILES['image']['name']) {
 
-            $dir = new HandlesDirectory('img_user', $entity->getId());
-            $dir->createOrigin()->createIdentity();
+            if ($option)
+                $this->delTree('img_user'.DIRECTORY_SEPARATOR.$entity->getId());
 
-            if ($_FILES['image']['name']) {
+            if ($entity) {
+
+                $dir = new HandlesDirectory('img_user', $entity->getId());
+                $dir->createOrigin()->createIdentity();
 
                 $name = $_FILES['image']['name'];
                 $tmp = $_FILES['image']['tmp_name'];
@@ -143,6 +151,29 @@ class UserController extends CrudController
                 $medio->saveToFile($dir->getOrigin() . $dir->getIdentity() . 'm_' . $name, 100);
             }
         }
+    }
+
+    /**
+     * delTree
+     *
+     * Deleta arquivos e subpastas.
+     *
+     * @author Jesus Vieira <jesusvieiradelima@gmail.com>
+     * @access public
+     * @param  String $dir
+     */
+    public static function delTree($dir)
+    {
+        $files = glob($dir . '*' , GLOB_MARK);
+        foreach ($files as $file) {
+            if (substr($file, -1) == '/')
+                self::delTree($file);
+            else
+                unlink($file);
+        }
+
+        if (is_dir($dir))
+            rmdir($dir);
     }
 
 }

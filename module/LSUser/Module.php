@@ -33,11 +33,10 @@ class Module
                 'LSUser\Form\User' => function($service) {
                     $em = $service->get ('Doctrine\ORM\EntityManager');
 
-                    $typeUser = $em->getRepository ('LSTypeuser\Entity\TypeUser');
-                    $result = $typeUser->fetchPairs ();
+                    $typeUser = $em->getRepository ('LSTypeuser\Entity\TypeUser')->fetchPairs ();
 
-                    return new Form\User ($result);
-                },
+                    return new Form\User ($typeUser);
+                }
             )
         );
 

@@ -103,13 +103,15 @@ class UserFilter extends InputFilter
                 ),
             ),
         ));
+
+
     }
 
     /**
      * stringLength
-     * 
+     *
      * Valida campo conforme especificado
-     * 
+     *
      * @param Integer $min
      * @param Integer $max
      * @param String $inputName
@@ -128,9 +130,9 @@ class UserFilter extends InputFilter
 
     /**
      * notEmpty
-     * 
+     *
      * Valida se o campo está em branco
-     * 
+     *
      * @param String $inputName
      * @return \Zend\Validator\NotEmpty
      */
@@ -144,9 +146,9 @@ class UserFilter extends InputFilter
 
     /**
      * identical
-     * 
+     *
      * Valida se o valor de dois campos são iguais
-     * 
+     *
      * @param String $inputName
      * @param String $compare
      * @return \Zend\Validator\Identical
