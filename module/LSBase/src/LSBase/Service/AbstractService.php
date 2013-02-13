@@ -30,9 +30,9 @@ abstract class AbstractService
 
   /**
    * insert
-   * 
+   *
    * Insere um registro.
-   * 
+   *
    * @author Jesus Vieira <jesusvieiradelima@gmail.com>
    * @param array $data
    * @access public
@@ -40,6 +40,7 @@ abstract class AbstractService
    */
   public function insert(array $data)
   {
+
     $entity = new $this->entity($data);
     $this->em->persist($entity);
     $this->em->flush();
@@ -49,9 +50,9 @@ abstract class AbstractService
 
   /**
    * update
-   * 
+   *
    * Atualiza um registro
-   * 
+   *
    * @author Jesus Vieira <jesusvieiradelima@gmail.com>
    * @param array $data
    * @access public
@@ -72,9 +73,9 @@ abstract class AbstractService
 
   /**
    * delete
-   * 
+   *
    * Deleta um registro
-   * 
+   *
    * @author Jesus Vieira <jesusvieiradelima@gmail.com>
    * @param integer $id
    * @access public

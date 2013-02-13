@@ -1,0 +1,60 @@
+User Category Ticket
+
+
+
+<?php foreach ($this->data as $key => $value): ?>
+
+        <?php if (isset($this->categoryTicket[$key])): ?>
+            <?php if ($this->categoryTicket[$key]->getCategoryTicket()->getId() ==  $value->getId() ): ?>
+
+            <form action="" method="post">
+                <label><input type="checkbox" checked="checked" name="categoryTicket" value="<?php echo $value->getId(); ?>" data-user="<?php echo $this->user ?>"> <?php echo $value->getDescription(); ?></label>
+            </form>
+
+            <?php else: ?>
+
+            <form action="" method="post">
+                <label><input type="checkbox" name="categoryTicket" value="<?php echo $value->getId(); ?>" data-user="<?php echo $this->user ?>"> <?php echo $value->getDescription(); ?></label>
+            </form>
+
+            <?php endif; ?>
+        <?php else: ?>
+
+            <form action="" method="post">
+                <label><input type="checkbox" name="categoryTicket" value="<?php echo $value->getId(); ?>" data-user="<?php echo $this->user ?>"> <?php echo $value->getDescription(); ?></label>
+            </form>
+
+        <?php endif; ?>
+
+<?php endforeach; ?>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+
+        $('form').submit(function(){return false;});
+
+        $(document).keypress(function (event){
+            if(event.which == 13) {return false;}
+        });
+
+        $('input[type="checkbox"]').click(function(){
+            var value = $(this).val();
+            var user = $(this).attr('data-user');
+
+            $.ajax({
+                type: "POST",
+                url: "<?php echo $this->url ('user/default', array('controller' => 'user', 'action' => 'registre-category-ticket')) ?>",
+                data: {categoryTicket: value, user:user},
+                success: function(data){
+
+                    var obj = jQuery.parseJSON(data);
+
+                    if (obj.erro)
+                        alert(obj.erro);
+                }
+            });
+        });
+
+
+    });
+</script>

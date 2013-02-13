@@ -27,6 +27,9 @@ class Module
             'factories' => array(
                 'LSBase\Service\Archive' => function($em) {
                     return new Service\Archive($em->get ('Doctrine\ORM\EntityManager'));
+                },
+                'LSBase\Service\CategoryTicketUser' => function($em) {
+                        return new Service\CategoryTicketUser($em->get ('Doctrine\ORM\EntityManager'));
                 }
             )
         );

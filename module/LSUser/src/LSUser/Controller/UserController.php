@@ -3,6 +3,7 @@
 namespace LSUser\Controller;
 
 use Zend\View\Model\ViewModel;
+use Zend\Json\Json;
 use LSBase\Controller\CrudController;
 use LSBase\Utils\HandlesDirectory;
 use \WideImage\WideImage;
@@ -116,6 +117,87 @@ class UserController extends CrudController
 
         return new ViewModel(array('form' => $form, 'id' => $param));
     }
+
+    /**
+     * categoryTicketAction
+     *
+     * Exibe pagina para definir o tipo de usuario
+     *
+     * @author Jesus Vieira <jesusvieiradelima@gmail.com>
+     * @access public
+     * @return \Zend\View\Model\ViewModel
+     */
+    public function categoryTicketAction()
+    {
+
+        $param = $this->params()->fromRoute('id', 0);
+        $list = $this->getEm()->getRepository('LSCategoryticket\Entity\CategoryTicket')->findAll();
+
+        if ($list){
+
+            $categoryTicket = $this->getEm()->getRepository('LSBase\Entity\UserCategoryTicket')->findBy(array('user' => $param));
+
+            return new ViewModel(array('data' => $list, 'user' => $param, 'categoryTicket' => $categoryTicket));
+        }else{
+            return $this->redirect()->toRoute($this->route, array('controller' => $this->controller));
+        }
+    }
+
+
+    /**
+     * registreCategoryTicketAction
+     *
+     * Registra o usuário em determinada categoria de ticket
+     *
+     * @author Jesus Vieira <jesusvieiradelima@gmail.com>
+     * @access public
+     * @return \Zend\View\Model\ViewModel
+     */
+    public function registreCategoryTicketAction()
+    {
+
+        if ($this->getRequest()->isPost()) {
+
+            if ($this->getRequest()->isXmlHttpRequest()) {
+
+                $service = $this->getServiceLocator()->get('LSBase\Service\CategoryTicketUser');
+
+                $data = $service->insertAndUpdate($this->getRequest()->getPost()->toArray());
+
+                if (! $data)
+                    return $this->getResponse()->setContent(Json::encode(array('erro' => 'Não foi possivel alterar.')));
+
+            }
+        }
+
+        exit();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * HandlesImage

@@ -3,6 +3,7 @@
 namespace LSBase\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Zend\Stdlib\Hydrator;
 
 /**
  * UserCategoryTicket
@@ -42,12 +43,21 @@ class UserCategoryTicket
      */
     private $user;
 
-
+    /**
+     * __construct
+     *
+     * @param array $options
+     */
+    public function __construct(array $options = array())
+    {
+        $hydrator = new Hydrator\ClassMethods;
+        $hydrator->hydrate($options, $this);
+    }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -70,7 +80,7 @@ class UserCategoryTicket
     /**
      * Get categoryTicket
      *
-     * @return \LSCategoryticket\Entity\CategoryTicket 
+     * @return \LSCategoryticket\Entity\CategoryTicket
      */
     public function getCategoryTicket()
     {
@@ -93,10 +103,21 @@ class UserCategoryTicket
     /**
      * Get user
      *
-     * @return \LSUser\Entity\User 
+     * @return \LSUser\Entity\User
      */
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * toArray
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        $hydrator = new Hydrator\ClassMethods;
+        return $hydrator->extract($this);
     }
 }
