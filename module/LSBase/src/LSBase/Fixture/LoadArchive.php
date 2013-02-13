@@ -3,7 +3,7 @@
 /**
  * Este arquivo é responsável por testar a manipulação de registro no banco de dados.
  * Onde o mesmo se refere a tabela archive.
- * 
+ *
  * @author Jesus Vieira E-mail <jesusvieiradelima@gmail.com>
  * @package LSBase\Fixture
  */
@@ -19,7 +19,7 @@ class LoadArchive extends AbstractFixture implements OrderedFixtureInterface
 
   /**
    * Carrega o dispositivo de dados com o EntityManager
-   * 
+   *
    * @param \Doctrine\Common\Persistence\ObjectManager $manager
    */
   public function load(\Doctrine\Common\Persistence\ObjectManager $manager)
@@ -27,7 +27,7 @@ class LoadArchive extends AbstractFixture implements OrderedFixtureInterface
     $interaction = $manager->getReference('LSInteraction\Entity\Interaction', 1);
 
     $archive = new Archive;
-    $archive->setIntereaction($interaction)
+    $archive->setInteraction($interaction)
             ->setPathFile('Caminhgo_da_imagem_ou_arquivo');
     $manager->persist($archive);
     $manager->flush();
