@@ -3,19 +3,9 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <?php echo $this->headTitle ('ZF2 ' . 'Skeleton Application')->setSeparator (' - ')->setAutoEscape (false) ?>
+        <?php echo $this->headTitle ('ListService - Gestão de atendimento')->setSeparator (' - ')->setAutoEscape (false) ?>
 
         <?php echo $this->headMeta ()->appendName ('viewport', 'width=device-width, initial-scale=1.0') ?>
-
-        <!-- Le styles -->
-        <?php
-
-        echo $this->headLink (array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath () . '/images/favicon.ico'))
-                ->prependStylesheet ($this->basePath () . '/css/bootstrap-responsive.min.css')
-                ->prependStylesheet ($this->basePath () . '/css/style.css')
-                ->prependStylesheet ($this->basePath () . '/css/bootstrap.min.css')
-
-        ?>
 
         <!-- Scripts -->
         <?php
@@ -23,8 +13,27 @@
         echo $this->headScript ()->prependFile ($this->basePath () . '/js/html5.js', 'text/javascript', array('conditional' => 'lt IE 9',))
                 ->prependFile ($this->basePath () . '/js/bootstrap.min.js')
                 ->prependFile ($this->basePath () . '/js/jquery.min.js')
-
         ?>
+
+        <!-- Le styles -->
+        <?php
+        echo $this->headLink (array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath () . '/images/favicon.ico'))
+                ->prependStylesheet ($this->basePath () . '/css/bootstrap-responsive.min.css')
+                ->prependStylesheet ($this->basePath () . '/css/style.css')
+                ->prependStylesheet ($this->basePath () . '/css/bootstrap.min.css')
+        ?>
+
+
+        <link rel="stylesheet" href="/css/font-awesome.min.css">
+
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('.home-link').click(function(){
+                    $('.home-link').parent().removeClass('active');
+                    $(this).parent().addClass('active');
+                });
+            });
+        </script>
 
     </head>
     <body>
@@ -36,22 +45,96 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </a>
-                    <a class="brand" href="#"><?php echo 'Skeleton Application' ?></a>
+
+                    <h1>
+                        <object data="/images/logo-top.svg" type="image/svg+xml" width="180" height="45">Not Support SVG.</object>
+                    </h1>
+
                     <div class="nav-collapse collapse">
                         <ul class="nav">
-                            <li class="active"><a href="#"><?php echo 'Home' ?></a></li>
+
+                            <li><a class="home-link" href="#">Home</a></li>
+
+                            <li class="dropdown">
+                                    <a class="dropdown-toggle home-link" data-toggle="dropdown" href="#">Ticket</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href=""><i class="icon-inbox"></i> Menus Ticket's <i class="badge badge-inverse"> 10</i></a></li>
+                                        <li><a href=""><i class="icon-edit"></i> Cadastrar</a></li>
+                                        <li><a href=""><i class="icon-bookmark-empty"></i> Resolvidos <i class="badge badge-success"> 2</i></a></li>
+                                        <li><a href=""><i class="icon-bookmark"></i> Em andamento <i class="badge badge-warning"> 4</i></a></li>
+                                        <li class="divider"></li>
+                                        <li><a href=""><i class="icon-asterisk"></i> Categoria de Ticket's</a></li>
+                                        <li><a href=""><i class="icon-asterisk"></i> Prioridade de Ticket's</a></li>
+                                    </ul>
+                            </li>
+
+                            <li class="dropdown">
+                                <a class="dropdown-toggle home-link" data-toggle="dropdown" href="#">Usuários</i></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href=""><i class="icon-group"></i> Todos usuários</a></li>
+                                    <li><a href=""><i class="icon-edit"></i> Cadastrar</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href=""><i class="icon-asterisk"></i> Categoria de usuário</a></li>
+                                </ul>
+                            </li>
+
+                            <li class="dropdown">
+                                <a class="dropdown-toggle home-link" data-toggle="dropdown" href="#">Relatórios</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href=""><i class="icon-inbox"></i> Menus Ticket's <i class="badge badge-inverse"> 10</i></a></li>
+                                    <li><a href=""><i class="icon-edit"></i> Cadastrar</a></li>
+                                    <li><a href=""><i class="icon-bookmark-empty"></i> Resolvidos <i class="badge badge-success"> 2</i></a></li>
+                                    <li><a href=""><i class="icon-bookmark"></i> Em andamento <i class="badge badge-warning"> 4</i></a></li>
+                                    <li class="divider"></li>
+                                    <li><a href=""><i class="icon-asterisk"></i> Categoria de Ticket's</a></li>
+                                    <li><a href=""><i class="icon-asterisk"></i> Prioridade de Ticket's</a></li>
+                                </ul>
+                            </li>
+
+                            <li>
+
+                                <div class="btn-group">
+                                    <form class="form-search">
+                                      <div class="input-append">
+                                        <input type="text" class="span2 search-query">
+                                        <button type="submit" class="btn"> <i class="icon-search"> </i> </button>
+                                      </div>
+                                    </form>
+                                </div>
+
+                            </li>
+
+                            <li class="home-user">
+                                <p>Jesus Vieira</p>
+                                    <img class="img-rounded" src="../img_user/26/a_88870e7fbe.jpg" alt="" />
+                            </li>
+
+                            <li class="dropdown home-conf">
+                                <a class="dropdown-toggle home-link" data-toggle="dropdown" href="#"><i class="icon-cogs"></i></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href=""><i class="icon-inbox"></i> Menus Ticket's <i class="badge badge-inverse"> 10</i></a></li>
+                                    <li><a href=""><i class="icon-edit"></i> Cadastrar</a></li>
+                                    <li><a href=""><i class="icon-bookmark-empty"></i> Resolvidos <i class="badge badge-success"> 2</i></a></li>
+                                    <li><a href=""><i class="icon-bookmark"></i> Em andamento <i class="badge badge-warning"> 4</i></a></li>
+                                    <li class="divider"></li>
+                                    <li><a href=""><i class="icon-asterisk"></i> Categoria de Ticket's</a></li>
+                                    <li><a href=""><i class="icon-asterisk"></i> Prioridade de Ticket's</a></li>
+                                </ul>
+                            </li>
+
                         </ul>
                     </div><!--/.nav-collapse -->
+
                 </div>
             </div>
         </div>
         <div class="container">
-<?php echo $this->content; ?>
+            <?php echo $this->content; ?>
             <hr>
             <footer>
-                <p>&copy; 2005 - 2012 by Zend Technologies Ltd. <?php echo 'All rights reserved.' ?></p>
+                <p>&copy; 2013 by ListService - Andre Jordão, Jesus Vieira </p>
             </footer>
         </div> <!-- /container -->
-<?php echo $this->inlineScript () ?>
+        <?php echo $this->inlineScript () ?>
     </body>
 </html>

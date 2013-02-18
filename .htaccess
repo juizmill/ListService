@@ -3,4 +3,5 @@ RewriteCond %{REQUEST_FILENAME} -s [OR]
 RewriteCond %{REQUEST_FILENAME} -l [OR]
 RewriteRule !\.(js|gif|jpg|png|css|txt|svg|eot|ttf|woff)$ public/index.php [L]
 RewriteCond %{REQUEST_URI} !^/public/
+RewriteCond %{REQUEST_URI} !^/img_user/
 RewriteRule ^(.*)$ public/$1 [NC,L]

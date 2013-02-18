@@ -1,0 +1,674 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"Lis",
+				"ListService"
+			],
+			[
+				"getRe",
+				"getRepository"
+			],
+			[
+				"php-",
+				"php-getset	Create getter and setter methods"
+			],
+			[
+				"categor",
+				"categoryTicket"
+			],
+			[
+				"User",
+				"UserCategoryTicket"
+			],
+			[
+				"View",
+				"ViewModel"
+			],
+			[
+				"pa",
+				"path"
+			],
+			[
+				"par",
+				"parent"
+			],
+			[
+				"Vi",
+				"ViewModel"
+			],
+			[
+				"en",
+				"entity"
+			],
+			[
+				"In",
+				"Interaction"
+			],
+			[
+				"in",
+				"interaction"
+			],
+			[
+				"use",
+				"user"
+			],
+			[
+				"del",
+				"delTree"
+			],
+			[
+				"glo",
+				"glob"
+			],
+			[
+				"Category",
+				"categoryTicket"
+			],
+			[
+				"new",
+				"newName"
+			],
+			[
+				"ht",
+				"http"
+			],
+			[
+				"ne",
+				"newFileName"
+			],
+			[
+				"ti",
+				"ticket"
+			],
+			[
+				"us",
+				"user"
+			],
+			[
+				"inte",
+				"interactionTicket"
+			],
+			[
+				"acti",
+				"active"
+			],
+			[
+				"Type",
+				"typeUser"
+			],
+			[
+				"type",
+				"typeUser"
+			],
+			[
+				"is_",
+				"is_dir"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "module/LSBase/view/layout/layout.phtml",
+			"settings":
+			{
+				"buffer_size": 7655,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "public/css/style.css",
+			"settings":
+			{
+				"buffer_size": 825,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 291.0,
+		"selected_items":
+		[
+			[
+				"Package Control: ",
+				"Package Control: Upgrade Package"
+			],
+			[
+				"pa",
+				"Package Control: Install Package"
+			],
+			[
+				"pac",
+				"Package Control: Install Package"
+			],
+			[
+				"",
+				"About"
+			],
+			[
+				"packe",
+				"Package Control: Install Package"
+			],
+			[
+				"pack",
+				"Package Control: Install Package"
+			],
+			[
+				"pakc",
+				"Package Control: Install Package"
+			],
+			[
+				"pak",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 579.0
+	},
+	"console":
+	{
+		"height": 125.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Volumes/Arquivos/sites/ListService/public/images/logo-top.svg",
+		"/Volumes/Arquivos/sites/ListService/module/LSHome/view/ls-home/home/index.phtml",
+		"/Volumes/Arquivos/sites/ListService/.htaccess",
+		"/Volumes/Arquivos/sites/ListService/public/css/font-awesome.min.css",
+		"/Volumes/Arquivos/sites/ListService/public/css/style.css",
+		"/Volumes/Arquivos/sites/revista/module/DETaraSecreta/src/DETaraSecreta/Controller/TaraSecretaController.php",
+		"/Volumes/Arquivos/sites/revista/module/DETaraSecreta/Module.php",
+		"/Volumes/Arquivos/sites/revista/module/DETaraSecreta/src/DETaraSecreta/Service/SendEmail.php",
+		"/Volumes/Arquivos/sites/revista/module/DETaraSecreta/view/de-tara-secreta/tara-secreta/resposta.phtml",
+		"/Volumes/Arquivos/sites/revista/module/DETaraSecreta/view/de-tara-secreta/tara-secreta/index.phtml",
+		"/Volumes/Arquivos/sites/revista/module/Contato/src/Contato/Service/Contato.php",
+		"/Volumes/Arquivos/sites/revista/module/DETaraSecreta/view/mailer/add-resposta.phtml",
+		"/Volumes/Arquivos/sites/revista/public/interna.html",
+		"/Users/jesusvieiradelima/Desktop/teste.html",
+		"/Users/jesusvieiradelima/Library/Application Support/Sublime Text 2/Packages/User/Preferences.sublime-settings",
+		"/Users/jesusvieiradelima/Library/Application Support/Sublime Text 2/Packages/Emmet/Emmet.sublime-settings",
+		"/Users/jesusvieiradelima/Library/Application Support/Sublime Text 2/Packages/User/SublimeLinter.sublime-settings",
+		"/Users/jesusvieiradelima/Library/Application Support/Sublime Text 2/Packages/SublimeLinter/SublimeLinter.sublime-settings",
+		"/Volumes/Arquivos/sites/revista/module/Base/src/Base/Entity/GerTaraSecreta.php",
+		"/Users/jesusvieiradelima/Desktop/teste2.php",
+		"/Volumes/Arquivos/sites/revista/module/DETaraSecreta/view/de-tara-secreta/tara-secreta/recado.phtml",
+		"/Volumes/Arquivos/sites/revista/.gitignore",
+		"/Volumes/Arquivos/sites/ListService/module/LSBase/src/LSBase/Entity/UserCategoryTicket.php",
+		"/Volumes/Arquivos/sites/ListService/module/LSBase/src/LSBase/Service/AbstractService.php",
+		"/Volumes/Arquivos/sites/ListService/module/LSBase/Module.php",
+		"/Volumes/Arquivos/sites/ListService/module/LSBase/src/LSBase/Service/UserCategoryTicket.php",
+		"/Volumes/Arquivos/sites/ListService/module/LSHome/src/LSHome/Controller/HomeController.php",
+		"/Volumes/Arquivos/sites/ListService/module/LSHome/config/module.config.php",
+		"/Volumes/Arquivos/sites/ListService/module/LSBase/src/LSBase/Fixture/LoadArchive.php",
+		"/Volumes/Arquivos/sites/ListService/module/LSHome/view/ls-home/index.phtml",
+		"/Volumes/Arquivos/sites/ListService/module/LSTicket/src/LSTicket/Controller/TicketController.php",
+		"/Volumes/Arquivos/sites/ListService/module/LSBase/src/LSBase/Controller/CrudController.php",
+		"/Volumes/Arquivos/sites/ListService/module/LSInteraction/src/LSInteraction/Controller/InteractionController.php",
+		"/Volumes/Arquivos/sites/ListService/module/LSBase/src/LSBase/Utils/UploadFile.php",
+		"/Volumes/Arquivos/sites/ListService/module/LSInteraction/src/LSInteraction/Service/Interaction.php",
+		"/Volumes/Arquivos/sites/ListService/module/LSInteraction/src/LSInteraction/Form/Interaction.php",
+		"/Volumes/Arquivos/sites/ListService/module/LSInteraction/src/LSInteraction/Form/InteractionFilter.php",
+		"/Volumes/Arquivos/sites/ListService/module/LSInteraction/view/ls-interaction/interaction/new.phtml",
+		"/Volumes/Arquivos/sites/ListService/module/LSInteraction/src/LSInteraction/Entity/Interaction.php",
+		"/usr/local/php5-20120823-092307/lib/php.ini",
+		"/private/etc/php.ini",
+		"/Volumes/Arquivos/sites/ListService/module/LSTicket/src/LSTicket/Entity/Ticket.php",
+		"/Volumes/Arquivos/sites/ListService/module/LSBase/src/LSBase/Entity/Archive.php",
+		"/Volumes/Arquivos/sites/ListService/module/LSTicket/src/LSTicket/Service/Ticket.php",
+		"/Volumes/Arquivos/sites/ListService/module/LSBase/src/LSBase/Service/Archive.php",
+		"/Volumes/Arquivos/sites/ListService/module/LSInteraction/Module.php",
+		"/Volumes/Arquivos/sites/ListService/module/LSUser/view/ls-user/user/new.phtml",
+		"/Volumes/Arquivos/sites/ListService/module/LSUser/src/LSUser/Controller/UserController.php",
+		"/Volumes/Arquivos/sites/ListService/module/LSUser/src/LSUser/Form/User.php",
+		"/Volumes/Arquivos/sites/ListService/module/LSUser/src/LSUser/Form/UserFilter.php",
+		"/Volumes/Arquivos/sites/ListService/module/LSUser/Module.php",
+		"/Volumes/Arquivos/sites/ListService/module/LSUser/src/LSUser/Form/CategoryTicket.php",
+		"/Volumes/Arquivos/sites/ListService/module/LSUser/view/ls-user/user/category-ticket.phtml",
+		"/Volumes/Arquivos/sites/ListService/module/LSTypeuser/src/LSTypeuser/Entity/Repository/TypeUserRepository.php",
+		"/Volumes/Arquivos/sites/ListService/module/LSTypeuser/src/LSTypeuser/Entity/TypeUser.php",
+		"/Volumes/Arquivos/sites/ListService/module/LSPriority/src/LSPriority/Form/PriorityFilter.php",
+		"/Volumes/Arquivos/sites/ListService/module/LSTicket/src/LSTicket/Form/Ticket.php",
+		"/Volumes/Arquivos/sites/ListService/module/LSTicket/src/LSTicket/Form/TicketFilter.php",
+		"/Volumes/HD - EX/sites/mix3/www/module/Cms/src/Cms/MyClass/UploadImage.php",
+		"/Users/jesusvieiradelima/Library/Application Support/Sublime Text 2/Packages/Alignment/Default (OSX).sublime-keymap",
+		"/Volumes/Arquivos/sites/ListService/vendor/zendframework/zendframework/library/Zend/File/Transfer/Adapter/Http.php",
+		"/Users/jesusvieiradelima/Library/Application Support/Sublime Text 2/Packages/CTags/Default.sublime-keymap",
+		"/Users/jesusvieiradelima/Desktop/asdf.so",
+		"/private/etc/apache2/extra/httpd-vhosts.conf",
+		"/Volumes/Arquivos/sites/ListService/module/LSBase/src/LSBase/Utils/HandlesDirectory.php",
+		"/Volumes/Arquivos/sites/ListService/module/LSUser/src/LSUser/Entity/User.php",
+		"/Volumes/Arquivos/sites/ListService/module/LSUser/src/LSUser/Fixture/LoadUser.php",
+		"/Volumes/Arquivos/sites/ListService/module/LSUser/src/LSUser/Service/User.php",
+		"/Volumes/Arquivos/sites/ListService/module/LSTicket/view/ls-ticket/ticket/new.phtml",
+		"/Volumes/Arquivos/sites/ListService/module/LSTicket/Module.php",
+		"/Volumes/Arquivos/sites/ListService/config/application.config.php",
+		"/Volumes/Arquivos/sites/ListService/module/LSCategoryticket/src/LSCategoryticket/Entity/Repository/CategoryTicketRepository.php",
+		"/Volumes/Arquivos/sites/ListService/module/LSCategoryticket/src/LSCategoryticket/Entity/CategoryTicket.php",
+		"/Volumes/Arquivos/sites/ListService/module/LSTypeuser/src/LSTypeuser/Form/TypeUser.php",
+		"/Users/jesusvieiradelima/Library/Application Support/Sublime Text 2/Packages/DocBlockr/README.md",
+		"/Users/jesusvieiradelima/Library/Application Support/Sublime Text 2/Packages/DocBlockr/Add DocBlockr Line Before.sublime-macro",
+		"/Users/jesusvieiradelima/Library/Application Support/Sublime Text 2/Packages/DocBlockr/Add DocBlockr Line.sublime-macro",
+		"/Users/jesusvieiradelima/Library/Application Support/Sublime Text 2/Packages/DocBlockr/actionscript.sublime-completions",
+		"/Users/jesusvieiradelima/Library/Application Support/Sublime Text 2/Packages/DocBlockr/Base File.sublime-settings",
+		"/Users/jesusvieiradelima/Library/Application Support/Sublime Text 2/Packages/DocBlockr/coffee.sublime-completions",
+		"/Users/jesusvieiradelima/Library/Application Support/Sublime Text 2/Packages/DocBlockr/package-metadata.json",
+		"/Users/jesusvieiradelima/Library/Application Support/Sublime Text 2/Packages/DocBlockr/Default.sublime-keymap",
+		"/Users/jesusvieiradelima/Library/Application Support/Sublime Text 2/Packages/DocBlockr/Default (OSX).sublime-keymap",
+		"/Users/jesusvieiradelima/Library/Application Support/Sublime Text 2/Packages/DocBlockr/HISTORY.md",
+		"/Users/jesusvieiradelima/Library/Application Support/Sublime Text 2/Packages/Prefixr/Default (OSX).sublime-keymap",
+		"/Volumes/Arquivos/sites/ListService/README.md",
+		"/Volumes/Arquivos/sites/ListService/public/index.php",
+		"/Users/jesusvieiradelima/Library/Application Support/Sublime Text 2/Packages/Default/Preferences.sublime-settings",
+		"/Users/jesusvieiradelima/Library/Application Support/Sublime Text 2/Packages/User/Default (OSX).sublime-keymap",
+		"/Users/jesusvieiradelima/Library/Application Support/Sublime Text 2/Packages/Terminal/Default (OSX).sublime-keymap",
+		"/Users/jesusvieiradelima/Library/Application Support/Sublime Text 2/Packages/MacTerminal/Default.sublime-keymap",
+		"/Users/jesusvieiradelima/Library/Application Support/Sublime Text 2/Packages/BracketHighlighter/BracketHighlighter.sublime-settings",
+		"/Users/jesusvieiradelima/Library/Application Support/Sublime Text 2/Packages/JsMinifier/Minifier.sublime-settings",
+		"/Volumes/Arquivos/sites/ListService/public/js/jquery.min.js",
+		"/Users/jesusvieiradelima/Library/Application Support/Sublime Text 2/Packages/User/CSS.sublime-settings",
+		"/Users/jesusvieiradelima/Desktop/teste.php",
+		"/Users/jesusvieiradelima/Library/Application Support/Sublime Text 2/Packages/User/Base File.sublime-settings",
+		"/Users/jesusvieiradelima/Library/Application Support/Sublime Text 2/Packages/Goto Documentation/Default.sublime-commands",
+		"/Users/jesusvieiradelima/Library/Application Support/Sublime Text 2/Packages/Goto Documentation/README.markdown"
+	],
+	"find":
+	{
+		"height": 39.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"btn-inverse",
+			"zf-green ",
+			"../",
+			"memory_limit",
+			"memory",
+			"getEventList",
+			"event",
+			"getMessages",
+			"messages",
+			"8",
+			"post",
+			"limit",
+			"post",
+			"time_",
+			"typeUser",
+			"2012",
+			"include_path",
+			"php",
+			"h",
+			"high",
+			"link-top"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"",
+			"getCategoryTicketList",
+			"categoryTicket",
+			"typeTicket"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "module/LSBase/view/layout/layout.phtml",
+					"settings":
+					{
+						"buffer_size": 7655,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3761,
+								3761
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E501"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"php": "php"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true,
+							"word_wrap": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 877.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "public/css/style.css",
+					"settings":
+					{
+						"buffer_size": 825,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								825,
+								825
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E501"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"php": "php"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/CSS/CSS.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 34.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.unsaved_changes":
+	{
+		"height": 102.0
+	},
+	"replace":
+	{
+		"height": 66.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"intera",
+				"module/LSInteraction/src/LSInteraction/Entity/Interaction.php"
+			],
+			[
+				"ticke",
+				"module/LSTicket/src/LSTicket/Entity/Ticket.php"
+			],
+			[
+				"ticket",
+				"module/LSTicket/src/LSTicket/Entity/Ticket.php"
+			],
+			[
+				"usercon",
+				"module/LSUser/src/LSUser/Controller/UserController.php"
+			],
+			[
+				"categoryticke",
+				"module/LSCategoryticket/src/LSCategoryticket/Entity/Repository/CategoryTicketRepository.php"
+			],
+			[
+				"typeuserr",
+				"module/LSTypeuser/src/LSTypeuser/Entity/Repository/TypeUserRepository.php"
+			],
+			[
+				"user",
+				"module/LSUser/src/LSUser/Form/User.php"
+			],
+			[
+				"lsuser",
+				"module/LSUser/src/LSUser/Service/User.php"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 199.0,
+	"status_bar_visible": true
+}
