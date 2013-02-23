@@ -119,6 +119,44 @@ class UserController extends CrudController
     }
 
     /**
+     * activeAction
+     *
+     * Ativa ou desativa o registro
+     *
+     * @author Jesus Vieira <jesusvieiradelima@gmail.com>
+     * @access public
+     * @return redirect current controller
+     */
+    public function activeAction()
+    {
+        $id = $this->params()->fromRoute('id', 0);
+
+        $entity = $this->getEm()->getRepository($this->entity)->findOneBy(array('id' => $id));
+
+        if( $entity ) {
+
+            $data = $entity->toArray();
+
+            $data['TypeUse'] = $data['type_use']->getId();
+
+            unset($data['type_use']);
+
+            if( $data['active'] == 1 )
+                $data['active'] = 0;
+            else
+                $data['active'] = 1;
+
+            $service = $this->getServiceLocator()->get($this->service);
+
+            if( $service->update($data) )
+                return $this->redirect()->toRoute($this->route, array('controller' => $this->controller));
+            else
+                $this->getResponse()->setStatusCode(404);
+        }
+
+    }
+
+    /**
      * categoryTicketAction
      *
      * Exibe pagina para definir o tipo de usuario

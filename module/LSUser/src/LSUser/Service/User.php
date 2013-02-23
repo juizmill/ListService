@@ -59,12 +59,14 @@ class User extends AbstractService
      */
     public function update(array $data)
     {
-        $typeUser = $this->em->getReference('LSTypeuser\Entity\TypeUser', $data['TypeUse']);
 
-        if (get_class($typeUser) == 'LSTypeuser\\Entity\\TypeUser') {
+        $typeUser = $this->em->getRepository($this->entity)->findOneBy(array('id' => $data['id']));
 
-            $data['TypeUse'] = $typeUser;
-            parent::update($data);
+        if ($typeUser) {
+
+            $data['TypeUse'] = $typeUser->getTypeUse();
+            return parent::update($data);
+
         } else {
             return false;
         }

@@ -22,7 +22,7 @@ div.container h1 a {
 }
 
 .home-user p, img { float:left; }
-.home-user p { margin-top:10px }
+.home-user p { margin-top:10px; color:#fff; }
 .home-user img { margin-top:5px; margin-left:10px }
 .home-conf .home-link { margin-top:13px;padding:0 !important  }
 
@@ -35,6 +35,17 @@ div.container h1 a {
 .ticket-home ul li a { color:#000; text-shadow:0 1px 0 #fff }
 .ticket-home ul li a:hover { color:#727272  }
 
+/*Form*/
 form { padding: 5px 15px }
 form input[type="submit"] { margin-top:25px }
+form li { list-style: none }
+
+/*Table*/
+table caption { margin: 45px 0; font-size:18pt; font-weight: bold; text-shadow:0 1px 0 #fff; color:#565656; }
+table thead tr th { color:#565656; text-shadow:0 1px 0 #fff  }
+table tbody tr th { font-weight: normal !important }
+
+.btn-toolbar { width:113px; margin:0 5px}
+
+
 

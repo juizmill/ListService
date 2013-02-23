@@ -34,6 +34,7 @@ class TypeUser extends Form
             'id' => 'description',
             'placeholder' => 'Entre com uma descrição.',
             'maxlength' => 30,
+            'class' => 'input-xlarge',
         )
     ));
 
@@ -43,6 +44,7 @@ class TypeUser extends Form
         'type' => 'Zend\Form\Element\Submit',
         'attributes' => array(
             'value' => 'Salvar',
+            'class' => 'btn btn-success btn-large',
         )
     ));
 

@@ -32,6 +32,8 @@
                     $('.home-link').parent().removeClass('active');
                     $(this).parent().addClass('active');
                 });
+
+                $('.active-listservice').tooltip();
             });
         </script>
 
@@ -53,7 +55,7 @@
                     <div class="nav-collapse collapse">
                         <ul class="nav">
 
-                            <li><a class="home-link" href="#">Home</a></li>
+                            <li><a class="home-link" href="<?php echo $this->url ('home', array('controller' => 'home'))?>">Home</a></li>
 
                             <li class="dropdown">
                                     <a class="dropdown-toggle home-link" data-toggle="dropdown" href="#">Ticket</a>
@@ -71,10 +73,11 @@
                             <li class="dropdown">
                                 <a class="dropdown-toggle home-link" data-toggle="dropdown" href="#">Usuários</i></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href=""><i class="icon-group"></i> Todos usuários</a></li>
-                                    <li><a href=""><i class="icon-edit"></i> Cadastrar</a></li>
+                                    <li><a href="<?php echo $this->url ('user/default', array('controller' => 'user'))?>"><i class="icon-group"></i> Todos usuários</a></li>
+                                    <li><a href="<?php echo $this->url ('user/default', array('controller' => 'user', 'action' => 'new')); ?>"><i class="icon-edit"></i> Cadastrar</a></li>
                                     <li class="divider"></li>
-                                    <li><a href=""><i class="icon-asterisk"></i> Categoria de usuário</a></li>
+                                    <li><a href="<?php echo $this->url('type-user/default', array('controller' => 'type-user')); ?>"><i class="icon-asterisk"></i> Categoria de usuário</a></li>
+                                    <li><a href="<?php echo $this->url('type-user/default', array('controller' => 'type-user', 'action' => 'new')); ?>"><i class="icon-asterisk"></i> Cadastrar Categoria de usuário</a></li>
                                 </ul>
                             </li>
 
@@ -108,7 +111,7 @@
                                 <a class="dropdown-toggle home-link" data-toggle="dropdown" href="#"><i class="icon-cogs"></i></a>
                                 <ul class="dropdown-menu">
                                     <li><a href=""><i class="icon-inbox"></i> Editar perfil</a></li>
-                                    <li><a href=""><i class="icon-edit"></i> Sair</a></li>
+                                    <li><a href=""><i class=" icon-off"></i> Sair</a></li>
                                 </ul>
                             </li>
 

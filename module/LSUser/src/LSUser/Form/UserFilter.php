@@ -97,7 +97,7 @@ class UserFilter extends InputFilter
                     'options' => array(
                         'haystack' => $this->typeUser,
                         'messages' => array(
-                            'notInArray' => 'Selecione um evento!'
+                            'notInArray' => 'Selecione um tipo de usuário'
                         ),
                     ),
                 ),
