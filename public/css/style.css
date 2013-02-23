@@ -34,3 +34,7 @@ div.container h1 a {
 .ticket-home ul li { padding:3px 13px }
 .ticket-home ul li a { color:#000; text-shadow:0 1px 0 #fff }
 .ticket-home ul li a:hover { color:#727272  }
+
+form { padding: 5px 15px }
+form input[type="submit"] { margin-top:25px }
+

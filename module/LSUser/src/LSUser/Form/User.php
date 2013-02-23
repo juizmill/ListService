@@ -38,6 +38,7 @@ class User extends Form
             'attributes' => array(
                 'id' => 'name',
                 'maxlength' => 80,
+                'class' => 'input-xlarge',
             )
         ));
 
@@ -51,6 +52,7 @@ class User extends Form
             'attributes' => array(
                 'id' => 'login',
                 'maxlength' => 15,
+                'class' => 'input-xlarge',
             )
         ));
 
@@ -64,6 +66,7 @@ class User extends Form
             'attributes' => array(
                 'id' => 'password',
                 'maxlength' => 15,
+                'class' => 'input-xlarge',
             )
         ));
 
@@ -77,6 +80,7 @@ class User extends Form
             'attributes' => array(
                 'id' => 'confirmation',
                 'maxlength' => 15,
+                'class' => 'input-xlarge',
             )
         ));
 
@@ -103,6 +107,7 @@ class User extends Form
             'attributes' => array(
                 'value' => '0',
                 'id' => 'typeUser',
+                'class' => 'input-xlarge',
             ),
         ));
 
@@ -122,6 +127,7 @@ class User extends Form
             'type' => 'Zend\Form\Element\Submit',
             'attributes' => array(
                 'value' => 'Salvar',
+                'class' => 'btn btn-success btn-large',
             )
         ));
 

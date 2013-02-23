@@ -1,22 +1,34 @@
-<h2>Cadastrar - User</h2>
+<div class="row">
 
-<?php
+  <div class="span4 box-home">
+        <div class="navbar">
+          <div class="navbar-inner">
+              <p class="navbar-home"><i class="icon-group icon-large"></i> <strong>Cadastrar Usuário</strong></p>
+          </div>
+        </div>
 
-$form = $this->form;
+        <div class="thumbnail ticket-home">
+            <?php
 
-$this->formElementErrors ()
-        ->setMessageOpenFormat ('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">×</button>')
-        ->setMessageCloseString ('</div>')
-        ->render ($form);
+                $form = $this->form;
 
-$form->setAttribute ('action', $this->url ('user/default', array('controller' => 'user', 'action' => 'new')));
+                $this->formElementErrors ()
+                ->setMessageOpenFormat ('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">×</button>')
+                ->setMessageCloseString ('</div>')
+                ->render ($form);
 
-$form->prepare ();
+                $form->setAttribute ('action', $this->url ('user/default', array('controller' => 'user', 'action' => 'new')));
 
-echo $this->form ()->openTag ($form);
+                $form->prepare ();
 
-echo $this->formCollection ($form);
+                echo $this->form ()->openTag ($form);
 
-echo $this->form ()->closeTag ();
+                echo $this->formCollection ($form);
 
-?>
+                echo $this->form ()->closeTag ();
+
+            ?>
+        </div>
+  </div>
+
+</div>
