@@ -33,6 +33,7 @@ class Priority extends Form
         'attributes' => array(
             'id' => 'description',
             'maxlength' => 45,
+            'class' => 'input-xlarge',
         )
     ));
 
@@ -42,6 +43,7 @@ class Priority extends Form
         'type' => 'Zend\Form\Element\Submit',
         'attributes' => array(
             'value' => 'Salvar',
+            'class' => 'btn btn-success btn-large',
         )
     ));
 

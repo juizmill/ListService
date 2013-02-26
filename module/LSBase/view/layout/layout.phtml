@@ -61,12 +61,28 @@
                                     <a class="dropdown-toggle home-link" data-toggle="dropdown" href="#">Ticket</a>
                                     <ul class="dropdown-menu">
                                         <li><a href=""><i class="icon-inbox"></i> Menus Ticket's <i class="badge badge-inverse"> 10</i></a></li>
-                                        <li><a href=""><i class="icon-edit"></i> Cadastrar</a></li>
+                                        <li><a href="<?php echo $this->url ('ticket/default', array('controller' => 'ticket', 'action' => 'new'))?>"><i class="icon-edit"></i> Cadastrar</a></li>
                                         <li><a href=""><i class="icon-bookmark-empty"></i> Resolvidos <i class="badge badge-success"> 2</i></a></li>
                                         <li><a href=""><i class="icon-bookmark"></i> Em andamento <i class="badge badge-warning"> 4</i></a></li>
                                         <li class="divider"></li>
-                                        <li><a href=""><i class="icon-asterisk"></i> Categoria de Ticket's</a></li>
-                                        <li><a href=""><i class="icon-asterisk"></i> Prioridade de Ticket's</a></li>
+                                        <li><a href="<?php echo $this->url ('category-ticket/default', array('controller' => 'category-ticket', 'action' => 'new'))?>"><i class="icon-asterisk"></i> Categoria de Ticket's</a></li>
+                                        <li><a href="<?php echo $this->url ('priority/default', array('controller' => 'priority', 'action' => 'new'))?>"><i class="icon-asterisk"></i> Prioridade de Ticket's</a></li>
+                                    </ul>
+                            </li>
+
+                            <li class="dropdown">
+                                    <a class="dropdown-toggle home-link" data-toggle="dropdown" href="#">Categoria de Ticket</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="<?php echo $this->url ('category-ticket/default', array('controller' => 'category-ticket'))?>"><i class="icon-inbox"></i> Todas as Categoria de Ticket</a></li>
+                                        <li><a href="<?php echo $this->url ('category-ticket/default', array('controller' => 'category-ticket', 'action' => 'new'))?>"><i class="icon-asterisk"></i> Categoria de Ticket's</a></li>
+                                    </ul>
+                            </li>
+
+                            <li class="dropdown">
+                                    <a class="dropdown-toggle home-link" data-toggle="dropdown" href="#">Prioridade</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="<?php echo $this->url ('priority/default', array('controller' => 'priority'))?>"><i class="icon-inbox"></i> Todas as Prioridades</a></li>
+                                        <li><a href="<?php echo $this->url ('priority/default', array('controller' => 'priority', 'action' => 'new'))?>"><i class="icon-asterisk"></i> Cadastrar</a></li>
                                     </ul>
                             </li>
 
@@ -89,8 +105,7 @@
                                 </ul>
                             </li>
 
-                            <li>
-
+                            <!--<li>
                                 <div class="btn-group">
                                     <form class="form-search">
                                       <div class="input-append">
@@ -100,7 +115,7 @@
                                     </form>
                                 </div>
 
-                            </li>
+                            </li>-->
 
                             <li class="home-user">
                                 <p>Jesus Vieira</p>
