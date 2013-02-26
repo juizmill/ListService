@@ -12,4 +12,12 @@ use Doctrine\ORM\EntityRepository;
  */
 class TicketRepository extends EntityRepository
 {
+
+    public function TotalMyTicket($user)
+    {        
+        $query = "SELECT COUNT(t.id) FROM LSTicket\Entity\Ticket t WHERE t.user = {$user} AND t.active = TRUE AND t.dateEnd IS NULL";
+        
+        return $this->_em->createQuery($query)->getResult();
+        
+    }
 }

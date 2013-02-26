@@ -32,6 +32,16 @@ class TicketController extends CrudController
     $this->service = 'LSTicket\Service\Ticket';
     $this->route = 'ticket';
   }
+  
+  
+  public function indexAction()
+  {
+              
+        $teste = $this->getEm()->getRepository($this->entity)->TotalMyTicket(1);
+        
+        \Zend\Debug\Debug::dump($teste[0][1]);die;
+  }
+  
 
     /**
      * newAction
