@@ -44,17 +44,17 @@ class Module
         return array(
             'factories' => array(
                     'TotalMyTicket' => function($sm){
-                        $service = $sm->getServiceLocator()->get('Doctrine\ORM\EntityManager')->getRepository('LSticket\Entity\Ticket')->TotalMyTicket(1);
+                        $service = $sm->getServiceLocator()->get('Doctrine\ORM\EntityManager')->getRepository('LSTicket\Entity\Ticket')->TotalMyTicket(1);
 
                         return new TotalMyTicket($service);
                     },
                     'TotalMyTicketResolved' => function($sm){
-                        $service = $sm->getServiceLocator()->get('Doctrine\ORM\EntityManager')->getRepository('LSticket\Entity\Ticket')->TotalMyTicketResolved(1);
+                        $service = $sm->getServiceLocator()->get('Doctrine\ORM\EntityManager')->getRepository('LSTicket\Entity\Ticket')->TotalMyTicketResolved(1);
 
                         return new TotalMyTicketResolved($service);
                     },
                     'TotalMyTicketOngoing' => function($sm){
-                        $service = $sm->getServiceLocator()->get('Doctrine\ORM\EntityManager')->getRepository('LSticket\Entity\Ticket')->TotalMyTicketOngoing(1);
+                        $service = $sm->getServiceLocator()->get('Doctrine\ORM\EntityManager')->getRepository('LSTicket\Entity\Ticket')->TotalMyTicketOngoing(1);
 
                         return new TotalMyTicketOngoing($service);
                     }

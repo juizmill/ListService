@@ -36,6 +36,7 @@ class Ticket extends Form
             'attributes' => array(
                 'id' => 'title',
                 'maxlenght' => 60,
+                'class' => 'input-xlarge',
             )
         ));
 
@@ -49,6 +50,7 @@ class Ticket extends Form
             'attributes' => array(
                 'id' => 'sought',
                 'maxlenght' => 45,
+                'class' => 'input-xlarge',
             )
         ));
 
@@ -63,18 +65,21 @@ class Ticket extends Form
             'attributes' => array(
                 'value' => '0',
                 'id' => 'categoryTicket',
+                'class' => 'input-xlarge',
             ),
         ));
 
         //Input Descricao
         $this->add(array(
             'name' => 'description',
-            'type' => 'Zend\Form\Element\TextArea',
+            'type' => 'Zend\Form\Element\Textarea',
             'options' => array(
                 'label' => 'Descrição'
             ),
             'attributes' => array(
                 'id' => 'description',
+                'class' => 'input-xlarge',
+                'rows' => 8,
             )
         ));
 
@@ -102,6 +107,7 @@ class Ticket extends Form
             'type' => 'Zend\Form\Element\Submit',
             'attributes' => array(
                 'value' => 'Salvar',
+                'class' => 'btn btn-success btn-large',
             )
         ));
     }
