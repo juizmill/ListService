@@ -12,4 +12,20 @@ use Doctrine\ORM\EntityRepository;
  */
 class UserRepository extends EntityRepository
 {
+    public function findByLoginAndPassword($login, $password) {
+
+        $user = $this->findBy(array('login' => $login));
+
+        if ($user) {
+            $hashSenha = $user[0]->encryptPassword($password);
+
+            if ($hashSenha == $user[0]->getPassword()) {
+                return $user;
+            }
+            else
+                return false;
+        }
+        else
+            return false;
+    }
 }

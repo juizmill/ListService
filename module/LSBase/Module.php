@@ -2,6 +2,10 @@
 
 namespace LSBase;
 
+use LSBase\View\Helpers\TotalMyTicket;
+use LSBase\View\Helpers\TotalMyTicketResolved;
+use LSBase\View\Helpers\TotalMyTicketOngoing;
+
 class Module
 {
 
@@ -33,6 +37,28 @@ class Module
                 }
             )
         );
+    }
+
+    public function getViewHelperConfig()
+    {
+        return array(
+            'factories' => array(
+                    'TotalMyTicket' => function($sm){
+                        $service = $sm->getServiceLocator()->get('Doctrine\ORM\EntityManager')->getRepository('LSticket\Entity\Ticket')->TotalMyTicket(1);
+
+                        return new TotalMyTicket($service);
+                    },
+                    'TotalMyTicketResolved' => function($sm){
+                        $service = $sm->getServiceLocator()->get('Doctrine\ORM\EntityManager')->getRepository('LSticket\Entity\Ticket')->TotalMyTicketResolved(1);
+
+                        return new TotalMyTicketResolved($service);
+                    },
+                    'TotalMyTicketOngoing' => function($sm){
+                        $service = $sm->getServiceLocator()->get('Doctrine\ORM\EntityManager')->getRepository('LSticket\Entity\Ticket')->TotalMyTicketOngoing(1);
+
+                        return new TotalMyTicketOngoing($service);
+                    }
+                ));
     }
 
 }

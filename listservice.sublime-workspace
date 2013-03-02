@@ -115,7 +115,7 @@
 			"file": "module/LSBase/view/layout/layout.phtml",
 			"settings":
 			{
-				"buffer_size": 7655,
+				"buffer_size": 8892,
 				"line_ending": "Unix"
 			}
 		},
@@ -123,7 +123,7 @@
 			"file": "public/css/style.css",
 			"settings":
 			{
-				"buffer_size": 825,
+				"buffer_size": 1234,
 				"line_ending": "Unix"
 			}
 		}
@@ -350,15 +350,15 @@
 					"file": "module/LSBase/view/layout/layout.phtml",
 					"settings":
 					{
-						"buffer_size": 7655,
+						"buffer_size": 8892,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3761,
-								3761
+								0,
+								0
 							]
 						],
 						"settings":
@@ -465,15 +465,15 @@
 					"file": "public/css/style.css",
 					"settings":
 					{
-						"buffer_size": 825,
+						"buffer_size": 1234,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								825,
-								825
+								0,
+								0
 							]
 						],
 						"settings":

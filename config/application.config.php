@@ -5,6 +5,7 @@ return array(
         'DoctrineModule',
         'DoctrineORMModule',
         'DoctrineDataFixtureModule',
+        'LSAuth',
         'LSBase',
         'LSCategoryticket',
         'LSInteraction',

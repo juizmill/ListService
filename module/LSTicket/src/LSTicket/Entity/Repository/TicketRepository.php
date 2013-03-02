@@ -13,11 +13,125 @@ use Doctrine\ORM\EntityRepository;
 class TicketRepository extends EntityRepository
 {
 
+    // ==================================================================
+    //
+    // Metodos para retornar a quantidade de ticket's em andamento, aberto e fechado
+    //
+    // ------------------------------------------------------------------
+
+
+    /**
+     * TotalMyTicket
+     *
+     * Retorna aquantidade de ticket's em aberto
+     * @param String|Integer $user ID do usuário
+     */
     public function TotalMyTicket($user)
-    {        
-        $query = "SELECT COUNT(t.id) FROM LSTicket\Entity\Ticket t WHERE t.user = {$user} AND t.active = TRUE AND t.dateEnd IS NULL";
-        
+    {
+        $query = "SELECT COUNT(t.id) FROM LSTicket\\Entity\\Ticket t WHERE t.user = {$user} AND t.active = TRUE AND t.dateEnd IS NULL";
+
         return $this->_em->createQuery($query)->getResult();
-        
     }
+
+    /**
+     * TotalMyTicketResolved
+     *
+     * Retorna aquantidade de ticket's resolvidos
+     * @param String|Integer $user ID do usuário
+     */
+    public function TotalMyTicketResolved($user)
+    {
+        $query = "SELECT COUNT(t.id) FROM LSTicket\\Entity\\Ticket t WHERE t.user = {$user} AND t.dateEnd IS NOT NULL AND t.active = TRUE";
+
+        return $this->_em->createQuery($query)->getResult();
+    }
+
+    /**
+     * TotalMyTicketOngoing
+     *
+     * Retorna aquantidade de ticket's em andamento
+     * @param String|Integer $user ID do usuário
+     */
+    public function TotalMyTicketOngoing($user)
+    {
+        $query = "SELECT COUNT(t.id) FROM LSTicket\\Entity\\Ticket t WHERE t.user = {$user} AND t.dateEnd IS NULL AND t.dateEstimated IS NOT NULL AND t.active = TRUE";
+
+        return $this->_em->createQuery($query)->getResult();
+    }
+
+    // ==================================================================
+    //
+    // Metodos para retornar o ID e o titulo dos tickets em andamento, aberto e fechado
+    //
+    // ------------------------------------------------------------------
+
+    /**
+     * MyTicket
+     *
+     * Retorna os ticket's em aberto
+     * @param String|Integer $user ID do usuário
+     */
+    public function MyTicket($user)
+    {
+        $query = "SELECT t.id, t.title FROM LSTicket\\Entity\\Ticket t WHERE t.user = {$user} AND t.active = TRUE AND t.dateEnd IS NULL";
+
+        return $this->_em->createQuery($query)->getResult();
+    }
+
+    /**
+     * MyTicketResolved
+     *
+     * Retorna os ticket's resolvidos
+     * @param String|Integer $user ID do usuário
+     */
+    public function MyTicketResolved($user)
+    {
+        $query = "SELECT t.id, t.title FROM LSTicket\\Entity\\Ticket t WHERE t.user = {$user} AND t.dateEnd IS NOT NULL AND t.active = TRUE";
+
+        return $this->_em->createQuery($query)->getResult();
+    }
+
+    /**
+     * MyTicketOngoing
+     *
+     * Retorna os ticket's em andamento
+     * @param String|Integer $user ID do usuário
+     */
+    public function MyTicketOngoing($user)
+    {
+        $query = "SELECT t.id, t.title FROM LSTicket\\Entity\\Ticket t WHERE t.user = {$user} AND t.dateEnd IS NULL AND t.dateEstimated IS NOT NULL AND t.active = TRUE";
+
+        return $this->_em->createQuery($query)->getResult();
+    }
+
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

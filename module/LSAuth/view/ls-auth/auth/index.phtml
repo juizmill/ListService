@@ -1,0 +1,58 @@
+<?php echo $this->doctype(); ?>
+
+<html lang="pt">
+    <head>
+        <meta charset="utf-8">
+        <?php echo $this->headTitle('ListService')->setAutoEscape(false) ?>
+
+        <?php echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0') ?>
+
+        <!-- Scripts -->
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.js" ></script>
+        <?php echo $this->headScript()->prependFile($this->basePath() . '/js/html5.js', 'text/javascript', array('conditional' => 'lt IE 9',))
+                                      ->prependFile($this->basePath() . '/js/bootstrap.min.js') ?>
+
+        <!-- Le styles -->
+        <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/images/favicon.ico'))
+                        ->prependStylesheet($this->basePath() . '/css/bootstrap-responsive.min.css')
+                        ->prependStylesheet($this->basePath() . '/css/style-login.css')
+                        ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css') ?>
+    </head>
+
+    <body>
+
+        <div class="container">
+
+            <?php
+                $form = $this->form;
+                $formLabel = $this->plugin('formLabel');
+
+                $form->setAttribute('action', $this->url('auth'));
+
+                $form->prepare();
+
+                echo $this->form()->openTag($form);
+
+                echo '<object data="/images/logo-top.svg" type="image/svg+xml" width="180" height="45">Not Support SVG.</object>';
+
+                if ($this->error)
+                    echo '<div id="msg"><ul class="alert alert-error"><li>Usuário ou senha inválidos</li></ul></div>';
+
+                echo '<div id="msg">'. $this->formElementErrors($form, array('class' => 'alert alert-error')).'</div>';
+
+                echo $formLabel->openTag() . $form->get('login')->getOption('label');
+                echo $this->formText($form->get('login'));
+                echo $formLabel->closeTag();
+
+                echo $formLabel->openTag() . $form->get('password')->getOption('label');
+                echo $this->formPassword($form->get('password'));
+                echo $formLabel->closeTag();
+
+                echo $this->formSubmit($form->get('submit'));
+                echo $this->form()->closeTag();
+
+            ?>
+
+        </div>
+    </body>
+</html>

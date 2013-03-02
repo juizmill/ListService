@@ -35,8 +35,11 @@ class HomeController extends CrudController
      */
     public function indexAction()
     {
+        $myTicket = $this->getEm()->getRepository('LSTicket\Entity\Ticket')->MyTicket(1);
+        $myTicketResolved = $this->getEm()->getRepository('LSTicket\Entity\Ticket')->MyTicketResolved(1);
+        $myTicketOngoing = $this->getEm()->getRepository('LSTicket\Entity\Ticket')->MyTicketOngoing(1);
 
-        return new ViewModel();
+        return new ViewModel(array('myTicket' => $myTicket, 'myTicketResolved' => $myTicketResolved, 'myTicketOngoing' => $myTicketOngoing));
 
     }
 }

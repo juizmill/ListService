@@ -9,16 +9,18 @@
 
         <div class="thumbnail ticket-home">
             <ul class="unstyled">
-                <li><a href="#">Mussum ipsum cacilds, vidis litro abertis</a></li>
-                <li><a href="#">Mussum ipsum cacilds, vidis litro abertis</a></li>
-                <li><a href="#">Mussum ipsum cacilds, vidis litro abertis</a></li>
-                <li><a href="#">Mussum ipsum cacilds, vidis litro abertis</a></li>
-                <li><a href="#">Mussum ipsum cacilds, vidis litro abertis</a></li>
-                <li><a href="#">Mussum ipsum cacilds, vidis litro abertis</a></li>
-                <li><a href="#">Mussum ipsum cacilds, vidis litro abertis</a></li>
-                <li><a href="#">Mussum ipsum cacilds, vidis litro abertis</a></li>
-                <li><a href="#">Mussum ipsum cacilds, vidis litro abertis</a></li>
-                <li><a href="#">Mussum ipsum cacilds, vidis litro abertis</a></li>
+                <?php if ($this->myTicket):?>
+                  <?php foreach ($this->myTicket as $key => $value): ?>
+
+                  <li><a href="#"><?php echo $value['title']; ?></a></li>
+
+                  <?php endforeach; ?>
+
+                <?php else: ?>
+
+                  <li>Nem um ticket em aberto.</li>
+
+                <?php endif; ?>
             </ul>
         </div>
   </div>
@@ -31,16 +33,18 @@
         </div>
         <div class="thumbnail ticket-home">
             <ul class="unstyled">
-                <li><a href="#">Mussum ipsum cacilds, vidis litro abertis</a></li>
-                <li><a href="#">Mussum ipsum cacilds, vidis litro abertis</a></li>
-                <li><a href="#">Mussum ipsum cacilds, vidis litro abertis</a></li>
-                <li><a href="#">Mussum ipsum cacilds, vidis litro abertis</a></li>
-                <li><a href="#">Mussum ipsum cacilds, vidis litro abertis</a></li>
-                <li><a href="#">Mussum ipsum cacilds, vidis litro abertis</a></li>
-                <li><a href="#">Mussum ipsum cacilds, vidis litro abertis</a></li>
-                <li><a href="#">Mussum ipsum cacilds, vidis litro abertis</a></li>
-                <li><a href="#">Mussum ipsum cacilds, vidis litro abertis</a></li>
-                <li><a href="#">Mussum ipsum cacilds, vidis litro abertis</a></li>
+                <?php if ($this->myTicketOngoing):?>
+                  <?php foreach ($this->myTicketOngoing as $key => $value): ?>
+
+                  <li><a href="#"><?php echo $value['title']; ?></a></li>
+
+                  <?php endforeach; ?>
+
+                <?php else: ?>
+
+                  <li>Nem um ticket em andamento.</li>
+
+                <?php endif; ?>
             </ul>
         </div>
   </div>
@@ -48,21 +52,23 @@
   <div class="span4 box-home">
         <div class="navbar">
           <div class="navbar-inner">
-              <p class="navbar-home"><i class="icon-eye-close icon-large"></i> <strong>Ticket's em andamento</strong></p>
+              <p class="navbar-home"><i class="icon-eye-close icon-large"></i> <strong>Ticket's resolvidos</strong></p>
           </div>
         </div>
         <div class="thumbnail ticket-home">
             <ul class="unstyled">
-                <li><a href="#">Mussum ipsum cacilds, vidis litro abertis</a></li>
-                <li><a href="#">Mussum ipsum cacilds, vidis litro abertis</a></li>
-                <li><a href="#">Mussum ipsum cacilds, vidis litro abertis</a></li>
-                <li><a href="#">Mussum ipsum cacilds, vidis litro abertis</a></li>
-                <li><a href="#">Mussum ipsum cacilds, vidis litro abertis</a></li>
-                <li><a href="#">Mussum ipsum cacilds, vidis litro abertis</a></li>
-                <li><a href="#">Mussum ipsum cacilds, vidis litro abertis</a></li>
-                <li><a href="#">Mussum ipsum cacilds, vidis litro abertis</a></li>
-                <li><a href="#">Mussum ipsum cacilds, vidis litro abertis</a></li>
-                <li><a href="#">Mussum ipsum cacilds, vidis litro abertis</a></li>
+                <?php if ($this->myTicketResolved):?>
+                  <?php foreach ($this->myTicketResolved as $key => $value): ?>
+
+                  <li><a href="#"><?php echo $value['title']; ?></a></li>
+
+                  <?php endforeach; ?>
+
+                <?php else: ?>
+
+                  <li>Nem um ticket resolvido.</li>
+
+                <?php endif; ?>
             </ul>
         </div>
   </div>
