@@ -23,8 +23,9 @@ class UserIdentity extends AbstractHelper {
             $user = $this->getAuthService()->getIdentity();
             return $user[0];
         }
-        else
-            return false;
+        else{
+            header('Location: http://'.$_SERVER['SERVER_NAME'].'/auth');
+            exit();
+        }
     }
-
 }
