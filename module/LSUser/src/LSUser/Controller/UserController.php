@@ -168,6 +168,9 @@ class UserController extends CrudController
     public function categoryTicketAction()
     {
 
+        $viewModel = new ViewModel();
+        $viewModel->setTerminal(true);
+
         $param = $this->params()->fromRoute('id', 0);
         $list = $this->getEm()->getRepository('LSCategoryticket\Entity\CategoryTicket')->findAll();
 
@@ -175,7 +178,12 @@ class UserController extends CrudController
 
             $categoryTicket = $this->getEm()->getRepository('LSBase\Entity\UserCategoryTicket')->findBy(array('user' => $param));
 
-            return new ViewModel(array('data' => $list, 'user' => $param, 'categoryTicket' => $categoryTicket));
+            $category = array();
+            foreach ($categoryTicket as $value) {
+                $category[] = $value->getCategoryTicket()->getId();
+            }
+
+            return $viewModel->setVariables(array('data' => $list, 'user' => $param, 'categoryId' => $category));
         }else{
             return $this->redirect()->toRoute($this->route, array('controller' => $this->controller));
         }

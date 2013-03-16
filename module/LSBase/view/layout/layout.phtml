@@ -117,15 +117,15 @@
                             </li>-->
 
                             <li class="home-user">
-                                <p>Jesus Vieira</p>
+                                <p><?php echo $this->UserIdentity("LS")->getName(); ?></p>
                                     <img class="img-rounded" src="../img_user/26/a_88870e7fbe.jpg" alt="" />
                             </li>
 
                             <li class="dropdown home-conf">
                                 <a class="dropdown-toggle home-link" data-toggle="dropdown" href="#"><i class="icon-cogs"></i></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href=""><i class="icon-inbox"></i> Editar perfil</a></li>
-                                    <li><a href=""><i class=" icon-off"></i> Sair</a></li>
+                                    <li><a href="<?php echo $this->url('user/default', array('controller' => 'user', 'action' => 'edit', 'id' => $this->UserIdentity("LS")->getId() )); ?>"><i class="icon-inbox"></i> Editar perfil</a></li>
+                                    <li><a href="<?php echo $this->url('auth/default', array('controller' => 'auth', 'action' => 'logout')); ?>"><i class=" icon-off"></i> Sair</a></li>
                                 </ul>
                             </li>
 

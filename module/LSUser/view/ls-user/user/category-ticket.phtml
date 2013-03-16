@@ -1,31 +1,9 @@
-User Category Ticket
-
-
-
-<?php foreach ($this->data as $key => $value): ?>
-
-        <?php if (isset($this->categoryTicket[$key])): ?>
-            <?php if ($this->categoryTicket[$key]->getCategoryTicket()->getId() ==  $value->getId() ): ?>
-
-            <form action="" method="post">
-                <label><input type="checkbox" checked="checked" name="categoryTicket" value="<?php echo $value->getId(); ?>" data-user="<?php echo $this->user ?>"> <?php echo $value->getDescription(); ?></label>
-            </form>
-
-            <?php else: ?>
-
-            <form action="" method="post">
-                <label><input type="checkbox" name="categoryTicket" value="<?php echo $value->getId(); ?>" data-user="<?php echo $this->user ?>"> <?php echo $value->getDescription(); ?></label>
-            </form>
-
-            <?php endif; ?>
-        <?php else: ?>
-
-            <form action="" method="post">
-                <label><input type="checkbox" name="categoryTicket" value="<?php echo $value->getId(); ?>" data-user="<?php echo $this->user ?>"> <?php echo $value->getDescription(); ?></label>
-            </form>
-
-        <?php endif; ?>
-
+<?php foreach ($this->data as $value): ?>
+    <?php if (in_array( $value->getId(), $this->categoryId)) : ?>
+        <label class="checkbox"><input class="category-check" checked="checked" type="checkbox" name="categoryTicket" value="<?php echo $value->getId(); ?>" data-user="<?php echo $this->user ?>"> <?php echo $value->getDescription(); ?></label>
+    <?php else: ?>
+        <label class="checkbox"><input class="category-check" type="checkbox" name="categoryTicket" value="<?php echo $value->getId(); ?>" data-user="<?php echo $this->user ?>"> <?php echo $value->getDescription(); ?></label>
+    <?php endif; ?>
 <?php endforeach; ?>
 
 <script type="text/javascript">
@@ -54,7 +32,5 @@ User Category Ticket
                 }
             });
         });
-
-
     });
 </script>
