@@ -14,6 +14,7 @@ return array(
         'LSTypeuser',
         'LSUser',
         'LSHome',
+        'LSRelatorio',
     ),
     'module_listener_options' => array(
         'config_glob_paths' => array(
