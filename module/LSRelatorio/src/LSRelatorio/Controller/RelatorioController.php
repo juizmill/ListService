@@ -35,7 +35,11 @@ class RelatorioController extends CrudController
      */
     public function indexAction()
     {
-        return new ViewModel();
+        $TicketOpen = $this->getEm()->getRepository('LSTicket\Entity\Ticket')->TotalTicketOpen();
+        $TicketResolved = $this->getEm()->getRepository('LSTicket\Entity\Ticket')->TotalTicketResolved();
+        $TicketOngoing = $this->getEm()->getRepository('LSTicket\Entity\Ticket')->TotalTicketOngoing();
+
+        return new ViewModel(array('ticketOpen' => $TicketOpen[0][1], 'ticketResolved' => $TicketResolved[0][1], 'ticketOngoing' => $TicketOngoing[0][1]));
 
     }
 }

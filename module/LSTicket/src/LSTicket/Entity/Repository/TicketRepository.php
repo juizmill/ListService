@@ -15,7 +15,7 @@ class TicketRepository extends EntityRepository
 
     // ==================================================================
     //
-    // Metodos para retornar a quantidade de ticket's em andamento, aberto e fechado
+    // Metodos para retornar a quantidade de ticket's em andamento, aberto e fechado do usuário
     //
     // ------------------------------------------------------------------
 
@@ -55,6 +55,50 @@ class TicketRepository extends EntityRepository
     public function TotalMyTicketOngoing($user)
     {
         $query = "SELECT COUNT(t.id) FROM LSTicket\\Entity\\Ticket t WHERE t.user = {$user} AND t.dateEnd IS NULL AND t.dateEstimated IS NOT NULL AND t.active = TRUE";
+
+        return $this->_em->createQuery($query)->getResult();
+    }
+
+
+    // ==================================================================
+    //
+    // Metodos para retornar a quantidade de ticket's em andamento, aberto e fechado (geral)
+    //
+    // ------------------------------------------------------------------
+
+
+    /**
+     * TotalTicketOpen
+     *
+     * Retorna aquantidade de ticket's em aberto
+     */
+    public function TotalTicketOpen()
+    {
+        $query = "SELECT COUNT(t.id) FROM LSTicket\\Entity\\Ticket t WHERE t.active = TRUE AND t.dateEnd IS NULL";
+
+        return $this->_em->createQuery($query)->getResult();
+    }
+
+    /**
+     * TotalTicketResolved
+     *
+     * Retorna aquantidade de ticket's resolvidos
+     */
+    public function TotalTicketResolved()
+    {
+        $query = "SELECT COUNT(t.id) FROM LSTicket\\Entity\\Ticket t WHERE t.dateEnd IS NOT NULL AND t.active = TRUE";
+
+        return $this->_em->createQuery($query)->getResult();
+    }
+
+    /**
+     * TotalTicketOngoing
+     *
+     * Retorna aquantidade de ticket's em andamento
+     */
+    public function TotalTicketOngoing()
+    {
+        $query = "SELECT COUNT(t.id) FROM LSTicket\\Entity\\Ticket t WHERE t.dateEnd IS NULL AND t.dateEstimated IS NOT NULL AND t.active = TRUE";
 
         return $this->_em->createQuery($query)->getResult();
     }

@@ -18,15 +18,13 @@
     data.addColumn('string', 'Topping');
     data.addColumn('number', 'Slices');
     data.addRows([
-      ['Em andamento', 3],
-      ['Em aberto', 1],
-      ['Olives', 1],
-      ['Zucchini', 1],
-      ['Pepperoni', 2]
+      ['Aberto', <?php echo $this->ticketOpen; ?>],
+      ['Andamento', <?php echo $this->ticketOngoing; ?>],
+      ['Fechados', <?php echo $this->ticketResolved; ?>]
     ]);
 
     // Set chart options
-    var options = {'width':459, 'height':300 };
+    var options = {'width':360, 'height':300 };
 
     // Instantiate and draw our chart, passing in some options.
     var chart = new google.visualization.PieChart(document.getElementById('pizza'));
@@ -39,14 +37,11 @@
   google.setOnLoadCallback(drawChart);
   function drawChart() {
     var data = google.visualization.arrayToDataTable([
-      ['Year', 'Sales', 'Expenses'],
-      ['2004',  1000,      400],
-      ['2005',  1170,      460],
-      ['2006',  660,       1120],
-      ['2007',  1030,      540]
+      [ '', 'Aberto', 'Andamento', 'Fechados'],
+      [  'quantidade', <?php echo $this->ticketOpen; ?>, <?php echo $this->ticketOngoing; ?>, <?php echo $this->ticketResolved; ?>,]
     ]);
 
-    var options = { hAxis: {title: 'Mensal', titleTextStyle: {color: 'red'}}
+    var options = { hAxis: {title: '', titleTextStyle: {color: 'red'}}
     };
 
     var chart = new google.visualization.ColumnChart(document.getElementById('barra'));
@@ -56,10 +51,10 @@
 
 <div class="row">
 
-  <div class="span5 box-home">
+  <div class="span4 box-home">
         <div class="navbar">
           <div class="navbar-inner">
-              <p class="navbar-home"><i class=" icon-bar-chart icon-large"></i> <strong>Gráfico em Pizza</strong></p>
+              <p class="navbar-home"><i class=" icon-bar-chart icon-large"></i> <strong>Gráfico em Pizza (geral)</strong></p>
           </div>
         </div>
 
@@ -69,15 +64,24 @@
         </div>
   </div>
 
-  <div class="span5 box-home">
+  <div class="span6 box-home">
         <div class="navbar">
           <div class="navbar-inner">
-              <p class="navbar-home"><i class=" icon-bar-chart icon-large"></i> <strong>Ticket's em andamento</strong></p>
+              <p class="navbar-home"><i class=" icon-bar-chart icon-large"></i> <strong>Gráfico em Barras (geral)</strong></p>
           </div>
         </div>
         <div class="thumbnail ticket-home">
-          <div id="barra" style="width: 459px; height: 300px;"></div>
+          <div id="barra" style="width: 560px; height: 300px;"></div>
         </div>
   </div>
 
+</div>
+
+<br /><br />
+<div class="row">
+  <div class="span4 offset3">
+      <a class="btn btn-info active-listservice" href="#" data-toggle="tooltip" data-placement="top" data-original-title="Imprimir Ticket's em abertos" ><i class=" icon-print"></i> Aberto</a>
+      <a class="btn btn-info active-listservice" href="#" data-toggle="tooltip" data-placement="top" data-original-title="Imprimir Ticket's em andamento" ><i class=" icon-print"></i> Andamento</a>
+      <a class="btn btn-info active-listservice" href="#" data-toggle="tooltip" data-placement="top" data-original-title="Imprimir Ticket's fechado" ><i class=" icon-print"></i> Fechado</a>
+  </div>
 </div>
