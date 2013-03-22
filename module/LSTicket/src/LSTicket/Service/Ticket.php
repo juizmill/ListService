@@ -47,4 +47,36 @@ class Ticket extends AbstractService
             return false;
         }
     }
+
+
+
+
+    #REMOVER O UPDATE NÃO TERÁ COMO ALTERAR O TICKET DEPOIS DE CADASTRADO.
+
+    /**
+     * update
+     *
+     * Atualiza um registro
+     *
+     * @author Jesus Vieira <jesusvieiradelima@gmail.com>
+     * @param array $data
+     * @access public
+     * @return $entity
+     */
+    public function update(array $data)
+    {
+
+        $category = $this->em->getReference('LSCategoryticket\Entity\CategoryTicket', $data['categoryTicket']);
+
+        //\Zend\Debug\Debug::dump($category);die;
+
+        if ($category) {
+
+            $data['categoryTicket'] = $category;
+            return parent::update($data);
+
+        } else {
+            return false;
+        }
+    }
 }

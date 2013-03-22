@@ -48,6 +48,7 @@ class InteractionController extends CrudController
         $param = $this->params()->fromRoute('id', 0);
 
         $ticket = $this->getEm()->getRepository('LSTicket\Entity\Ticket')->find($param);
+        $description = $this->getEm()->getRepository('LSInteraction\Entity\Interaction')->findBy(array('ticket' => $param));
 
         if ($ticket){
 
@@ -80,7 +81,7 @@ class InteractionController extends CrudController
                 }
             }
 
-            return new ViewModel(array('form' => $form, 'ticketId' => $ticket->getId()));
+            return new ViewModel(array('form' => $form, 'ticket' => $ticket, 'description' => $description[0]));
         }else{
             return $this->redirect()->toRoute('ticket', array('controller' => 'ticket'));
         }

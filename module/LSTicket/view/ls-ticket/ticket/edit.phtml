@@ -1,35 +1,23 @@
-<?php $this->plugin("dateFormat")->setTimezone("America/Campo_Grande")->setLocale("pt_BR");?>
-
 <div class="row">
 
-  <div class="span5 box-home">
+  <div class="span4 box-home">
         <div class="navbar">
           <div class="navbar-inner">
-              <p class="navbar-home"><i class="icon-reorder icon-large"></i> <strong>Dados do Ticket #<?php echo $this->ticket->getId()?></strong></p>
+              <p class="navbar-home"><i class="icon-edit icon-large"></i> <strong>Alterar Ticket</strong></p>
           </div>
         </div>
 
         <div class="thumbnail ticket-home">
-
-            <h4><?php echo $this->ticket->getTitle(); ?></h4>
-            <p><strong>Solicitante: </strong><?php echo $this->ticket->getSought(); ?></p>
-            <p><strong>Data de abertura: </strong><?php echo $this->dateFormat($this->ticket->getDateBegin(), IntlDateFormatter::SHORT); ?></p>
-            <p><strong>Categoria: </strong><?php echo $this->ticket->getCategoryTicket()->getDescription(); ?></p>
-            <br />
-            <p><strong>Descrição:</strong></p>
-            <div class="thumbnail" style="background:#fff">
-                <p><?php echo $this->description->getDescription(); ?></p>
-            </div>
             <?php
 
                 $form = $this->form;
 
                 $this->formElementErrors ()
-                        ->setMessageOpenFormat ('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">×</button>')
-                        ->setMessageCloseString ('</div>')
-                        ->render ($form);
+                ->setMessageOpenFormat ('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">×</button>')
+                ->setMessageCloseString ('</div>')
+                ->render ($form);
 
-                $form->setAttribute ('action', $this->url ('interaction/default', array('controller' => 'interaction', 'action' => 'new', 'id' => $this->ticket->getId())));
+                $form->setAttribute ('action', $this->url ('ticket/default', array('controller' => 'ticket', 'action' => 'edit', 'id' => $this->id)));
 
                 $form->prepare ();
 
@@ -38,12 +26,12 @@
                 echo $this->formCollection ($form);
 
                 echo $this->form ()->closeTag ();
+
             ?>
-            <div class="img-user"><img src="#" align="" /></div>
         </div>
   </div>
 
-   <div class="span5 box-home offset2">
+   <div class="span4 box-home offset2">
         <div class="navbar">
           <div class="navbar-inner">
               <p class="navbar-home"><i class=" icon-lightbulb icon-large"></i> <strong>Precisando de ajuda?</strong></p>
