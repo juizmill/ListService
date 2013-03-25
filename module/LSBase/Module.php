@@ -5,6 +5,7 @@ namespace LSBase;
 use LSBase\View\Helpers\TotalMyTicket;
 use LSBase\View\Helpers\TotalMyTicketResolved;
 use LSBase\View\Helpers\TotalMyTicketOngoing;
+use LSAcl\Permissions\Acl;
 
 class Module
 {

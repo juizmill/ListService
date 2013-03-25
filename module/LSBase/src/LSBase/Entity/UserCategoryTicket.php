@@ -10,7 +10,7 @@ use Zend\Stdlib\Hydrator;
  *
  * @ORM\Table(name="user_category_ticket")
  * @ORM\Entity
- * @ORM\Entity(repositoryClass="LSBase\Entity\Repository\UserCategoryRepository")
+ * @ORM\Entity(repositoryClass="LSBase\Entity\Repository\UserCategoryTicketRepository")
  */
 class UserCategoryTicket
 {

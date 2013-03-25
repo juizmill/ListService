@@ -31,4 +31,18 @@ class TypeUserRepository extends EntityRepository
         return $array;
 
     }
+
+    /**
+     * fetchAllTypeUserActive
+     *
+     * Retorna todos os tipos de usuarios ativos
+     *
+     * @return array
+     */
+    public function fetchAllTypeUserActive()
+    {
+        $query = "SELECT t.id, t.description FROM LSTypeuser\\Entity\\TypeUser t WHERE t.active = true";
+
+        return $this->_em->createQuery($query)->getResult();
+    }
 }

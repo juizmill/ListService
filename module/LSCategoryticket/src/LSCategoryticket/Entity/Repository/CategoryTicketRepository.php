@@ -28,6 +28,19 @@ class CategoryTicketRepository extends EntityRepository
             $array[$categoryTicket->getId ()] = $categoryTicket->getDescription ();
 
         return $array;
+    }
 
+    /**
+     * fetchAllCategoryTicketActive
+     *
+     * Retorna todas as  categorias de ticket ativos
+     *
+     * @return array
+     */
+    public function fetchAllCategoryTicketActive()
+    {
+        $query = "SELECT c.id, c.description FROM LSCategoryticket\\Entity\\CategoryTicket c WHERE c.active = true";
+
+        return $this->_em->createQuery($query)->getResult();
     }
 }
