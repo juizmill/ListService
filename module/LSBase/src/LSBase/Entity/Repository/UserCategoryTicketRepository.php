@@ -19,9 +19,9 @@ class UserCategoryTicketRepository extends EntityRepository
      *
      * @return array
      */
-    public function fetchAllUserCategoryTicket()
+    public function fetchAllUserCategoryTicket($id)
     {
-        $query = "SELECT ct.description FROM LSBase\\Entity\\UserCategoryTicket uct JOIN LSCategoryticket\\Entity\\CategoryTicket ct uct.categoryTicket ct  JOIN LSUser\\Entity\\User us uct.user us WHERE uct.user = 3";
+        $query = "SELECT tu.description as roles, ct.description as permissions FROM LSBase\\Entity\\UserCategoryTicket uct JOIN uct.user u JOIN  u.typeUse tu JOIN uct.categoryTicket ct  WHERE tu.active = true AND u.id NOT IN(3) AND u.active = true AND ct.active = true AND u.id = {$id}";
 
         return $this->_em->createQuery($query)->getResult();
     }

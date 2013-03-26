@@ -29,18 +29,6 @@ class UserController extends CrudController
         $this->route = 'user';
     }
 
-public function indexAction()
-{
-
-        $acl = $this->getServiceLocator()->get("LSUser\Permissions\Acl");
-
-        //$acl->isAllowed();
-        //
-        die;
-    return parrent::indexAction();
-}
-
-
     /**
      * newAction
      *

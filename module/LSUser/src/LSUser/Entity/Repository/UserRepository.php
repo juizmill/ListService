@@ -12,6 +12,15 @@ use Doctrine\ORM\EntityRepository;
  */
 class UserRepository extends EntityRepository
 {
+    /**
+     * findByLoginAndPassword
+     *
+     * Retorna o registro do usuário
+     *
+     * @param  string $login
+     * @param  string $password
+     * @return array
+     */
     public function findByLoginAndPassword($login, $password) {
 
         $user = $this->findBy(array('login' => $login));
@@ -28,4 +37,20 @@ class UserRepository extends EntityRepository
         else
             return false;
     }
+
+    /**
+     * findTypeUser
+     *
+     * Retorna o tipo de usuário
+     *
+     * @param  integer $id
+     * @return array
+     */
+    public function findTypeUser($id)
+    {
+        $query = "SELECT tu.description FROM LSUser\\Entity\\User u JOIN u.typeUse tu WHERE u.active = true AND tu.active = true AND u.id = {$id}";
+
+        return $this->_em->createQuery($query)->getResult();
+    }
+
 }

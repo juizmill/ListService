@@ -27,12 +27,15 @@
         <div class="btn-toolbar">
           <div class="btn-group">
             <a class="btn active-listservice" href="<?php echo $this->url('interaction/default', array('controller' => 'interaction', 'action' => 'new', 'id' => $user->getId())); ?>" data-toggle="tooltip" data-placement="top" data-original-title="Interagir"><i class="icon-pencil"></i></a>
+
+            <?php if ($this->typeUser == "Adm"): ?>
             <?php if ($user->getActive()): ?>
             <a class="btn active-listservice" href="<?php echo $this->url('ticket/default', array('controller' => 'ticket', 'action' => 'active', 'id' => $user->getId())); ?>" data-toggle="tooltip" data-placement="top" data-original-title="Desativar"><i class="icon-ok"></i></a>
             <?php else: ?>
             <a class="btn active-listservice" href="<?php echo $this->url('ticket/default', array('controller' => 'ticket', 'action' => 'active', 'id' => $user->getId())); ?>" data-toggle="tooltip" data-placement="top" data-original-title="Ativar"><i class="icon-ban-circle"></i></a>
             <?php endif; ?>
             <a class="btn active-listservice" href="<?php echo $this->url('ticket/default', array('controller' => 'ticket', 'action' => 'delete', 'id' => $user->getId())); ?>" data-toggle="tooltip" data-placement="top" data-original-title="Deletar"><i class="icon-trash"></i></a>
+          <?php endif; ?>
           </div>
         </div>
       </th>

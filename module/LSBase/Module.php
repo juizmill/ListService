@@ -5,7 +5,11 @@ namespace LSBase;
 use LSBase\View\Helpers\TotalMyTicket;
 use LSBase\View\Helpers\TotalMyTicketResolved;
 use LSBase\View\Helpers\TotalMyTicketOngoing;
-use LSAcl\Permissions\Acl;
+
+use Zend\Authentication\AuthenticationService,
+    Zend\Authentication\Storage\Session as SessionStorage;
+
+use LSUser\Permissions\Acl;
 
 class Module
 {
@@ -26,6 +30,25 @@ class Module
         );
     }
 
+    public function getAuthService() {
+        return $this->authService;
+    }
+
+    public function getUserCurrent()
+    {
+        #Recupera a autenticação do usuário
+        $sessionStorage = new SessionStorage("LS");
+        $this->authService = new AuthenticationService;
+        $this->authService->setStorage($sessionStorage);
+
+        #verifica se o usuário está autenticado
+        if ($this->getAuthService()->hasIdentity()) {
+          $user = $this->getAuthService()->getIdentity();
+
+          return $user[0]->getId();
+        }
+    }
+
     public function getServiceConfig ()
     {
         return array(
@@ -35,6 +58,26 @@ class Module
                 },
                 'LSBase\Service\CategoryTicketUser' => function($em) {
                         return new Service\CategoryTicketUser($em->get ('Doctrine\ORM\EntityManager'));
+                },
+
+                //esta parte do "programa" é exclusivo para realizar as permissões de cada usuário.
+                'LSUser\Permissions\Acl' => function($sm)
+                {
+                  $em = $sm->get('Doctrine\ORM\EntityManager');
+
+                  #Recupera os Papeis de usuários
+                  $repoRole = $em->getRepository("LSTypeuser\Entity\TypeUser");
+                  $roles = $repoRole->fetchAllTypeUserActive();
+
+                  #Recupera os Recursos do Usuário
+                  $repoResource = $em->getRepository("LSCategoryticket\Entity\CategoryTicket");
+                  $resources = $repoResource->fetchAllCategoryTicketActive();
+
+                  #Recupera os privilégios que o usuário possui
+                  $repoPrivilege = $em->getRepository("LSBase\Entity\UserCategoryTicket");
+                  $privileges = $repoPrivilege->fetchAllUserCategoryTicket($this->getUserCurrent());
+
+                  return new Acl($roles,$resources,$privileges);
                 }
             )
         );
@@ -45,17 +88,16 @@ class Module
         return array(
             'factories' => array(
                     'TotalMyTicket' => function($sm){
-                        $service = $sm->getServiceLocator()->get('Doctrine\ORM\EntityManager')->getRepository('LSTicket\Entity\Ticket')->TotalMyTicket(1);
-
+                        $service = $sm->getServiceLocator()->get('Doctrine\ORM\EntityManager')->getRepository('LSTicket\Entity\Ticket')->TotalMyTicket($this->getUserCurrent());
                         return new TotalMyTicket($service);
                     },
                     'TotalMyTicketResolved' => function($sm){
-                        $service = $sm->getServiceLocator()->get('Doctrine\ORM\EntityManager')->getRepository('LSTicket\Entity\Ticket')->TotalMyTicketResolved(1);
+                        $service = $sm->getServiceLocator()->get('Doctrine\ORM\EntityManager')->getRepository('LSTicket\Entity\Ticket')->TotalMyTicketResolved($this->getUserCurrent());
 
                         return new TotalMyTicketResolved($service);
                     },
                     'TotalMyTicketOngoing' => function($sm){
-                        $service = $sm->getServiceLocator()->get('Doctrine\ORM\EntityManager')->getRepository('LSTicket\Entity\Ticket')->TotalMyTicketOngoing(1);
+                        $service = $sm->getServiceLocator()->get('Doctrine\ORM\EntityManager')->getRepository('LSTicket\Entity\Ticket')->TotalMyTicketOngoing($this->getUserCurrent());
 
                         return new TotalMyTicketOngoing($service);
                     }

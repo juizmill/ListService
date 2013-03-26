@@ -12,12 +12,15 @@ class Acl extends ClassAcl
     protected $roles;
     protected $resources;
     protected $privileges;
+    protected $newRoles;
+    protected $newResoirces;
+    protected $newprivileges;
 
-    public function __construct(array $roles, array $resources) {
+    public function __construct(array $roles, array $resources, array $privileges) {
 
         $this->roles = $roles;
         $this->resources = $resources;
-        $this->privileges = array('edit', 'view', 'delete', 'relatory');
+        $this->privileges = $privileges;
 
         $this->loadRoles();
         $this->loadResources();
@@ -26,24 +29,26 @@ class Acl extends ClassAcl
 
     protected function loadRoles()
     {
-        foreach($this->roles as $key => $role)
+        foreach($this->roles as $role)
         {
-            if( ($role[$key][0] != 1) && ($role[$key][1] != "Administrador")  )  {
-                $this->addRole(new Role($role[$key][1]));
+
+            $this->addRole(new Role($role['description']));
+
+            if ( ($role['id'] == 1) && ($role['description'] == "adm")  ){
+                $this->allow($role['description'] ,array(),array());
             }
 
-            if ( ($role[$key][0] == 1) && ($role[$key][0] == "Administrador")  ){
-                $this->allow($role[$key][1] ,array(),array());
-            }
-
+            $this->newRoles[] = $role['description'];
         }
     }
 
     protected function loadResources()
     {
-        foreach($this->resources as $key => $resource)
+        foreach($this->resources as $resource)
         {
-            $this->addResource(new Resource($resource[$key][1]));
+            $this->addResource(new Resource($resource['description']));
+
+            $this->newResoirces[] = $resource['description'];
         }
     }
 
@@ -51,8 +56,11 @@ class Acl extends ClassAcl
     {
 
         foreach($this->privileges as $privilege)
+            $permissions[] = $privilege['permissions'];
+
+        foreach($this->privileges as $privilege)
         {
-            $this->allow($privilege->getRole()->getNome(), $privilege->getResource()->getNome(),$privilege->getNome());
+            $this->allow($privilege['roles'], $this->newResoirces, $permissions);
         }
     }
 }

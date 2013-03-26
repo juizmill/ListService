@@ -5,6 +5,8 @@ namespace LSUser;
 class Module
 {
 
+    protected $authService;
+
     public function getConfig ()
     {
         return include __DIR__ . '/config/module.config.php';
@@ -36,29 +38,8 @@ class Module
                     $typeUser = $em->getRepository ('LSTypeuser\Entity\TypeUser')->fetchPairs ();
 
                     return new Form\User ($typeUser);
-                },
-                'LSUser\Permissions\Acl' => function($sm)
-                {
-                  $em = $sm->get('Doctrine\ORM\EntityManager');
-
-                  $repoRole = $em->getRepository("LSTypeuser\Entity\TypeUser");
-                  $roles = $repoRole->fetchAllTypeUserActive();
-
-                  $repoResource = $em->getRepository("LSCategoryticket\Entity\CategoryTicket");
-                  $resources = $repoResource->fetchAllCategoryTicketActive();
-
-                  $repoPrivilege = $em->getRepository("LSBase\Entity\UserCategoryTicket");
-                  $privileges = $repoPrivilege->fetchAllUserCategoryTicket();
-
-                  \Zend\Debug\Debug::dump($privileges);die;
-
-                  #return new Acl($roles,$resources,$privileges);
-                  return new Acl($roles,null,null);
                 }
-
             )
         );
-
     }
-
 }

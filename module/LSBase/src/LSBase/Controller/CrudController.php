@@ -7,6 +7,9 @@ use \Zend\View\Model\ViewModel;
 use Zend\Paginator\Paginator,
     Zend\Paginator\Adapter\ArrayAdapter;
 
+use Zend\Authentication\AuthenticationService,
+    Zend\Authentication\Storage\Session as SessionStorage;
+
 /**
  * CrudController
  *
@@ -27,6 +30,10 @@ abstract class CrudController extends AbstractActionController
     protected $controller;
     protected $limitPaginator = 10;
 
+    public function getAuthService() {
+        return $this->authService;
+    }
+
     /**
      * indexAction
      *
@@ -39,9 +46,12 @@ abstract class CrudController extends AbstractActionController
     public function indexAction()
     {
 
-        $list = $this->getEm()
-                ->getRepository($this->entity)
-                ->findAll();
+        $user = $this->getUserCurrent();
+
+        if ( $user[0]->getId() != 1)
+            $list = $this->getEm()->getRepository($this->entity)->findBy(array('user' => $user[0]->getId()));
+        else
+            $list = $this->getEm()->getRepository($this->entity)->findAll();
 
         $page = $this->params()->fromRoute('page');
 
@@ -49,7 +59,11 @@ abstract class CrudController extends AbstractActionController
         $paginator->setCurrentPageNumber($page)
                 ->setDefaultItemCountPerPage($this->limitPaginator);
 
-        return new ViewModel(array('data' => $paginator, 'page' => $page));
+        #ACL
+        $acl = $this->getServiceLocator()->get("LSUser\Permissions\Acl");
+        $type = $this->getEm()->getRepository("LSUser\Entity\User")->findTypeUser($user[0]->getId());
+
+        return new ViewModel(array('data' => $paginator, 'page' => $page, 'typeUser' => $type, 'acl' => $acl));
 
     }
 
@@ -178,8 +192,23 @@ abstract class CrudController extends AbstractActionController
             else
                 $this->getResponse()->setStatusCode(404);
         }
-
     }
+
+
+    public function getUserCurrent()
+    {
+        #Recupera a autenticação do usuário
+        $sessionStorage = new SessionStorage("LS");
+        $this->authService = new AuthenticationService;
+        $this->authService->setStorage($sessionStorage);
+
+        #verifica se o usuário está autenticado
+        if ($this->getAuthService()->hasIdentity()) {
+          return $this->getAuthService()->getIdentity();
+        }
+    }
+
+
 
     /**
      * getEm

@@ -44,7 +44,8 @@ class TicketController extends CrudController
      */
     public function newAction()
     {
-        $user = $this->getEm()->getReference('LSUser\Entity\User', 1);//REMOVER DEPOIS QUE CRIAR O AUTENTICATION
+        $idUser = $this->getUserCurrent();
+        $user = $this->getEm()->getReference('LSUser\Entity\User', $idUser[0]->getId());
 
         $form = $this->getServiceLocator()->get($this->form);
 
@@ -89,56 +90,6 @@ class TicketController extends CrudController
         }
 
         return new ViewModel(array('form' => $form));
-    }
-
-    /**
-     * editAction
-     *
-     * Exibe pagina para editar o registro.
-     *
-     * @author Jesus Vieira <jesusvieiradelima@gmail.com>
-     * @access public
-     * @return \Zend\View\Model\ViewModel
-     */
-    public function editAction()
-    {
-        $form = $this->getServiceLocator()->get($this->form);
-
-        $request = $this->getRequest();
-        $param = $this->params()->fromRoute('id', 0);
-
-        $repository = $this->getEm()->getRepository($this->entity);
-        $entity = $repository->find($param);
-
-        if( $entity ) {
-
-            $data = $entity->toArray();
-
-            //Faz com que o nome do selected fique correto.
-            $data['categoryTicket'] = $data['category_ticket']->getId();
-            unset($data['category_ticket']);
-
-
-            $form->setData($data);
-
-            if( $request->isPost() ) {
-
-                $form->setData($request->getPost());
-
-                if( $form->isValid() ) {
-
-                    $service = $this->getServiceLocator()->get($this->service);
-                    $service->update($request->getPost()->toArray());
-
-                    return $this->redirect()->toRoute($this->route, array('controller' => $this->controller));
-                }
-            }
-        } else {
-            return $this->redirect()->toRoute($this->route, array('controller' => $this->controller));
-        }
-
-        return new ViewModel(array('form' => $form, 'id' => $param));
-
     }
 
     /**
