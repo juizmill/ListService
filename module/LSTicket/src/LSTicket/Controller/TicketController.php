@@ -57,17 +57,34 @@ class TicketController extends CrudController
 
             $userId = $this->getEm()->getReference('LSUser\Entity\User', $user[0]['id']);
 
-            $list = $this->getEm()->getRepository($this->entity)->find(array('user' => $userId));
+            $list = $this->getEm()->getRepository($this->entity)->findBy(array('user' => $userId->getId()));
 
             $page = $this->params()->fromRoute('page');
 
-            $paginator = new Paginator(new ArrayAdapter($list));
+
+\Zend\Debug\Debug::dump($list[0]);die;
+
+
+            $paginator = new Paginator(new ArrayAdapter($list[0]));
             $paginator->setCurrentPageNumber($page)
                       ->setDefaultItemCountPerPage($this->limitPaginator);
 
             return new ViewModel(array('data' => $paginator, 'page' => $page));
 
         }
+
+$a = "
+SELECT t.id, ct.description as category, p.description as priority, t.title, t.date_begin, t.date_end, t.date_estimated, t.sought
+FROM listservice.ticket t
+JOIN listservice.category_ticket ct ON (t.category_ticket_id = ct.id )
+Left JOIN listservice.priority p ON (t.priority_id = p.id )
+WHERE t.active = true AND ct.active = true AND t.user_id = 2
+;
+";
+
+
+
+
 
     }
 
