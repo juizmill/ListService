@@ -13,7 +13,7 @@ use Zend\Math\Rand,
  * @ORM\Table(name="user")
  * @ORM\Entity
  * @ORM\Entity(repositoryClass="LSUser\Entity\Repository\UserRepository")
- * @ORM\HasLifecycleCallbacks 
+ * @ORM\HasLifecycleCallbacks
  */
 class User
 {
@@ -81,7 +81,7 @@ class User
 
   /**
    * __construct
-   * 
+   *
    * @param array $options
    */
   public function __construct(array $options = array())
@@ -96,7 +96,7 @@ class User
   /**
    * Get id
    *
-   * @return integer 
+   * @return integer
    */
   public function getId()
   {
@@ -119,7 +119,7 @@ class User
   /**
    * Get name
    *
-   * @return string 
+   * @return string
    */
   public function getName()
   {
@@ -142,7 +142,7 @@ class User
   /**
    * Get login
    *
-   * @return string 
+   * @return string
    */
   public function getLogin()
   {
@@ -165,7 +165,7 @@ class User
   /**
    * Get password
    *
-   * @return string 
+   * @return string
    */
   public function getPassword()
   {
@@ -189,7 +189,7 @@ class User
   /**
    * Get dateRegistry
    *
-   * @return \DateTime 
+   * @return \DateTime
    */
   public function getDateRegistry()
   {
@@ -212,7 +212,7 @@ class User
   /**
    * Get active
    *
-   * @return boolean 
+   * @return boolean
    */
   public function getActive()
   {
@@ -235,7 +235,7 @@ class User
   /**
    * Get salt
    *
-   * @return string 
+   * @return string
    */
   public function getSalt()
   {
@@ -258,7 +258,7 @@ class User
   /**
    * Get typeUse
    *
-   * @return \LSTypeuser\Entity\TypeUser 
+   * @return \LSTypeuser\Entity\TypeUser
    */
   public function getTypeUse()
   {
@@ -267,7 +267,7 @@ class User
 
   /**
    * encryptLoginAndPassword
-   * 
+   *
    * @param string $senhaOrPassword
    * @param integer $iterations
    * @return string hash
@@ -279,7 +279,7 @@ class User
 
   /**
    * toArray
-   * 
+   *
    * @return array
    */
   public function toArray()

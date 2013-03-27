@@ -45,7 +45,7 @@ class Module
         if ($this->getAuthService()->hasIdentity()) {
           $user = $this->getAuthService()->getIdentity();
 
-          return $user[0]->getId();
+          return $user[0]['id'];
         }
     }
 

@@ -10,6 +10,9 @@ use LSBase\Utils\UploadFile;
 
 use Zend\File\Transfer\Adapter\Http;
 
+use Zend\Authentication\AuthenticationService,
+    Zend\Authentication\Storage\Session as SessionStorage;
+
 
 
 /**
@@ -32,6 +35,41 @@ class TicketController extends CrudController
     $this->service = 'LSTicket\Service\Ticket';
     $this->route = 'ticket';
   }
+
+    /**
+     * indexAction
+     *
+     * Exibe pagina principal.
+     *
+     * @author Jesus Vieira <jesusvieiradelima@gmail.com>
+     * @access public
+     * @return \Zend\View\Model\ViewModel
+     */
+    public function indexAction()
+    {
+
+        $sessionStorage = new SessionStorage("LS");
+        $authService = new AuthenticationService;
+        $authService->setStorage($sessionStorage);
+
+        if ($authService->hasIdentity()) {
+            $user = $authService->getIdentity();
+
+            $userId = $this->getEm()->getReference('LSUser\Entity\User', $user[0]['id']);
+
+            $list = $this->getEm()->getRepository($this->entity)->find(array('user' => $userId));
+
+            $page = $this->params()->fromRoute('page');
+
+            $paginator = new Paginator(new ArrayAdapter($list));
+            $paginator->setCurrentPageNumber($page)
+                      ->setDefaultItemCountPerPage($this->limitPaginator);
+
+            return new ViewModel(array('data' => $paginator, 'page' => $page));
+
+        }
+
+    }
 
     /**
      * newAction

@@ -39,7 +39,6 @@ class Adapter implements AdapterInterface {
         return $this;
     }
 
-
     public function authenticate() {
         $repository = $this->em->getRepository('LSUser\Entity\User');
 

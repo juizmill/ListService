@@ -3,7 +3,7 @@
 namespace LSUser\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository;
-
+use Zend\Crypt\Key\Derivation\Pbkdf2;
 /**
  * UserRepository
  *
@@ -23,12 +23,14 @@ class UserRepository extends EntityRepository
      */
     public function findByLoginAndPassword($login, $password) {
 
-        $user = $this->findBy(array('login' => $login));
+        $query = "SELECT u.id, u.name, u.login, u.password, u.salt,  tu.id as category_id, tu.description as category FROM LSUser\\Entity\\User u JOIN u.typeUse tu  WHERE u.active = true AND tu.active = true AND u.login = '".$login."' ";
+
+        $user = $this->_em->createQuery($query)->getResult();
 
         if ($user) {
-            $hashSenha = $user[0]->encryptPassword($password);
+            $hashSenha = $this->encryptPassword($password, $user[0]['salt']);
 
-            if ($hashSenha == $user[0]->getPassword()) {
+            if ($hashSenha == $user[0]['password']) {
                 return $user;
             }
             else
@@ -36,6 +38,7 @@ class UserRepository extends EntityRepository
         }
         else
             return false;
+
     }
 
     /**
@@ -52,5 +55,18 @@ class UserRepository extends EntityRepository
 
         return $this->_em->createQuery($query)->getResult();
     }
+
+
+  /**
+   * encryptLoginAndPassword
+   *
+   * @param string $senhaOrPassword
+   * @param integer $iterations
+   * @return string hash
+   */
+  public function encryptPassword($password, $salt)
+  {
+    return base64_encode(Pbkdf2::calc('sha256', $password, $salt, 15000, strlen($password * 2)));
+  }
 
 }

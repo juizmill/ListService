@@ -1,4 +1,4 @@
-<?php $this->UserIdentity("LS"); ?>
+<?php $user = $this->UserIdentity("LS"); ?>
 
 <?php echo $this->doctype (); ?>
 
@@ -72,8 +72,8 @@
                             <li class="dropdown">
                                     <a class="dropdown-toggle home-link" data-toggle="dropdown" href="#">Categoria de Ticket</a>
                                     <ul class="dropdown-menu">
-                                        <li><a href="<?php echo $this->url ('category-ticket/default', array('controller' => 'category-ticket'))?>"><i class="icon-inbox"></i> Todas as Categoria de Ticket</a></li>
-                                        <li><a href="<?php echo $this->url ('category-ticket/default', array('controller' => 'category-ticket', 'action' => 'new'))?>"><i class="icon-asterisk"></i> Categoria de Ticket's</a></li>
+                                        <li><a href="<?php echo $this->url ('category-ticket/default', array('controller' => 'category-ticket'))?>"><i class="icon-inbox"></i> Todas as Categoria</a></li>
+                                        <li><a href="<?php echo $this->url ('category-ticket/default', array('controller' => 'category-ticket', 'action' => 'new'))?>"><i class="icon-asterisk"></i> Cadastrar</a></li>
                                     </ul>
                             </li>
 
@@ -91,7 +91,7 @@
                                     <li><a href="<?php echo $this->url ('user/default', array('controller' => 'user'))?>"><i class="icon-group"></i> Todos usuários</a></li>
                                     <li><a href="<?php echo $this->url ('user/default', array('controller' => 'user', 'action' => 'new')); ?>"><i class="icon-edit"></i> Cadastrar</a></li>
                                     <li class="divider"></li>
-                                    <li><a href="<?php echo $this->url('type-user/default', array('controller' => 'type-user')); ?>"><i class="icon-asterisk"></i> Categoria de usuário</a></li>
+                                    <li><a href="<?php echo $this->url('type-user/default', array('controller' => 'type-user')); ?>"><i class="icon-asterisk"></i> Todas as categoria de usuário</a></li>
                                     <li><a href="<?php echo $this->url('type-user/default', array('controller' => 'type-user', 'action' => 'new')); ?>"><i class="icon-asterisk"></i> Cadastrar Categoria de usuário</a></li>
                                 </ul>
                             </li>
@@ -117,14 +117,14 @@
                             </li>-->
 
                             <li class="home-user">
-                                <p><?php echo $this->UserIdentity("LS")->getName(); ?></p>
+                                <p><?php echo $user['name'] ?></p>
                                     <img class="img-rounded" src="../img_user/26/a_88870e7fbe.jpg" alt="" />
                             </li>
 
                             <li class="dropdown home-conf">
                                 <a class="dropdown-toggle home-link" data-toggle="dropdown" href="#"><i class="icon-cogs"></i></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="<?php echo $this->url('user/default', array('controller' => 'user', 'action' => 'edit', 'id' => $this->UserIdentity("LS")->getId() )); ?>"><i class="icon-inbox"></i> Editar perfil</a></li>
+                                    <li><a href="<?php echo $this->url('user/default', array('controller' => 'user', 'action' => 'edit', 'id' => $user['id'] )); ?>"><i class="icon-inbox"></i> Editar perfil</a></li>
                                     <li><a href="<?php echo $this->url('auth/default', array('controller' => 'auth', 'action' => 'logout')); ?>"><i class=" icon-off"></i> Sair</a></li>
                                 </ul>
                             </li>

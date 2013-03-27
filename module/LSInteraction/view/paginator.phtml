@@ -1,0 +1,49 @@
+<?php
+$urlPattern = $_SERVER['REQUEST_URI'];
+$formatUrl = function ($page) use ($urlPattern) {
+	if (!preg_match('/page/', $urlPattern))
+		return $urlPattern . '/page/' . (int) $page;
+	else
+		return preg_replace('@/page/(\d+)@', '/page/' . (int) $page, $urlPattern);
+};
+?>
+
+<?php if ($this->pageCount > 1): ?>
+
+
+<div class="pagination pagination-centered page_nave">
+	<p>
+		pagina
+		<?php echo $this->current;?>
+		de
+		<?php echo $this->pageCount;?>
+	</p>
+	<ul>
+		<?php if (isset($this->previous)): ?>
+		<li><a href="<?php echo $formatUrl($this->previous) ?>"
+			title="Ir para pagina anterior">Anterior</a></li>
+		<?php else: ?>
+		<li class="disabled"><a href="#" onclick="return false;">Anterior</a>
+		</li>
+		<?php endif; ?>
+
+		<?php foreach ($this->pagesInRange as $page): ?>
+
+		<?php if ($page != $this->current): ?>
+		<li><a href="<?php echo $formatUrl($page); ?>"><?php echo $page; ?> </a>
+		</li>
+		<?php else: ?>
+		<li class="active"><a href="#"><?php echo $page; ?> </a></li>
+		<?php endif; ?>
+
+		<?php endforeach; ?>
+
+		<?php if (isset($this->next)): ?>
+		<li><a href="<?php echo $formatUrl($this->next); ?>">Próximo</a></li>
+		<?php else: ?>
+		<li class="disabled"><a href="#" onclick="return false;"
+			title="Ir para próxima pagina">Próximo</a></li>
+		<?php endif; ?>
+	</ul>
+</div>
+<?php endif; ?>
