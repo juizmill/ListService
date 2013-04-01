@@ -69,40 +69,44 @@
                                     </ul>
                             </li>
 
-                            <li class="dropdown">
-                                    <a class="dropdown-toggle home-link" data-toggle="dropdown" href="#">Categoria de Ticket</a>
+                            <?php if (($user['category_id'] == "1") || ($user['category'] == 'Administrador')): ?>
+
+                                <li class="dropdown">
+                                        <a class="dropdown-toggle home-link" data-toggle="dropdown" href="#">Categoria de Ticket</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="<?php echo $this->url ('category-ticket/default', array('controller' => 'category-ticket'))?>"><i class="icon-inbox"></i> Todas as Categoria</a></li>
+                                            <li><a href="<?php echo $this->url ('category-ticket/default', array('controller' => 'category-ticket', 'action' => 'new'))?>"><i class="icon-asterisk"></i> Cadastrar</a></li>
+                                        </ul>
+                                </li>
+
+                                <li class="dropdown">
+                                        <a class="dropdown-toggle home-link" data-toggle="dropdown" href="#">Prioridade</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="<?php echo $this->url ('priority/default', array('controller' => 'priority'))?>"><i class="icon-inbox"></i> Todas as Prioridades</a></li>
+                                            <li><a href="<?php echo $this->url ('priority/default', array('controller' => 'priority', 'action' => 'new'))?>"><i class="icon-asterisk"></i> Cadastrar</a></li>
+                                        </ul>
+                                </li>
+
+                                <li class="dropdown">
+                                    <a class="dropdown-toggle home-link" data-toggle="dropdown" href="#">Usuários</i></a>
                                     <ul class="dropdown-menu">
-                                        <li><a href="<?php echo $this->url ('category-ticket/default', array('controller' => 'category-ticket'))?>"><i class="icon-inbox"></i> Todas as Categoria</a></li>
-                                        <li><a href="<?php echo $this->url ('category-ticket/default', array('controller' => 'category-ticket', 'action' => 'new'))?>"><i class="icon-asterisk"></i> Cadastrar</a></li>
+                                        <li><a href="<?php echo $this->url ('user/default', array('controller' => 'user'))?>"><i class="icon-group"></i> Todos usuários</a></li>
+                                        <li><a href="<?php echo $this->url ('user/default', array('controller' => 'user', 'action' => 'new')); ?>"><i class="icon-edit"></i> Cadastrar</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="<?php echo $this->url('type-user/default', array('controller' => 'type-user')); ?>"><i class="icon-asterisk"></i> Todas as categoria de usuário</a></li>
+                                        <li><a href="<?php echo $this->url('type-user/default', array('controller' => 'type-user', 'action' => 'new')); ?>"><i class="icon-asterisk"></i> Cadastrar Categoria de usuário</a></li>
                                     </ul>
-                            </li>
+                                </li>
 
-                            <li class="dropdown">
-                                    <a class="dropdown-toggle home-link" data-toggle="dropdown" href="#">Prioridade</a>
+                                <li class="dropdown">
+                                    <a class="dropdown-toggle home-link" data-toggle="dropdown" href="#">Relatórios</a>
                                     <ul class="dropdown-menu">
-                                        <li><a href="<?php echo $this->url ('priority/default', array('controller' => 'priority'))?>"><i class="icon-inbox"></i> Todas as Prioridades</a></li>
-                                        <li><a href="<?php echo $this->url ('priority/default', array('controller' => 'priority', 'action' => 'new'))?>"><i class="icon-asterisk"></i> Cadastrar</a></li>
+                                        <li><a href=""><i class="icon-group"></i> Usuário</a></li>
+                                        <li><a href=""><i class="icon-inbox"></i> Ticket</a></li>
                                     </ul>
-                            </li>
+                                </li>
 
-                            <li class="dropdown">
-                                <a class="dropdown-toggle home-link" data-toggle="dropdown" href="#">Usuários</i></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="<?php echo $this->url ('user/default', array('controller' => 'user'))?>"><i class="icon-group"></i> Todos usuários</a></li>
-                                    <li><a href="<?php echo $this->url ('user/default', array('controller' => 'user', 'action' => 'new')); ?>"><i class="icon-edit"></i> Cadastrar</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="<?php echo $this->url('type-user/default', array('controller' => 'type-user')); ?>"><i class="icon-asterisk"></i> Todas as categoria de usuário</a></li>
-                                    <li><a href="<?php echo $this->url('type-user/default', array('controller' => 'type-user', 'action' => 'new')); ?>"><i class="icon-asterisk"></i> Cadastrar Categoria de usuário</a></li>
-                                </ul>
-                            </li>
-
-                            <li class="dropdown">
-                                <a class="dropdown-toggle home-link" data-toggle="dropdown" href="#">Relatórios</a>
-                                <ul class="dropdown-menu">
-                                    <li><a href=""><i class="icon-group"></i> Usuário</a></li>
-                                    <li><a href=""><i class="icon-inbox"></i> Ticket</a></li>
-                                </ul>
-                            </li>
+                            <?php endif; ?>
 
                             <!--<li>
                                 <div class="btn-group">
@@ -118,7 +122,20 @@
 
                             <li class="home-user">
                                 <p><?php echo $user['name'] ?></p>
-                                    <img class="img-rounded" src="../img_user/26/a_88870e7fbe.jpg" alt="" />
+                                <?php
+                                /*
+                                    $directory = 'users'.DIRECTORY_SEPARATOR.$user['id'].DIRECTORY_SEPARATOR;
+                                    $iterator = new DirectoryIterator($directory);
+                                    foreach ($iterator as $fileinfo) {
+                                        if ($fileinfo->isFile()) {
+                                            $img = $filenames[$fileinfo->getMTime()] = $fileinfo->getFilename();
+                                        }
+                                    }
+                                    */
+                                ?>
+
+
+                                    <img class="img-rounded" src="../users/<?php //echo $user['id']. "/". $img; ?>" alt="" />
                             </li>
 
                             <li class="dropdown home-conf">

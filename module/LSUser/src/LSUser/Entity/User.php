@@ -86,10 +86,11 @@ class User
    */
   public function __construct(array $options = array())
   {
+    $this->salt = base64_encode(Rand::getBytes(30, true));
+
     $hydrator = new Hydrator\ClassMethods;
     $hydrator->hydrate($options, $this);
 
-    $this->salt = base64_encode(Rand::getBytes(30, true));
     $this->active = true;
   }
 
@@ -217,19 +218,6 @@ class User
   public function getActive()
   {
     return $this->active;
-  }
-
-  /**
-   * Set salt
-   *
-   * @param string $salt
-   * @return User
-   */
-  public function setSalt($salt)
-  {
-    $this->salt = $salt;
-
-    return $this;
   }
 
   /**

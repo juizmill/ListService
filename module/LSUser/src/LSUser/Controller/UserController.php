@@ -53,8 +53,18 @@ class UserController extends CrudController
                 $service = $this->getServiceLocator()->get($this->service);
                 $data = $service->insert($request->getPost()->toArray());
 
-                $this->HandlesImage($data);
+                //Verifica se está vindo alguma imagem do usuário
+                if ($_FILES['image']['name']) {
 
+                    //Cria as pastas de destino
+                    $directory = new HandlesDirectory('public'.DIRECTORY_SEPARATOR.'users', $data->getId());
+                    $directory->createOrigin('public'.DIRECTORY_SEPARATOR.'users')->createIdentity($data->getId());
+
+                    //Faz o upload da imagem
+                    $img = WideImage::loadFromFile($_FILES['image']['tmp_name']);
+                    $newImage = $img->resize(27, 27);
+                    $newImage->saveToFile($directory->getOrigin().DIRECTORY_SEPARATOR.$directory->getIdentity().$_FILES['image']['name']);
+                }
 
                 return $this->redirect()->toRoute($this->route, array('controller' => $this->controller));
             }
@@ -105,8 +115,19 @@ class UserController extends CrudController
                     $service = $this->getServiceLocator()->get($this->service);
                     $service->update($data->toArray());
 
-                    $this->HandlesImage($entity, true);
+                    //Verifica se está vindo alguma imagem do usuário
+                    if ($_FILES['image']['name']) {
 
+                        //Cria as pastas de destino
+                        $directory = new HandlesDirectory('public'.DIRECTORY_SEPARATOR.'users', $param);
+                        $directory->removeDirectory('public'.DIRECTORY_SEPARATOR.'users'.DIRECTORY_SEPARATOR.$param);
+                        $directory->createOrigin('public'.DIRECTORY_SEPARATOR.'users')->createIdentity($param);
+
+                        //Faz o upload da imagem
+                        $img = WideImage::loadFromFile($_FILES['image']['tmp_name']);
+                        $newImage = $img->resize(27, 27);
+                        $newImage->saveToFile($directory->getOrigin().DIRECTORY_SEPARATOR.$directory->getIdentity().$_FILES['image']['name']);
+                    }
 
                     return $this->redirect()->toRoute($this->route, array('controller' => $this->controller));
                 }
