@@ -35,7 +35,6 @@ class User extends AbstractService
      */
     public function insert(array $data)
     {
-
         $typeUser = $this->em->getReference('LSTypeuser\Entity\TypeUser', $data['TypeUse']);
 
         if (get_class($typeUser) == 'LSTypeuser\\Entity\\TypeUser') {
@@ -59,7 +58,6 @@ class User extends AbstractService
      */
     public function update(array $data)
     {
-
         $typeUser = $this->em->getRepository($this->entity)->findOneBy(array('id' => $data['id']));
 
         if ($typeUser) {

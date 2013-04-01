@@ -117,10 +117,6 @@ class User extends Form
             'type' => 'Zend\Form\Element\Hidden',
         ));
 
-        $csrf = new \Zend\Form\Element\Csrf ("security");
-        $csrf->setCsrfValidatorOptions(array('messages'=> array('notSame' => 'Pressione o botão salvar para cadastrar.')));
-        $this->add ($csrf);
-
         //Input Submit
         $this->add (array(
             'name' => 'submit',

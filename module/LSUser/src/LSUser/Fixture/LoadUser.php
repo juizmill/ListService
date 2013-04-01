@@ -3,7 +3,7 @@
 /**
  * Este arquivo é responsável por testar a manipulação de registro no banco de dados.
  * Onde o mesmo se refere a tabela user.
- * 
+ *
  * @author Jesus Vieira E-mail <jesusvieiradelima@gmail.com>
  * @package LSUser\Fixture
  */
@@ -19,7 +19,7 @@ class LoadUser extends AbstractFixture implements OrderedFixtureInterface
 
   /**
    * Carrega o dispositivo de dados com o EntityManager
-   * 
+   *
    * @param \Doctrine\Common\Persistence\ObjectManager $manager
    */
   public function load(\Doctrine\Common\Persistence\ObjectManager $manager)

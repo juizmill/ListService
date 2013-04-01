@@ -301,17 +301,6 @@ class User extends \LSUser\Entity\User implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
-    public function setSalt($salt)
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setSalt', array($salt));
-
-        return parent::setSalt($salt);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function getSalt()
     {
 

@@ -10,10 +10,6 @@ use LSBase\Utils\UploadFile;
 
 use Zend\File\Transfer\Adapter\Http;
 
-use Zend\Authentication\AuthenticationService,
-    Zend\Authentication\Storage\Session as SessionStorage;
-
-
 
 /**
  * TicketController
@@ -37,58 +33,6 @@ class TicketController extends CrudController
   }
 
     /**
-     * indexAction
-     *
-     * Exibe pagina principal.
-     *
-     * @author Jesus Vieira <jesusvieiradelima@gmail.com>
-     * @access public
-     * @return \Zend\View\Model\ViewModel
-     */
-    public function indexAction()
-    {
-
-        $sessionStorage = new SessionStorage("LS");
-        $authService = new AuthenticationService;
-        $authService->setStorage($sessionStorage);
-
-        if ($authService->hasIdentity()) {
-            $user = $authService->getIdentity();
-
-            $userId = $this->getEm()->getReference('LSUser\Entity\User', $user[0]['id']);
-
-            $list = $this->getEm()->getRepository($this->entity)->findBy(array('user' => $userId->getId()));
-
-            $page = $this->params()->fromRoute('page');
-
-
-\Zend\Debug\Debug::dump($list[0]);die;
-
-
-            $paginator = new Paginator(new ArrayAdapter($list[0]));
-            $paginator->setCurrentPageNumber($page)
-                      ->setDefaultItemCountPerPage($this->limitPaginator);
-
-            return new ViewModel(array('data' => $paginator, 'page' => $page));
-
-        }
-
-$a = "
-SELECT t.id, ct.description as category, p.description as priority, t.title, t.date_begin, t.date_end, t.date_estimated, t.sought
-FROM listservice.ticket t
-JOIN listservice.category_ticket ct ON (t.category_ticket_id = ct.id )
-Left JOIN listservice.priority p ON (t.priority_id = p.id )
-WHERE t.active = true AND ct.active = true AND t.user_id = 2
-;
-";
-
-
-
-
-
-    }
-
-    /**
      * newAction
      *
      * Exibe pagina de cadastro.
@@ -99,9 +43,6 @@ WHERE t.active = true AND ct.active = true AND t.user_id = 2
      */
     public function newAction()
     {
-        $idUser = $this->getUserCurrent();
-        $user = $this->getEm()->getReference('LSUser\Entity\User', $idUser[0]->getId());
-
         $form = $this->getServiceLocator()->get($this->form);
 
         if ($this->getRequest()->isPost()) {
