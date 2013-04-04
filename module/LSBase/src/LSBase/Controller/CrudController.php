@@ -182,6 +182,24 @@ abstract class CrudController extends AbstractActionController
     }
 
     /**
+     * getUserCurrent
+     *
+     * @author Jesus Vieira <jesusvieiradelima@gmail.com>
+     * @access public
+     * @return object
+     */
+    public function getUserCurrent()
+    {
+            $sessionStorage = new SessionStorage("LS");
+            $authService = new AuthenticationService;
+            $authService->setStorage($sessionStorage);
+
+            if ($authService->hasIdentity())
+                return $authService->getIdentity();
+    }
+
+
+    /**
      * getEm
      *
      * Prepara o EntityManager

@@ -32,6 +32,7 @@ class Interaction extends Form
             ),
             'attributes' => array(
                 'id' => 'description',
+                'rows' => 3,
             )
         ));
 
@@ -59,6 +60,7 @@ class Interaction extends Form
             'type' => 'Zend\Form\Element\Submit',
             'attributes' => array(
                 'value' => 'Salvar',
+                'class' => 'btn btn-success btn-large clear',
             )
         ));
     }

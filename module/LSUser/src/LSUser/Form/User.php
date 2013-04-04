@@ -84,6 +84,7 @@ class User extends Form
             )
         ));
 
+        /*
         //Input Senha
         $this->add (array(
             'name' => 'image',
@@ -95,6 +96,7 @@ class User extends Form
                 'id' => 'image',
             )
         ));
+        */
 
         //Select Tipo de usuario
         $this->add (array(

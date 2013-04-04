@@ -84,6 +84,9 @@ class UserController extends CrudController
      */
     public function editAction()
     {
+
+        $user = $this->getUserCurrent();
+
         $form = $this->getServiceLocator()->get($this->form);
 
         $param = $this->params()->fromRoute('id', 0);
@@ -101,19 +104,22 @@ class UserController extends CrudController
 
             if ($this->getRequest()->isPost()) {
 
-                $data = $this->getRequest()->getPost();
+                $data = $this->getRequest()->getPost()->toArray();
 
                 //Caso o campo senha ou o campo confirmar senha não seja preenchidos
                 //É informado para validar somente os campos nome, login e tipo de usuário
-                if (! ($data['confirmation'] || $data['password']) )
+                if (! ($data['confirmation'] || $data['password']) ){
                     $form->setValidationGroup('name', 'login', 'TypeUse');
+
+                    unset($data['confirmation'], $data['password']);
+                }
 
                 $form->setData($data);
 
                 if ($form->isValid()) {
 
                     $service = $this->getServiceLocator()->get($this->service);
-                    $service->update($data->toArray());
+                    $service->update($data);
 
                     //Verifica se está vindo alguma imagem do usuário
                     if ($_FILES['image']['name']) {
@@ -129,11 +135,17 @@ class UserController extends CrudController
                         $newImage->saveToFile($directory->getOrigin().DIRECTORY_SEPARATOR.$directory->getIdentity().$_FILES['image']['name']);
                     }
 
-                    return $this->redirect()->toRoute($this->route, array('controller' => $this->controller));
+                    if($user[0]['category_id'] == 1)
+                        return $this->redirect()->toRoute($this->route, array('controller' => $this->controller));
+                    else
+                        return $this->redirect()->toRoute('home', array('controller' => 'home'));
                 }
             }
         } else {
-            return $this->redirect()->toRoute($this->route, array('controller' => $this->controller));
+            if($user[0]['category_id'] == 1)
+                return $this->redirect()->toRoute($this->route, array('controller' => $this->controller));
+            else
+                return $this->redirect()->toRoute('home', array('controller' => 'home'));
         }
 
         return new ViewModel(array('form' => $form, 'id' => $param));
@@ -239,31 +251,6 @@ class UserController extends CrudController
 
         exit();
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     /**

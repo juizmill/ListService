@@ -148,6 +148,26 @@ class TicketRepository extends EntityRepository
         return $this->_em->createQuery($query)->getResult();
     }
 
+    /**
+     * [findAllTicket description]
+     * @param  [type] $user [description]
+     * @return [type]       [description]
+     */
+    public function findAllTicket($user)
+    {
+
+        $adm = "SELECT type_use_id FROM user WHERE id = {$user} AND active = true";
+        $is_adm = $this->_em->getConnection()->executeQuery($adm)->fetchAll();
+
+        if ($is_adm[0]['type_use_id'] == 1)
+            $query = "SELECT t.id, t.active, ct.description AS category, IFNULL(p.description, 'Sem Prioridade' ) AS priority, t.title, DATE_FORMAT(t.date_begin, '%d/%m/%Y') AS date_begin , DATE_FORMAT(t.date_end, '%d/%m/%Y') AS date_end, DATE_FORMAT(t.date_estimated, '%d/%m/%Y') AS date_estimated, t.sought, IF(t.date_begin, IF(t.date_estimated, IF(t.date_end, '<span class=\"label label-success\">Fechado</span>', '<span class=\"label label-info\">Em Andamento</span>'), '<span class=\"label label-warning\">Em Análise</span>'), 'OPS Data inicio não foi definida!' ) AS status FROM ticket t JOIN category_ticket ct ON ( t.category_ticket_id = ct.id ) LEFT JOIN priority p ON (t.priority_id = p.id) JOIN interaction i ON (t.id = i.ticket_id) GROUP BY t.id ORDER BY t.id DESC";
+        else
+            $query = "SELECT t.id, t.active, ct.description AS category, IFNULL(p.description, 'Sem Prioridade' ) AS priority, t.title, DATE_FORMAT(t.date_begin, '%d/%m/%Y') AS date_begin , DATE_FORMAT(t.date_end, '%d/%m/%Y') AS date_end, DATE_FORMAT(t.date_estimated, '%d/%m/%Y') AS date_estimated, t.sought, IF(t.date_begin, IF(t.date_estimated, IF(t.date_end, '<span class=\"label label-success\">Fechado</span>', '<span class=\"label label-info\">Em Andamento</span>'), '<span class=\"label label-warning\">Em Análise</span>'), 'OPS Data inicio não foi definida!' ) AS status FROM ticket t JOIN category_ticket ct ON ( t.category_ticket_id = ct.id ) LEFT JOIN priority p ON (t.priority_id = p.id) JOIN interaction i ON (t.id = i.ticket_id) WHERE t.active = true AND i.user_id = {$user} GROUP BY t.id ORDER BY t.id DESC";
+
+        return $this->_em->getConnection()->executeQuery($query)->fetchAll();
+
+    }
+
 
 
 }

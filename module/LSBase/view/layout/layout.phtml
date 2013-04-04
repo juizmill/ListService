@@ -13,6 +13,7 @@
         <?php
 
         echo $this->headScript ()->prependFile ($this->basePath () . '/js/html5.js', 'text/javascript', array('conditional' => 'lt IE 9',))
+                ->prependFile ($this->basePath () . '/js/bootstrap-datepicker.js')
                 ->prependFile ($this->basePath () . '/js/bootstrap.min.js')
                 ->prependFile ($this->basePath () . '/js/jquery.min.js')
         ?>
@@ -21,21 +22,54 @@
         <?php
         echo $this->headLink (array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath () . '/images/favicon.ico'))
                 ->prependStylesheet ($this->basePath () . '/css/bootstrap-responsive.min.css')
+                ->prependStylesheet ($this->basePath () . '/css/datepicker.css')
                 ->prependStylesheet ($this->basePath () . '/css/style.css')
                 ->prependStylesheet ($this->basePath () . '/css/bootstrap.min.css')
         ?>
-
 
         <link rel="stylesheet" href="/css/font-awesome.min.css">
 
         <script type="text/javascript">
             $(document).ready(function(){
+
+                var ID;
+
                 $('.home-link').click(function(){
                     $('.home-link').parent().removeClass('active');
                     $(this).parent().addClass('active');
                 });
 
+                $('.datepicke').click(function(){
+                    ID = $(this).attr("href");
+                });
+
                 $('.active-listservice').tooltip();
+                $('.datepicke').datepicker().on('changeDate', function(ev){
+
+                    var newDate = new Date(ev.date);
+                    var dia = newDate.getDate();
+                    var mes = newDate.getMonth() + 1;
+                    var ano = newDate.getFullYear();
+
+                    if (dia < 9){
+                        dia = "0"+dia;
+                    }
+
+                    if (mes < 9){
+                        mes = "0"+mes;
+                    }
+
+                    var newData = ano +"-"+ mes +"-"+ dia;
+
+                    $.ajax({
+                      type: "POST",
+                      url: "<?php echo $this->url('ticket/default', array('controller' => 'ticket', 'action' => 'dateEstimated')); ?>",
+                      data: { date: newData, id: ID}
+                    }).done(function(data) {
+                      window.location.reload();
+                    });
+
+                });
             });
         </script>
 
@@ -62,10 +96,19 @@
                             <li class="dropdown">
                                     <a class="dropdown-toggle home-link" data-toggle="dropdown" href="#">Ticket</a>
                                     <ul class="dropdown-menu">
+
+                                    <?php if (($user['id'] == 1) && ($user['category'] == 'Administrador')): ?>
+                                        <li><a href="<?php echo $this->url ('ticket/default', array('controller' => 'ticket'))?>"><i class="icon-inbox"></i> Todos os Ticket's </a></li>
+                                        <li><a href="<?php echo $this->url ('ticket/default', array('controller' => 'ticket', 'action' => 'new'))?>"><i class="icon-edit"></i> Cadastrar</a></li>
+                                        <li><a href=""><i class="icon-bookmark-empty"></i> Resolvidos </a></li>
+                                        <li><a href=""><i class="icon-bookmark"></i> Em andamento </a></li>
+                                    <?php else: ?>
                                         <li><a href="<?php echo $this->url ('ticket/default', array('controller' => 'ticket'))?>"><i class="icon-inbox"></i> Menus Ticket's <i class="badge badge-inverse"> <?php echo $this->TotalMyTicket(); ?></i></a></li>
                                         <li><a href="<?php echo $this->url ('ticket/default', array('controller' => 'ticket', 'action' => 'new'))?>"><i class="icon-edit"></i> Cadastrar</a></li>
                                         <li><a href=""><i class="icon-bookmark-empty"></i> Resolvidos <i class="badge badge-success"> <?php echo $this->TotalMyTicketResolved();?></i></a></li>
                                         <li><a href=""><i class="icon-bookmark"></i> Em andamento <i class="badge badge-warning"> <?php echo $this->TotalMyTicketOngoing(); ?></i></a></li>
+                                    <?php endif; ?>
+
                                     </ul>
                             </li>
 
@@ -135,7 +178,7 @@
                                 ?>
 
 
-                                    <img class="img-rounded" src="../users/<?php //echo $user['id']. "/". $img; ?>" alt="" />
+                                    <!--<img class="img-rounded" src="../users/<?php //echo $user['id']. "/". $img; ?>" alt="" />-->
                             </li>
 
                             <li class="dropdown home-conf">

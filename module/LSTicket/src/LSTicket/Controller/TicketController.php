@@ -4,7 +4,8 @@ namespace LSTicket\Controller;
 
 use LSBase\Controller\CrudController;
 use Zend\View\Model\ViewModel;
-
+use Zend\Paginator\Paginator,
+    Zend\Paginator\Adapter\ArrayAdapter;
 
 use LSBase\Utils\UploadFile;
 
@@ -33,6 +34,31 @@ class TicketController extends CrudController
   }
 
     /**
+     * indexAction
+     *
+     * Exibe pagina principal.
+     *
+     * @author Jesus Vieira <jesusvieiradelima@gmail.com>
+     * @access public
+     * @return \Zend\View\Model\ViewModel
+     */
+    public function indexAction()
+    {
+
+        $user = $this->getUserCurrent();
+        $list = $this->getEm()->getRepository($this->entity)->findAllTicket($user[0]['id']);
+
+        $page = $this->params()->fromRoute('page');
+
+        $paginator = new Paginator(new ArrayAdapter($list));
+        $paginator->setCurrentPageNumber($page)
+                ->setDefaultItemCountPerPage($this->limitPaginator);
+
+        return new ViewModel(array('data' => $paginator, 'page' => $page));
+
+    }
+
+    /**
      * newAction
      *
      * Exibe pagina de cadastro.
@@ -43,6 +69,7 @@ class TicketController extends CrudController
      */
     public function newAction()
     {
+
         $form = $this->getServiceLocator()->get($this->form);
 
         if ($this->getRequest()->isPost()) {
@@ -53,7 +80,6 @@ class TicketController extends CrudController
 
                 //Registra o User
                 $data = $this->getRequest()->getPost()->toArray();
-                $data['user'] = $user;
 
                 //Registra o ticket
                 $service = $this->getServiceLocator()->get($this->service);
@@ -61,11 +87,15 @@ class TicketController extends CrudController
 
                 //Registra a Interação
                 if ($ticket){
+
+                    $user = $this->getUserCurrent();
+                    $entityUser = $this->getEm()->getRepository('LSUser\Entity\User')->find($user[0]["id"]);
+
                     $service2 = $this->getServiceLocator()->get('LSInteraction\Service\Interaction');
                     $interaction = $service2->insert(array(
-                                                'description' => $data['description'],
-                                                'ticket' => $ticket,
-                                                'user' => $user));
+                                    'description' => $data['description'],
+                                    'ticket' => $ticket,
+                                    'user' => $entityUser));
                 }
 
                 //Registra o arquivo
@@ -114,6 +144,119 @@ class TicketController extends CrudController
             $this->getResponse()->setStatusCode(404);
         }
 
+    }
+
+    /**
+     * activeAction
+     *
+     * Ativa ou desativa o registro
+     *
+     * @author Jesus Vieira <jesusvieiradelima@gmail.com>
+     * @access public
+     * @return redirect current controller
+     */
+    public function activeAction()
+    {
+        $id = $this->params()->fromRoute('id', 0);
+
+        $entity = $this->getEm()->getRepository($this->entity)->findOneBy(array('id' => $id));
+
+        if( $entity ) {
+
+            $data = $entity->toArray();
+
+            if( $data['active'] == 1 )
+                $data['active'] = 0;
+            else
+                $data['active'] = 1;
+
+            $service = $this->getServiceLocator()->get($this->service);
+
+            if( $service->updateActive($data) )
+                return $this->redirect()->toRoute($this->route, array('controller' => $this->controller));
+            else
+                $this->getResponse()->setStatusCode(404);
+        }
+    }
+
+
+    public function dateEstimatedAction()
+    {
+
+        if ($this->getRequest()->isPost()) {
+
+            if ($this->getRequest()->isXmlHttpRequest()) {
+
+                $data = $this->getRequest()->getPost()->toArray();
+
+                $service = $this->getServiceLocator()->get($this->service);
+                if ($service->update($data))
+                    \Zend\Debug\Debug::dump("OK");die;
+            }
+        }
+
+        exit();
+
+    }
+
+    /**
+     * categoryTicketAction
+     *
+     * Exibe pagina para definir o tipo de usuario
+     *
+     * @author Jesus Vieira <jesusvieiradelima@gmail.com>
+     * @access public
+     * @return \Zend\View\Model\ViewModel
+     */
+    public function agenteAction()
+    {
+
+        $viewModel = new ViewModel();
+        $viewModel->setTerminal(true);
+
+        $param = $this->params()->fromRoute('id', 0);
+        $list = $this->getEm()->getRepository('LSUser\Entity\User')->findAll();
+
+        $ticket = $this->getEm()->getRepository($this->entity)->find(array('id' => $param));
+
+        if ($list){
+
+            if ($ticket->getUser())
+                return $viewModel->setVariables(array('data' => $list, 'id' => $param, 'user' => $ticket->getUser()->getId()));
+            else
+                return $viewModel->setVariables(array('data' => $list, 'id' => $param));
+        }else{
+            return $this->redirect()->toRoute($this->route, array('controller' => $this->controller));
+        }
+    }
+
+    /**
+     * registreAgenteAction
+     *
+     * Registra o usuário em determinada categoria de ticket
+     *
+     * @author Jesus Vieira <jesusvieiradelima@gmail.com>
+     * @access public
+     * @return \Zend\View\Model\ViewModel
+     */
+    public function registreAgenteAction()
+    {
+
+        if ($this->getRequest()->isPost()) {
+
+            if ($this->getRequest()->isXmlHttpRequest()) {
+
+                $service = $this->getServiceLocator()->get('LSTicket\Service\Ticket');
+
+                $data = $service->updateUser($this->getRequest()->getPost()->toArray());
+
+                if (! $data)
+                    return $this->getResponse()->setContent(Json::encode(array('erro' => 'Não foi possivel alterar.')));
+
+            }
+        }
+
+        exit();
     }
 
     /**

@@ -48,11 +48,6 @@ class Ticket extends AbstractService
         }
     }
 
-
-
-
-    #REMOVER O UPDATE NÃO TERÁ COMO ALTERAR O TICKET DEPOIS DE CADASTRADO.
-
     /**
      * update
      *
@@ -65,18 +60,76 @@ class Ticket extends AbstractService
      */
     public function update(array $data)
     {
+        $ticket = $this->em->getRepository($this->entity)->find($data['id']);
 
-        $category = $this->em->getReference('LSCategoryticket\Entity\CategoryTicket', $data['categoryTicket']);
+        if ($ticket) {
 
-        //\Zend\Debug\Debug::dump($category);die;
+            $data['categoryTicket'] = $ticket->getCategoryTicket();
+            $data['dateEstimated'] = new \DateTime($data['date']);
+            unset($data['date']);
 
-        if ($category) {
-
-            $data['categoryTicket'] = $category;
             return parent::update($data);
 
         } else {
             return false;
         }
     }
+
+    /**
+     * update
+     *
+     * Atualiza um registro
+     *
+     * @author Jesus Vieira <jesusvieiradelima@gmail.com>
+     * @param array $data
+     * @access public
+     * @return $entity
+     */
+    public function updateActive(array $data)
+    {
+        $ticket = $this->em->getRepository($this->entity)->find($data['id']);
+
+        if ($ticket) {
+
+            $data['categoryTicket'] = $ticket->getCategoryTicket();
+
+            return parent::update($data);
+
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * updateUser
+     *
+     * Atualiza um registro
+     *
+     * @author Jesus Vieira <jesusvieiradelima@gmail.com>
+     * @param array $data
+     * @access public
+     * @return $entity
+     */
+    public function updateUser(array $data)
+    {
+
+        $ticket = $this->em->getRepository($this->entity)->find($data['id']);
+
+        if ($ticket) {
+
+            $user = $this->em->getRepository("LSUser\Entity\User")->find($data['agente']);
+
+            $data['user'] = $user;
+
+            return parent::update($data);
+
+        } else {
+            return false;
+        }
+    }
+
+
+
+
+
 }

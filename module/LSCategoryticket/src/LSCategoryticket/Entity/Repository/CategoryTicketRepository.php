@@ -21,7 +21,7 @@ class CategoryTicketRepository extends EntityRepository
      */
     public function fetchPairs ()
     {
-        $categoryTickets = $this->findAll ();
+        $categoryTickets = $this->findBy(array('active' => true));
         $array = array();
 
         foreach ( $categoryTickets as $categoryTicket )

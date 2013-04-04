@@ -41,7 +41,9 @@ class InteractionController extends CrudController
     public function newAction()
     {
 
-        $user = $this->getEm()->getReference('LSUser\Entity\User', 1);//REMOVER DEPOIS QUE CRIAR O AUTENTICATION
+        $userId = $this->getUserCurrent();
+
+        $user = $this->getEm()->getReference('LSUser\Entity\User', $userId[0]['id']);
 
         $form = new $this->form();
 
@@ -81,7 +83,7 @@ class InteractionController extends CrudController
                 }
             }
 
-            return new ViewModel(array('form' => $form, 'ticket' => $ticket, 'description' => $description[0]));
+            return new ViewModel(array('form' => $form, 'ticket' => $ticket, 'description' => $description));
         }else{
             return $this->redirect()->toRoute('ticket', array('controller' => 'ticket'));
         }

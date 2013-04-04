@@ -3,6 +3,8 @@
 namespace LSTypeuser\Controller;
 
 use Zend\View\Model\ViewModel;
+use Zend\Paginator\Paginator,
+    Zend\Paginator\Adapter\ArrayAdapter;
 use LSBase\Controller\CrudController;
 
 /**
@@ -28,10 +30,34 @@ class TypeUserController extends CrudController
     }
 
     /**
+     * indexAction
+     *
+     * Exibe pagina principal.
+     *
+     * @author Jesus Vieira <jesusvieiradelima@gmail.com>
+     * @access public
+     * @return \Zend\View\Model\ViewModel
+     */
+    public function indexAction()
+    {
+
+        $list = $this->getEm()->getRepository($this->entity)->findAll();
+
+        $page = $this->params()->fromRoute('page');
+
+        $paginator = new Paginator(new ArrayAdapter($list));
+        $paginator->setCurrentPageNumber($page)
+                ->setDefaultItemCountPerPage($this->limitPaginator);
+
+        return new ViewModel(array('data' => $paginator, 'page' => $page));
+
+    }
+
+    /**
      * newAction
-     * 
+     *
      * Exibe pagina de cadastro.
-     * 
+     *
      * @author Jesus Vieira <jesusvieiradelima@gmail.com>
      * @access public
      * @return \Zend\View\Model\ViewModel
@@ -70,9 +96,9 @@ class TypeUserController extends CrudController
 
     /**
      * editAction
-     * 
+     *
      * Exibe pagina para editar o registro.
-     * 
+     *
      * @author Jesus Vieira <jesusvieiradelima@gmail.com>
      * @access public
      * @return \Zend\View\Model\ViewModel

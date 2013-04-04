@@ -39,6 +39,9 @@ div.container h1 a {
 form { padding: 5px 15px }
 form input[type="submit"] { margin-top:25px }
 form li { list-style: none }
+form#interaction #description { width:415px }
+
+form .clear{ display:block }
 
 /*Table*/
 table caption { margin: 45px 0; font-size:18pt; font-weight: bold; text-shadow:0 1px 0 #fff; color:#565656; }
