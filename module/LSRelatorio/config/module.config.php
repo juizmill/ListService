@@ -14,9 +14,20 @@ return array(
                     ),
                     'defaults' => array(
                         'controller' => 'LSRelatorio\Controller\Relatorio',
-                        'action' => 'index',
                     ),
                 ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'default' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '[/:action[/:id]]',
+                            'constraints' => array(
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            )
+                        ),
+                    ),
+                 ),
             ),
         )
     ),

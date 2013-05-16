@@ -25,7 +25,7 @@ class RelatorioController extends CrudController
     }
 
     /**
-     * indexAction
+     * usuarioAction
      *
      * Exibe pagina principal.
      *
@@ -33,13 +33,31 @@ class RelatorioController extends CrudController
      * @access public
      * @return \Zend\View\Model\ViewModel
      */
-    public function indexAction()
+    public function usuarioAction()
     {
-        $TicketOpen = $this->getEm()->getRepository('LSTicket\Entity\Ticket')->TotalTicketOpen();
-        $TicketResolved = $this->getEm()->getRepository('LSTicket\Entity\Ticket')->TotalTicketResolved();
-        $TicketOngoing = $this->getEm()->getRepository('LSTicket\Entity\Ticket')->TotalTicketOngoing();
-
-        return new ViewModel(array('ticketOpen' => $TicketOpen[0][1], 'ticketResolved' => $TicketResolved[0][1], 'ticketOngoing' => $TicketOngoing[0][1]));
+        $user = $this->getEm()->getRepository('LSUser\Entity\User')->findAll();
+	    
+        return new ViewModel(array('user' => $user));
 
     }
+
+    /**
+     * ticketAction
+     *
+     * Exibe pagina principal.
+     *
+     * @author Jesus Vieira <jesusvieiradelima@gmail.com>
+     * @access public
+     * @return \Zend\View\Model\ViewModel
+     */	
+	public function ticketAction()
+	{
+        $ticket = $this->getEm()->getRepository('LSTicket\Entity\Ticket')->findAll();
+       
+        return new ViewModel(array('ticket' => $ticket));
+
+	}
+	
+	
+	
 }

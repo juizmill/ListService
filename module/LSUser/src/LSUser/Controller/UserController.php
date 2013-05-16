@@ -53,6 +53,7 @@ class UserController extends CrudController
                 $service = $this->getServiceLocator()->get($this->service);
                 $data = $service->insert($request->getPost()->toArray());
 
+				/*SS
                 //Verifica se está vindo alguma imagem do usuário
                 if ($_FILES['image']['name']) {
 
@@ -64,7 +65,7 @@ class UserController extends CrudController
                     $img = WideImage::loadFromFile($_FILES['image']['tmp_name']);
                     $newImage = $img->resize(27, 27);
                     $newImage->saveToFile($directory->getOrigin().DIRECTORY_SEPARATOR.$directory->getIdentity().$_FILES['image']['name']);
-                }
+                }*/
 
                 return $this->redirect()->toRoute($this->route, array('controller' => $this->controller));
             }
@@ -88,6 +89,12 @@ class UserController extends CrudController
         $user = $this->getUserCurrent();
 
         $form = $this->getServiceLocator()->get($this->form);
+
+
+        //$form2 = new \LSUser\Form\User();
+        $form->remove("TypeUse"); //Remove o campo tipo de usuário.
+
+
 
         $param = $this->params()->fromRoute('id', 0);
 
@@ -121,6 +128,7 @@ class UserController extends CrudController
                     $service = $this->getServiceLocator()->get($this->service);
                     $service->update($data);
 
+					/*
                     //Verifica se está vindo alguma imagem do usuário
                     if ($_FILES['image']['name']) {
 
@@ -133,7 +141,7 @@ class UserController extends CrudController
                         $img = WideImage::loadFromFile($_FILES['image']['tmp_name']);
                         $newImage = $img->resize(27, 27);
                         $newImage->saveToFile($directory->getOrigin().DIRECTORY_SEPARATOR.$directory->getIdentity().$_FILES['image']['name']);
-                    }
+                    }*/
 
                     if($user[0]['category_id'] == 1)
                         return $this->redirect()->toRoute($this->route, array('controller' => $this->controller));

@@ -46,13 +46,24 @@
         </div>
 
         <div class="thumbnail ticket-home">
-<?php //\Zend\Debug\Debug::dump($this->description[0]->getUser()->getName() );die; ?>
+<?php //\Zend\Debug\Debug::dump($this->archive);die; ?>
 
 
           <?php foreach ($this->description as $value): ?>
             <div class="thumbnail" style="background:#fff">
                 <strong><?php echo $value->getUser()->getName(); ?>: </strong>
                 <p><?php echo $value->getDescription() ?></p>
+                
+                <?php foreach ($this->archive as $archive): ?>
+                
+                
+                <?php if ($archive->getIntereaction()->getId() == $value->getId()): ?>
+                	<a href="../../../archives/<?php echo $value->getTicket()->getId()?>/<?php echo $value->getId();?>/<?php echo $archive->getPathFile() ?>"><?php echo $archive->getPathFile(); ?></a>
+                <?php endif; ?>
+                
+                <?php endforeach; ?>
+                
+                
             </div>
           <?php endforeach; ?>
 

@@ -94,7 +94,7 @@ class Archive
   public function setInteraction(\LSInteraction\Entity\Interaction $interaction = null)
   {
     $this->interaction = $interaction;
-
+	
     return $this;
   }
 
@@ -105,7 +105,7 @@ class Archive
    */
   public function getIntereaction()
   {
-    return $this->intereaction;
+    return $this->interaction;
   }
 
   /**

@@ -215,7 +215,7 @@ class TicketController extends CrudController
         $viewModel->setTerminal(true);
 
         $param = $this->params()->fromRoute('id', 0);
-        $list = $this->getEm()->getRepository('LSUser\Entity\User')->findAll();
+        $list = $this->getEm()->getRepository('LSUser\Entity\User')->findBy(array('typeUse' => 2, 'active' => 1));
 
         $ticket = $this->getEm()->getRepository($this->entity)->find(array('id' => $param));
 

@@ -91,7 +91,7 @@
                     <div class="nav-collapse collapse">
                         <ul class="nav">
 
-                            <li><a class="home-link" href="<?php echo $this->url ('home', array('controller' => 'home'))?>">Home</a></li>
+                            <!--<li><a class="home-link" href="<?php echo $this->url ('home', array('controller' => 'home'))?>">Home</a></li>-->
 
                             <li class="dropdown">
                                     <a class="dropdown-toggle home-link" data-toggle="dropdown" href="#">Ticket</a>
@@ -100,13 +100,11 @@
                                     <?php if (($user['id'] == 1) && ($user['category'] == 'Administrador')): ?>
                                         <li><a href="<?php echo $this->url ('ticket/default', array('controller' => 'ticket'))?>"><i class="icon-inbox"></i> Todos os Ticket's </a></li>
                                         <li><a href="<?php echo $this->url ('ticket/default', array('controller' => 'ticket', 'action' => 'new'))?>"><i class="icon-edit"></i> Cadastrar</a></li>
-                                        <li><a href=""><i class="icon-bookmark-empty"></i> Resolvidos </a></li>
-                                        <li><a href=""><i class="icon-bookmark"></i> Em andamento </a></li>
                                     <?php else: ?>
-                                        <li><a href="<?php echo $this->url ('ticket/default', array('controller' => 'ticket'))?>"><i class="icon-inbox"></i> Menus Ticket's <i class="badge badge-inverse"> <?php echo $this->TotalMyTicket(); ?></i></a></li>
+                                    	                                    	
+                                        <li><a href="<?php echo $this->url ('ticket/default', array('controller' => 'ticket'))?>"><i class="icon-inbox"></i> Ticket's</a></li>
                                         <li><a href="<?php echo $this->url ('ticket/default', array('controller' => 'ticket', 'action' => 'new'))?>"><i class="icon-edit"></i> Cadastrar</a></li>
-                                        <li><a href=""><i class="icon-bookmark-empty"></i> Resolvidos <i class="badge badge-success"> <?php echo $this->TotalMyTicketResolved();?></i></a></li>
-                                        <li><a href=""><i class="icon-bookmark"></i> Em andamento <i class="badge badge-warning"> <?php echo $this->TotalMyTicketOngoing(); ?></i></a></li>
+
                                     <?php endif; ?>
 
                                     </ul>
@@ -144,8 +142,8 @@
                                 <li class="dropdown">
                                     <a class="dropdown-toggle home-link" data-toggle="dropdown" href="#">Relatórios</a>
                                     <ul class="dropdown-menu">
-                                        <li><a href=""><i class="icon-group"></i> Usuário</a></li>
-                                        <li><a href=""><i class="icon-inbox"></i> Ticket</a></li>
+                                        <li><a href="<?php echo $this->url('relatorio/default', array('controller' => 'relatorio', 'action' => 'usuario')); ?>"><i class="icon-group"></i> Usuário</a></li>
+                                        <li><a href="<?php echo $this->url('relatorio/default', array('controller' => 'relatorio', 'action' => 'ticket')); ?>"><i class="icon-inbox"></i> Ticket</a></li>
                                     </ul>
                                 </li>
 

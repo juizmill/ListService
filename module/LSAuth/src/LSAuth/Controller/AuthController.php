@@ -46,7 +46,7 @@ class AuthController extends AbstractActionController
 
                     $identity = $auth->getIdentity();
                     $sessionStorage->write($identity['user'], null);
-                    return $this->redirect()->toRoute("home", array('controller' => 'home'));
+                    return $this->redirect()->toRoute("ticket", array('controller' => 'ticket'));
 
                 }else{
 
