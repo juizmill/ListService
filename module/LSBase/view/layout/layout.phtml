@@ -61,13 +61,33 @@
 
                     var newData = ano +"-"+ mes +"-"+ dia;
 
-                    $.ajax({
-                      type: "POST",
-                      url: "<?php echo $this->url('ticket/default', array('controller' => 'ticket', 'action' => 'dateEstimated')); ?>",
-                      data: { date: newData, id: ID}
-                    }).done(function(data) {
-                      window.location.reload();
-                    });
+                    var dataAtual = new Date();
+                    var diaAtual = dataAtual.getDate();
+                    var mesAtual = dataAtual.getMonth() + 1;
+                    var anoAtual = dataAtual.getFullYear();
+
+                    if (diaAtual < 9){
+                        diaAtual = "0"+diaAtual;
+                    }
+
+                    if (mesAtual < 9){
+                        mesAtual = "0"+mesAtual;
+                    }
+
+                    var dateAtual = anoAtual+'-'+mesAtual+'-'+diaAtual;
+
+                    if ( newData < dateAtual){
+                        $(this).datepicker('hide');
+                        $("#myModalData").modal();
+                    }else{
+                        $.ajax({
+                            type: "POST",
+                            url: "<?php echo $this->url('ticket/default', array('controller' => 'ticket', 'action' => 'dateEstimated')); ?>",
+                            data: { date: newData, id: ID}
+                        }).done(function(data) {
+                                window.location.reload();
+                        });
+                    }
 
                 });
             });
@@ -201,5 +221,19 @@
             </footer>
         </div> <!-- /container -->
         <?php echo $this->inlineScript () ?>
+
+
+        <!-- Modal -->
+        <div id="myModalData" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+                <button type="button" class="close exit" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel">Atenção</h3>
+            </div>
+            <div class="modal-body"><p>A data estimada não pode ser menor que a data atual.</p></div>
+            <div class="modal-footer">
+                <button class="btn exit" data-dismiss="modal" aria-hidden="true">Fechar</button>
+            </div>
+        </div>
+
     </body>
 </html>

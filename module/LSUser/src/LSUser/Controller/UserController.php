@@ -90,9 +90,12 @@ class UserController extends CrudController
 
         $form = $this->getServiceLocator()->get($this->form);
 
+       //
 
-        //$form2 = new \LSUser\Form\User();
-        $form->remove("TypeUse"); //Remove o campo tipo de usuário.
+        $categoria = $user[0]["category_id"];
+
+        if ( $categoria != 1)
+            $form->remove("TypeUse"); //Remove o campo tipo de usuário.
 
 
 
@@ -105,7 +108,8 @@ class UserController extends CrudController
 
             $array = $entity->toArray();
 
-            $array['TypeUse'] = $array['type_use']->getId();
+            if ($user[0]["category_id"] == 1)
+                $array['TypeUse'] = $array['type_use']->getId();
 
             $form->setData($array);
 
@@ -116,7 +120,10 @@ class UserController extends CrudController
                 //Caso o campo senha ou o campo confirmar senha não seja preenchidos
                 //É informado para validar somente os campos nome, login e tipo de usuário
                 if (! ($data['confirmation'] || $data['password']) ){
-                    $form->setValidationGroup('name', 'login', 'TypeUse');
+                    if ($user[0]["category_id"] == 1)
+                        $form->setValidationGroup('name', 'login', 'TypeUse');
+                    else
+                        $form->setValidationGroup('name', 'login');
 
                     unset($data['confirmation'], $data['password']);
                 }
@@ -146,14 +153,14 @@ class UserController extends CrudController
                     if($user[0]['category_id'] == 1)
                         return $this->redirect()->toRoute($this->route, array('controller' => $this->controller));
                     else
-                        return $this->redirect()->toRoute('home', array('controller' => 'home'));
+                        return $this->redirect()->toRoute('ticket', array('controller' => 'ticket'));
                 }
             }
         } else {
             if($user[0]['category_id'] == 1)
                 return $this->redirect()->toRoute($this->route, array('controller' => $this->controller));
             else
-                return $this->redirect()->toRoute('home', array('controller' => 'home'));
+                return $this->redirect()->toRoute('ticket', array('controller' => 'ticket'));
         }
 
         return new ViewModel(array('form' => $form, 'id' => $param));

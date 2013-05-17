@@ -10,6 +10,7 @@ vendor
 vendor/
 .directory
 arquivo
+archives
 .settings
 .metadata
 revista.sublime-project
