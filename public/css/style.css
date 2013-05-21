@@ -56,4 +56,7 @@ table tbody tr th { font-weight: normal !important }
 #myModalLabel em { font-size:9pt; color:#1c5772; text-shadow:0 1px 0 #fff; }
 
 
+/*Interacao*/
+.ticket-interacao { max-height: 600px !important; overflow-y: auto; overflow-x: hidden;}
+
 

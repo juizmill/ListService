@@ -10,6 +10,7 @@ use Zend\Paginator\Paginator,
 use LSBase\Utils\UploadFile;
 
 use Zend\File\Transfer\Adapter\Http;
+use Zend\XmlRpc\Value\DateTime;
 
 
 /**
@@ -259,6 +260,116 @@ class TicketController extends CrudController
 
         exit();
     }
+
+
+    /**
+     * priorityAction
+     *
+     * Exibe pagina para definir o tipo de prioridade
+     *
+     * @author Jesus Vieira <jesusvieiradelima@gmail.com>
+     * @access public
+     * @return \Zend\View\Model\ViewModel
+     */
+    public function priorityAction()
+    {
+        $viewModel = new ViewModel();
+        $viewModel->setTerminal(true);
+
+        $param = $this->params()->fromRoute('id', 0);
+
+        $list = $this->getEm()->getRepository('LSPriority\Entity\Priority')->findBy(array('active' => true));
+
+        $priority = $this->getEm()->getRepository($this->entity)->find(array('id' => $param));
+
+        if ($list){
+
+            if ($priority->getPriority())
+                return $viewModel->setVariables(array('data' => $list, 'id' => $param, 'priority' => $priority->getPriority()->getId()));
+            else
+                return $viewModel->setVariables(array('data' => $list, 'id' => $param));
+        }else{
+            return $this->redirect()->toRoute($this->route, array('controller' => $this->controller));
+        }
+    }
+
+    /**
+     * registrePriorityAction
+     *
+     * Registra a prioridade no ticket
+     *
+     * @author Jesus Vieira <jesusvieiradelima@gmail.com>
+     * @access public
+     * @return \Zend\View\Model\ViewModel
+     */
+    public function registrePriorityAction()
+    {
+
+        if ($this->getRequest()->isPost()) {
+
+            if ($this->getRequest()->isXmlHttpRequest()) {
+
+                $service = $this->getServiceLocator()->get('LSTicket\Service\Ticket');
+
+                $data = $service->updatePriority($this->getRequest()->getPost()->toArray());
+
+                if (! $data)
+                    return $this->getResponse()->setContent(Json::encode(array('erro' => 'Não foi possivel alterar.')));
+
+            }
+        }
+
+        exit();
+    }
+
+
+    /**
+     * closeAction
+     *
+     * Fecha o ticket
+     *
+     * @author Jesus Vieira <jesusvieiradelima@gmail.com>
+     * @access public
+     * @return \Zend\View\Model\ViewModel
+     */
+    public function closeAction()
+    {
+
+        $id = $this->params()->fromRoute('id', 0);
+
+        $entity = $this->getEm()->getRepository($this->entity)->findOneBy(array('id' => $id));
+
+        if( $entity ) {
+
+            $data = $entity->toArray();
+
+            if (is_null($data['date_end']) && is_null($data['date_estimated']) ){
+                $data['date_end'] = new \DateTime('now');
+                $data['date_estimated'] = new \DateTime('now');
+            }else if (is_null($data['date_end'])){
+                $data['date_end'] = new \DateTime('now');
+            }else{
+                $data['date_end'] = null;
+                $data['date_estimated'] =  null;
+            }
+
+            $service = $this->getServiceLocator()->get($this->service);
+
+            if( $service->updateActive($data) )
+                return $this->redirect()->toRoute($this->route, array('controller' => $this->controller));
+            else
+                $this->getResponse()->setStatusCode(404);
+        }else{
+            return $this->redirect()->toRoute($this->route, array('controller' => $this->controller));
+        }
+
+    }
+
+
+
+
+
+
 
     /**
      * delTree

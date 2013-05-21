@@ -26,7 +26,7 @@ class Interaction extends Form
         //Input Descrição
         $this->add(array(
             'name' => 'description',
-            'type' => 'Zend\Form\Element\TextArea',
+            'type' => 'Zend\Form\Element\Textarea',
             'options' => array(
                 'label' => 'Descrição'
             ),

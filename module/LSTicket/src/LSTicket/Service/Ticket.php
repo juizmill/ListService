@@ -128,6 +128,34 @@ class Ticket extends AbstractService
         }
     }
 
+    /**
+     * updatePriority
+     *
+     * Atualiza um registro
+     *
+     * @author Jesus Vieira <jesusvieiradelima@gmail.com>
+     * @param array $data
+     * @access public
+     * @return $entity
+     */
+    public function updatePriority(array $data)
+    {
+
+        $ticket = $this->em->getRepository($this->entity)->find($data['id']);
+
+        if ($ticket) {
+
+            $priority = $this->em->getRepository("LSPriority\Entity\Priority")->find($data['prioriry']);
+
+            $data['priority'] = $priority;
+
+            return parent::update($data);
+
+        } else {
+            return false;
+        }
+    }
+
 
 
 

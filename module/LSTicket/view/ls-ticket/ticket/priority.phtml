@@ -1,0 +1,43 @@
+<form method="post" action="#">
+<?php foreach ($this->data as $value): ?>
+    <?php if($this->priority == $value->getId()):?>
+        <label class="radio"><input checked="checked" class="category-check" type="radio" name="priority" data-ticket="<?php echo $this->id; ?>" value="<?php echo $value->getId(); ?>"> <?php echo $value->getDescription(); ?></label>
+    <?php else: ?>
+        <label class="radio"><input class="category-check" type="radio" name="priority" data-ticket="<?php echo $this->id; ?>" value="<?php echo $value->getId(); ?>"> <?php echo $value->getDescription(); ?></label>
+    <?php endif; ?>
+<?php endforeach; ?>
+</form>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+
+        $('form').submit(function(){return false;});
+
+        $(document).keypress(function (event){
+            if(event.which == 13) {return false;}
+        });
+
+        $('input[type="radio"]').click(function(){
+
+            var value = $(this).val();
+            var id = $(this).attr("data-ticket");
+
+            $.ajax({
+                type: "POST",
+                url: "<?php echo $this->url ('ticket/default', array('controller' => 'ticket', 'action' => 'registre-priority')) ?>",
+                data: {id: id, prioriry: value},
+                success: function(data){
+
+                    $('pre').html(data);
+
+                    return false;
+
+
+                    if(data){
+                        alert('ERRO: Tente mais tarde!');
+                    }
+                }
+            });
+        });
+    });
+</script>

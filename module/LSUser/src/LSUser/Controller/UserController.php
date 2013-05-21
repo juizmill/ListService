@@ -194,6 +194,8 @@ class UserController extends CrudController
             else
                 $data['active'] = 1;
 
+            unset($data["password"]);
+
             $service = $this->getServiceLocator()->get($this->service);
 
             if( $service->update($data) )

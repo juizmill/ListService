@@ -1,4 +1,5 @@
-.navbar { display:none }
+.navbar, #myModalData, .print { display:none }
+
 
 /*!
  * Bootstrap v2.3.1

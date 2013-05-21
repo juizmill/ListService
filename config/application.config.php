@@ -13,7 +13,6 @@ return array(
         'LSTicket',
         'LSTypeuser',
         'LSUser',
-        'LSHome',
         'LSRelatorio',
     ),
     'module_listener_options' => array(
