@@ -1,37 +1,62 @@
 body {
     padding-top: 60px;
     padding-bottom: 40px;
+    background: url("/images/bg.png")
 }
 
-.zf-green {
-    color: #68b604;
+div.container h1 {
+    width:180px;
+    height: 45px;
+    margin-top:0px;
+    float:left;
+    overflow:hidden;
 }
 
-.btn-success {
-  background-color: #57a900;
-  background-image: -moz-linear-gradient(top, #70d900, #57a900);
-  background-image: -ms-linear-gradient(top, #70d900, #57a900);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#70d900), to(#57a900));
-  background-image: -webkit-linear-gradient(top, #70d900, #57a900);
-  background-image: -o-linear-gradient(top, #70d900, #57a900);
-  background-image: linear-gradient(top, #70d900, #57a900);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#70d900', endColorstr='#57a900', GradientType=0);
+
+div.container h1 a {
+    display:none
 }
 
-.btn-success:hover,
-.btn-success:active,
-.btn-success.active,
-.btn-success.disabled,
-.btn-success[disabled] {
-  background-color: #57a900;
+.nav-collapse .nav li {
+    margin-left:10px !important
 }
 
-.btn-success:active, .btn-success.active {
-  background-color: #57a900;
-}
+.home-user p, img { float:left; }
+.home-user p { margin-top:10px; color:#fff; }
+.home-user img { margin-top:5px; margin-left:10px }
+.home-conf .home-link { margin-top:13px;padding:0 !important  }
 
-div.container a.brand {
-    background: url("../images/zf2-logo.png") no-repeat scroll 0 10px transparent;
-    margin-left: 0;
-    padding: 8px 20px 12px 40px;
-}
+.box-home { margin-top:35px }
+.navbar-home { margin-top:10px }
+.navbar-home strong { text-shadow:0 1px 0 #fff; color:#3f3f3f }
+.ticket-home { background: #f8f8f8; margin-top:-21px}
+
+.ticket-home ul li { padding:3px 13px }
+.ticket-home ul li a { color:#000; text-shadow:0 1px 0 #fff }
+.ticket-home ul li a:hover { color:#727272  }
+
+/*Form*/
+form { padding: 5px 15px }
+form input[type="submit"] { margin-top:25px }
+form li { list-style: none }
+form#interaction #description { width:415px }
+
+form .clear{ display:block }
+
+/*Table*/
+table caption { margin: 45px 0; font-size:18pt; font-weight: bold; text-shadow:0 1px 0 #fff; color:#565656; }
+table thead tr th { color:#565656; text-shadow:0 1px 0 #fff  }
+table tbody tr th { font-weight: normal !important }
+
+.btn-toolbar { width:113px; margin:0 5px}
+
+
+/*Modal*/
+#myModalLabel { font-size:12.5pt; color:#191919; text-shadow:0 1px 0 #fff; }
+#myModalLabel em { font-size:9pt; color:#1c5772; text-shadow:0 1px 0 #fff; }
+
+
+/*Interacao*/
+.ticket-interacao { max-height: 600px !important; overflow-y: auto; overflow-x: hidden;}
+
+

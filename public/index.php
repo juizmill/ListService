@@ -1,8 +1,25 @@
 <?php
 
 //Config for development
-ini_set('display_errors', true);
-error_reporting(E_ALL | E_STRICT);
+#ini_set('display_errors', true);
+#error_reporting(E_ALL | E_STRICT);
+
+//Este IF verifica se a URL termina com uma BARRA, caso ela termine a BARRA é removida.
+//Assim evitando o erro 404.
+/*
+if(preg_match("/^(.*)\/$/", $_SERVER['REQUEST_URI'])){
+  $uri = substr_replace($_SERVER['REQUEST_URI'],'', -1, strlen($_SERVER['REQUEST_URI']));
+  header("Location: http://{$_SERVER['HTTP_HOST']}{$uri}");
+  exit();
+}
+*/
+
+$host = $_SERVER['REQUEST_URI'];
+if ($host == '/' || $host == '' ){
+    header('Location: http://'.$_SERVER['SERVER_NAME'].'/auth');
+    exit();
+
+}
 
 date_default_timezone_set('America/Campo_Grande');
 
