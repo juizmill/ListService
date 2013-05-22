@@ -1,0 +1,30 @@
+
+<link rel="stylesheet" type="text/css" media="print" href="/css/print.css">
+
+
+<?php $this->plugin("dateFormat")->setTimezone("America/Campo_Grande")->setLocale("pt_BR");?>
+<table class="table table-striped table-condensed table-bordered">
+  <caption>Relatorio de usuários <br /><br /><a class="btn btn-info print" href="#" onclick="window.print();return false"><i class="icon-print"></i> Imprimir</a></caption>
+  <thead>
+    <tr>
+      <th class="span1">#</th>
+      <th>Nome</th>
+      <th>Login</th>
+      <th>Registrado</th>
+      <th>Categoria</th>
+      <th>Ativo</th>      
+    </tr>
+  </thead>
+  <tbody>
+    <?php foreach ($this->user as $user): ?>
+    <tr>
+      <th><?php echo $user->getId(); ?></th>
+      <th><?php echo $user->getName() ; ?></th>
+      <th><?php echo $user->getLogin() ; ?></th>
+      <th><?php echo $this->dateFormat($user->getDateRegistry(), IntlDateFormatter::SHORT); ?></th>
+      <th><?php echo $user->getTypeUse()->getDescription(); ?></th>
+      <th><?php echo ($user->getActive()) ? '<span class="label label-info">Sim</span>' : '<span class="label">Não</span>'; ?></th>
+    </tr>
+    <?php endforeach; ?>
+  </tbody>
+</table>

@@ -1,0 +1,248 @@
+<?php $user = $this->UserIdentity("LS"); ?>
+
+<?php echo $this->doctype (); ?>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <?php echo $this->headTitle ('ListService - Gestão de atendimento')->setSeparator (' - ')->setAutoEscape (false) ?>
+
+        <?php echo $this->headMeta ()->appendName ('viewport', 'width=device-width, initial-scale=1.0') ?>
+
+        <!-- Scripts -->
+        <?php
+
+        echo $this->headScript ()->prependFile ($this->basePath () . '/js/html5.js', 'text/javascript', array('conditional' => 'lt IE 9',))
+                ->prependFile ($this->basePath () . '/js/bootstrap-datepicker.js')
+                ->prependFile ($this->basePath () . '/js/bootstrap.min.js')
+                ->prependFile ($this->basePath () . '/js/jquery.min.js')
+        ?>
+
+        <!-- Le styles -->
+        <?php
+        echo $this->headLink (array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath () . '/images/favicon.ico'))
+                ->prependStylesheet ($this->basePath () . '/css/bootstrap-responsive.min.css')
+                ->prependStylesheet ($this->basePath () . '/css/datepicker.css')
+                ->prependStylesheet ($this->basePath () . '/css/style.css')
+                ->prependStylesheet ($this->basePath () . '/css/bootstrap.min.css')
+        ?>
+
+        <link rel="stylesheet" href="/css/font-awesome.min.css">
+
+        <script type="text/javascript">
+            $(document).ready(function(){
+
+                var ID;
+
+                $('.home-link').click(function(){
+                    $('.home-link').parent().removeClass('active');
+                    $(this).parent().addClass('active');
+                });
+
+                $('.datepicke').click(function(){
+                    ID = $(this).attr("href");
+                });
+
+                $('.active-listservice').tooltip();
+                $('.datepicke').datepicker().on('changeDate', function(ev){
+
+                    var newDate = new Date(ev.date);
+                    var dia = newDate.getDate();
+                    var mes = newDate.getMonth() + 1;
+                    var ano = newDate.getFullYear();
+
+                    if (dia < 9){
+                        dia = "0"+dia;
+                    }
+
+                    if (mes < 9){
+                        mes = "0"+mes;
+                    }
+
+                    var newData = ano +"-"+ mes +"-"+ dia;
+
+                    var dataAtual = new Date();
+                    var diaAtual = dataAtual.getDate();
+                    var mesAtual = dataAtual.getMonth() + 1;
+                    var anoAtual = dataAtual.getFullYear();
+
+                    if (diaAtual < 9){
+                        diaAtual = "0"+diaAtual;
+                    }
+
+                    if (mesAtual < 9){
+                        mesAtual = "0"+mesAtual;
+                    }
+
+                    var dateAtual = anoAtual+'-'+mesAtual+'-'+diaAtual;
+
+                    if ( newData < dateAtual){
+                        $(this).datepicker('hide');
+                        $("#myModalData").modal();
+                    }else{
+                        $.ajax({
+                            type: "POST",
+                            url: "<?php echo $this->url('ticket/default', array('controller' => 'ticket', 'action' => 'dateEstimated')); ?>",
+                            data: { date: newData, id: ID}
+                        }).done(function(data) {
+                                window.location.reload();
+                        });
+                    }
+
+                });
+            });
+        </script>
+
+    </head>
+    <body>
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+
+                    <h1>
+                        <object data="/images/logo-top.svg" type="image/svg+xml" width="180" height="45">Not Support SVG.</object>
+                    </h1>
+
+                    <div class="nav-collapse collapse">
+                        <ul class="nav">
+
+                            <li class="dropdown">
+                                    <a class="dropdown-toggle home-link" data-toggle="dropdown" href="#">Ticket</a>
+                                    <ul class="dropdown-menu">
+
+                                    <?php if (($user['id'] == 1) && ($user['category'] == 'Administrador')): ?>
+                                        <li><a href="<?php echo $this->url ('ticket/default', array('controller' => 'ticket'))?>"><i class="icon-inbox"></i> Todos os Ticket's </a></li>
+                                        <li><a href="<?php echo $this->url ('ticket/default', array('controller' => 'ticket', 'action' => 'new'))?>"><i class="icon-edit"></i> Cadastrar</a></li>
+                                    <?php else: ?>
+                                    	                                    	
+                                        <li><a href="<?php echo $this->url ('ticket/default', array('controller' => 'ticket'))?>"><i class="icon-inbox"></i> Ticket's</a></li>
+                                        <li><a href="<?php echo $this->url ('ticket/default', array('controller' => 'ticket', 'action' => 'new'))?>"><i class="icon-edit"></i> Cadastrar</a></li>
+
+                                    <?php endif; ?>
+
+                                    </ul>
+                            </li>
+
+                            <?php if (($user['category_id'] == "1") || ($user['category'] == 'Administrador')): ?>
+
+                                <li class="dropdown">
+                                        <a class="dropdown-toggle home-link" data-toggle="dropdown" href="#">Categoria de Ticket</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="<?php echo $this->url ('category-ticket/default', array('controller' => 'category-ticket'))?>"><i class="icon-inbox"></i> Todas as Categoria</a></li>
+                                            <li><a href="<?php echo $this->url ('category-ticket/default', array('controller' => 'category-ticket', 'action' => 'new'))?>"><i class="icon-asterisk"></i> Cadastrar</a></li>
+                                        </ul>
+                                </li>
+
+                                <li class="dropdown">
+                                        <a class="dropdown-toggle home-link" data-toggle="dropdown" href="#">Prioridade</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="<?php echo $this->url ('priority/default', array('controller' => 'priority'))?>"><i class="icon-inbox"></i> Todas as Prioridades</a></li>
+                                            <li><a href="<?php echo $this->url ('priority/default', array('controller' => 'priority', 'action' => 'new'))?>"><i class="icon-asterisk"></i> Cadastrar</a></li>
+                                        </ul>
+                                </li>
+
+                                <li class="dropdown">
+                                    <a class="dropdown-toggle home-link" data-toggle="dropdown" href="#">Usuários</i></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="<?php echo $this->url ('user/default', array('controller' => 'user'))?>"><i class="icon-group"></i> Todos usuários</a></li>
+                                        <li><a href="<?php echo $this->url ('user/default', array('controller' => 'user', 'action' => 'new')); ?>"><i class="icon-edit"></i> Cadastrar</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="<?php echo $this->url('type-user/default', array('controller' => 'type-user')); ?>"><i class="icon-asterisk"></i> Todas as categoria de usuário</a></li>
+                                        <li><a href="<?php echo $this->url('type-user/default', array('controller' => 'type-user', 'action' => 'new')); ?>"><i class="icon-asterisk"></i> Cadastrar Categoria de usuário</a></li>
+                                    </ul>
+                                </li>
+
+                                <li class="dropdown">
+                                    <a class="dropdown-toggle home-link" data-toggle="dropdown" href="#">Relatórios</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="<?php echo $this->url('relatorio/default', array('controller' => 'relatorio', 'action' => 'usuario')); ?>"><i class="icon-group"></i> Usuário</a></li>
+                                        <li><a href="<?php echo $this->url('relatorio/default', array('controller' => 'relatorio', 'action' => 'ticket')); ?>"><i class="icon-inbox"></i> Ticket</a></li>
+                                    </ul>
+                                </li>
+
+                            <?php endif; ?>
+
+                            <!--<li>
+                                <div class="btn-group">
+                                    <form class="form-search">
+                                      <div class="input-append">
+                                        <input type="text" class="span2 search-query">
+                                        <button type="submit" class="btn"> <i class="icon-search"> </i> </button>
+                                      </div>
+                                    </form>
+                                </div>
+
+                            </li>-->
+
+                            <li class="home-user">
+                                <p><?php echo $user['name'] ?></p>
+                                <?php
+                                /*
+                                    $directory = 'users'.DIRECTORY_SEPARATOR.$user['id'].DIRECTORY_SEPARATOR;
+                                    $iterator = new DirectoryIterator($directory);
+                                    foreach ($iterator as $fileinfo) {
+                                        if ($fileinfo->isFile()) {
+                                            $img = $filenames[$fileinfo->getMTime()] = $fileinfo->getFilename();
+                                        }
+                                    }
+                                    */
+                                ?>
+
+
+                                    <!--<img class="img-rounded" src="../users/<?php //echo $user['id']. "/". $img; ?>" alt="" />-->
+                            </li>
+
+                            <li class="dropdown home-conf">
+                                <a class="dropdown-toggle home-link" data-toggle="dropdown" href="#"><i class="icon-cogs"></i></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="<?php echo $this->url('user/default', array('controller' => 'user', 'action' => 'edit', 'id' => $user['id'] )); ?>"><i class="icon-inbox"></i> Editar perfil</a></li>
+                                    <li><a href="<?php echo $this->url('auth/default', array('controller' => 'auth', 'action' => 'logout')); ?>"><i class=" icon-off"></i> Sair</a></li>
+                                </ul>
+                            </li>
+
+                        </ul>
+                    </div><!--/.nav-collapse -->
+
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <?php echo $this->content; ?>
+            <hr>
+            <footer>
+                <p>&copy; 2013 by ListService v.o.1 - Andre Jordão, Jesus Vieira </p>
+            </footer>
+        </div> <!-- /container -->
+        <?php echo $this->inlineScript () ?>
+
+
+        <!-- Modal -->
+        <div id="myModalData" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+                <button type="button" class="close exit" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel">Atenção</h3>
+            </div>
+            <div class="modal-body"><p>A data estimada não pode ser menor que a data atual.</p></div>
+            <div class="modal-footer">
+                <button class="btn exit" data-dismiss="modal" aria-hidden="true">Fechar</button>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+            ga('create', 'UA-41130387-1', 'listservice.com.br');
+            ga('send', 'pageview');
+
+        </script>
+
+    </body>
+</html>

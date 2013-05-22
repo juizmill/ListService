@@ -1,0 +1,140 @@
+<script type="text/javascript">
+    $(document).ready(function(){
+        $(".icon-comments-alt").tooltip();
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function(){
+
+        var sizeImage, sizePhp;
+
+        $('#archive').bind('change', function(e) {
+
+            sizeImage = this.files[0].size;
+            sizePhp = <?php $sizephp = substr(ini_get('upload_max_filesize'), 0 , -1); $sizephp = ($sizephp * 1024) * 1024; echo $sizephp ;?>
+
+        });
+
+        $('.btn').click(function(){
+            if (sizePhp <= sizeImage){
+                $('#myModalArquivo').modal('show');
+
+                return false;
+            }else{
+                return true;
+            }
+        });
+
+        $('.exit').click(function(){
+            $("#myModalArquivo").modal('hide');
+        });
+
+
+    });
+
+</script>
+
+<?php $user = $this->UserIdentity("LS");?>
+<?php $this->plugin("dateFormat")->setTimezone("America/Campo_Grande")->setLocale("pt_BR");?>
+
+<div class="row">
+
+  <div class="span5 box-home">
+        <div class="navbar">
+          <div class="navbar-inner">
+              <p class="navbar-home"><i class="icon-reorder icon-large"></i> <strong>Dados do Ticket #<?php echo $this->ticket->getId()?></strong></p>
+          </div>
+        </div>
+
+        <div class="thumbnail ticket-home">
+
+            <h4  class="text-success"><?php echo $this->ticket->getTitle(); ?></h4>
+            <p><strong>Solicitado por: </strong><?php echo $this->ticket->getSought(); ?></p>
+            <p><strong>Data de abertura: </strong><?php echo $this->dateFormat($this->ticket->getDateBegin(), IntlDateFormatter::SHORT); ?></p>
+            <p><strong>Categoria: </strong><?php echo $this->ticket->getCategoryTicket()->getDescription(); ?></p>
+
+            <?php
+
+                $form = $this->form;
+
+                $this->formElementErrors ()
+                        ->setMessageOpenFormat ('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">×</button>')
+                        ->setMessageCloseString ('</div>')
+                        ->render ($form);
+
+                $form->setAttribute ('action', $this->url ('interaction/default', array('controller' => 'interaction', 'action' => 'new', 'id' => $this->ticket->getId())));
+
+                $form->prepare ();
+
+                echo $this->form ()->openTag ($form);
+
+                echo $this->formCollection ($form);
+
+                echo $this->form ()->closeTag ();
+            ?>
+        </div>
+  </div>
+
+   <div class="span5 box-home offset2">
+        <div class="navbar">
+          <div class="navbar-inner">
+              <p class="navbar-home"><i class="icon-comment icon-large"></i> <strong>Interaçōes</strong></p>
+          </div>
+        </div>
+
+        <div class="thumbnail ticket-home ticket-interacao">
+            <div class="row">
+
+          <?php foreach ($this->description as $value): ?>
+
+              <?php if ($user['id'] == $value->getUser()->getId() && $user['category_id'] != 1 || $value->getUser()->getTypeUse()->getId() == 2 ): ?>
+
+            <div class="span4 thumbnail" style="background:#f7f0b9; float:right; margin-bottom: 5px">
+                <h5 class="text-warning"><?php echo $value->getUser()->getName(); ?>: <i style="cursor: pointer" class="icon-comments-alt" data-toggle="tooltip" data-placement="top" data-original-title="Cliente"></i></h5>
+
+             <?php elseif($value->getUser()->getTypeUse()->getId() == 1): ?>
+
+                <div class="span5 thumbnail" style="background:#ededed; margin-bottom: 5px;  width:455px;">
+                    <h5 class="text-muted"><?php echo $value->getUser()->getName(); ?>: <i style="cursor: pointer" class="icon-comments-alt" data-toggle="tooltip" data-placement="top" data-original-title="Administrador"></i></h5>
+
+             <?php else: ?>
+
+                <div class="span4 thumbnail" style="background:#f9eaec; float:left; margin-bottom: 5px">
+                    <h5 class="text-error"><?php echo $value->getUser()->getName(); ?>: <i style="cursor: pointer" class="icon-comments-alt" data-toggle="tooltip" data-placement="top" data-original-title="Agente"></i></h5>
+              <?php endif ?>
+
+
+                <p><?php echo $value->getDescription() ?></p>
+
+                <?php foreach ($this->archive as $archive): ?>
+
+
+                <?php if ($archive->getIntereaction()->getId() == $value->getId()): ?>
+                	<a href="/download.php?interaction=<?php echo $value->getTicket()->getId()?>&id=<?php echo $value->getId();?>&archive=<?php echo $archive->getPathFile() ?>"><?php echo $archive->getPathFile(); ?></a>
+                <?php endif; ?>
+
+                <?php endforeach; ?>
+
+
+            </div>
+          <?php endforeach; ?>
+
+
+          </div>
+
+      </div>
+  </div>
+
+</div>
+
+<!-- Modal -->
+<div id="myModalArquivo" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-header">
+       <button type="button" class="close exit" data-dismiss="modal" aria-hidden="true">×</button>
+       <h3 id="myModalLabel">Atenção</h3>
+   </div>
+   <div class="modal-body"><p>O anexo não pode ser maior que <?php echo ini_get('upload_max_filesize').'egas';?></p></div>
+   <div class="modal-footer">
+       <button class="btn exit" data-dismiss="modal" aria-hidden="true">Fechar</button>
+   </div>
+</div>
