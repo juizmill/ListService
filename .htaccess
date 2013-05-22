@@ -1,8 +1,8 @@
 RewriteEngine On
+
 RewriteCond %{REQUEST_FILENAME} -s [OR]
 RewriteCond %{REQUEST_FILENAME} -l [OR]
 RewriteRule !\.(js|gif|jpg|png|css|txt|svg|eot|ttf|woff|php)$ public/index.php [L]
 RewriteCond %{REQUEST_URI} !^/public/
-RewriteCond %{REQUEST_URI} !^/archives/
-RewriteCond %{REQUEST_URI} !^/img_user/
+#RewriteCond %{REQUEST_URI} !^/archives/
 RewriteRule ^(.*)$ public/$1 [NC,L]

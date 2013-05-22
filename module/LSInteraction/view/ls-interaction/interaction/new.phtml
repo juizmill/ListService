@@ -94,7 +94,7 @@
 
              <?php elseif($value->getUser()->getTypeUse()->getId() == 1): ?>
 
-                <div class="span6 thumbnail" style="background:#ededed; margin-bottom: 5px">
+                <div class="span5 thumbnail" style="background:#ededed; margin-bottom: 5px;  width:455px;">
                     <h5 class="text-muted"><?php echo $value->getUser()->getName(); ?>: <i style="cursor: pointer" class="icon-comments-alt" data-toggle="tooltip" data-placement="top" data-original-title="Administrador"></i></h5>
 
              <?php else: ?>
@@ -105,17 +105,17 @@
 
 
                 <p><?php echo $value->getDescription() ?></p>
-                
+
                 <?php foreach ($this->archive as $archive): ?>
-                
-                
+
+
                 <?php if ($archive->getIntereaction()->getId() == $value->getId()): ?>
                 	<a href="/download.php?interaction=<?php echo $value->getTicket()->getId()?>&id=<?php echo $value->getId();?>&archive=<?php echo $archive->getPathFile() ?>"><?php echo $archive->getPathFile(); ?></a>
                 <?php endif; ?>
-                
+
                 <?php endforeach; ?>
-                
-                
+
+
             </div>
           <?php endforeach; ?>
 

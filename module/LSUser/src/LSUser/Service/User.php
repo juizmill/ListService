@@ -58,11 +58,18 @@ class User extends AbstractService
      */
     public function update(array $data)
     {
-        $typeUser = $this->em->getRepository($this->entity)->findOneBy(array('id' => $data['id']));
 
-        if ($typeUser) {
+        $user = $this->em->getRepository($this->entity)->findOneBy(array('id' => $data['id']));
 
-            $data['TypeUse'] = $typeUser->getTypeUse();
+
+        if ($data['TypeUse']){
+            $typeUser = $this->em->getRepository("LSTypeuser\Entity\TypeUser")->findOneBy(array('id' => $data['TypeUse']));
+            $data['TypeUse'] = $typeUser;
+        }
+
+
+        if ($user) {
+
             return parent::update($data);
 
         } else {

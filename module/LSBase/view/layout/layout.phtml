@@ -215,7 +215,7 @@
             <?php echo $this->content; ?>
             <hr>
             <footer>
-                <p>&copy; 2013 by ListService - Andre Jordão, Jesus Vieira </p>
+                <p>&copy; 2013 by ListService v.o.1 - Andre Jordão, Jesus Vieira </p>
             </footer>
         </div> <!-- /container -->
         <?php echo $this->inlineScript () ?>
@@ -232,6 +232,17 @@
                 <button class="btn exit" data-dismiss="modal" aria-hidden="true">Fechar</button>
             </div>
         </div>
+
+        <script type="text/javascript">
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+            ga('create', 'UA-41130387-1', 'listservice.com.br');
+            ga('send', 'pageview');
+
+        </script>
 
     </body>
 </html>

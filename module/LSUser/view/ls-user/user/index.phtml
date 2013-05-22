@@ -64,15 +64,19 @@
     $('.category-ticket').click(function(){
       name = $(this).attr("data-nameuser");
       id = $(this).attr("data-id");
+
       $('#myModalLabel').html(name);
 
-      $.ajax({
-          type: "GET",
-          url: "<?php echo $this->url ('user/default', array('controller' => 'user', 'action' => 'category-ticket')) ?>/"+id,
-          success: function(data){
-            $('.modal-body').html(data);
-          }
-      });
+        $('.modal-body').html('<i class="icon-spinner icon-spin icon-large">');
+        $('#myModal').on('shown', function () {
+            $.ajax({
+                type: "GET",
+                url: "<?php echo $this->url ('user/default', array('controller' => 'user', 'action' => 'category-ticket')) ?>/"+id,
+                success: function(data){
+                    $('.modal-body').html(data);
+                }
+            });
+        });
 
       $('#myModal').modal('show');
 

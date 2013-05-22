@@ -11,6 +11,7 @@
       <th>Solicitante</th>
       <th>Data abertura</th>
       <th>Previsão</th>
+      <th>Prioridade</th>
       <th>Categoria</th>
       <th>Status</th>
     </tr>
@@ -23,6 +24,7 @@
       <th><?php echo $ticket->getSought(); ?></th>
       <th><?php echo $this->dateFormat($ticket->getDateBegin(), IntlDateFormatter::SHORT); ?></th>
       <th><?php echo $this->dateFormat($ticket->getDateEstimated(), IntlDateFormatter::SHORT); ?></th>
+      <th><?php echo $ticket->getPriority()->getDescription(); ?></th>
       <th><?php echo $ticket->getCategoryTicket()->getDescription(); ?></th>
       <th><?php if ($ticket->getActive() == 1){echo "<span class=\"label label-info\">Aberto</span>";}else{echo "<span class=\"label\">Fechado</span>";} ?></th>
     <?php endforeach; ?>
