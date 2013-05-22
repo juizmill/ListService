@@ -1,0 +1,36 @@
+<?php foreach ($this->data as $value): ?>
+    <?php if (in_array( $value->getId(), $this->categoryId)) : ?>
+        <label class="checkbox"><input class="category-check" checked="checked" type="checkbox" name="categoryTicket" value="<?php echo $value->getId(); ?>" data-user="<?php echo $this->user ?>"> <?php echo $value->getDescription(); ?></label>
+    <?php else: ?>
+        <label class="checkbox"><input class="category-check" type="checkbox" name="categoryTicket" value="<?php echo $value->getId(); ?>" data-user="<?php echo $this->user ?>"> <?php echo $value->getDescription(); ?></label>
+    <?php endif; ?>
+<?php endforeach; ?>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+
+        $('form').submit(function(){return false;});
+
+        $(document).keypress(function (event){
+            if(event.which == 13) {return false;}
+        });
+
+        $('input[type="checkbox"]').click(function(){
+            var value = $(this).val();
+            var user = $(this).attr('data-user');
+
+            $.ajax({
+                type: "POST",
+                url: "<?php echo $this->url ('user/default', array('controller' => 'user', 'action' => 'registre-category-ticket')) ?>",
+                data: {categoryTicket: value, user:user},
+                success: function(data){
+
+                    var obj = jQuery.parseJSON(data);
+
+                    if (obj.erro)
+                        alert(obj.erro);
+                }
+            });
+        });
+    });
+</script>

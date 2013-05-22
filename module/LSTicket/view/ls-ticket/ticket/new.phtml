@@ -1,0 +1,114 @@
+<script type="text/javascript">
+    $(document).ready(function(){
+
+        var sizeImage, sizePhp;
+
+        $('#archive').bind('change', function(e) {
+
+            sizeImage = this.files[0].size;
+            sizePhp = <?php $sizephp = substr(ini_get('upload_max_filesize'), 0 , -1); $sizephp = ($sizephp * 1024) * 1024; echo $sizephp ;?>
+
+        });
+
+        $('.btn').click(function(){
+            if (sizePhp <= sizeImage){
+                $('#myModalArquivo').modal('show');
+
+                return false;
+            }else{
+                return true;
+            }
+        });
+
+        $('.exit').click(function(){
+            $("#myModalArquivo").modal('hide');
+        });
+
+
+    });
+
+</script>
+
+
+
+<div class="row">
+
+  <div class="span4 box-home">
+        <div class="navbar">
+          <div class="navbar-inner">
+              <p class="navbar-home"><i class="icon-edit icon-large"></i> <strong>Cadastrar Ticket</strong></p>
+          </div>
+        </div>
+
+        <div class="thumbnail ticket-home">
+            <?php
+
+                $form = $this->form;
+
+                $this->formElementErrors ()
+                ->setMessageOpenFormat ('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">×</button>')
+                ->setMessageCloseString ('</div>')
+                ->render ($form);
+
+                $form->setAttribute ('action', $this->url ('ticket/default', array('controller' => 'ticket', 'action' => 'new')));
+
+                $form->prepare ();
+
+                echo $this->form ()->openTag ($form);
+
+                echo $this->formCollection ($form);
+
+                echo $this->form ()->closeTag ();
+
+            ?>
+        </div>
+  </div>
+
+   <!--<div class="span4 box-home offset2">
+        <div class="navbar">
+          <div class="navbar-inner">
+              <p class="navbar-home"><i class=" icon-lightbulb icon-large"></i> <strong>Precisando de ajuda?</strong></p>
+          </div>
+        </div>
+
+        <div class="thumbnail ticket-home">
+
+          <div class="accordion" id="accordion2">
+            <div class="accordion-group">
+              <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">Collapsible Group Item #1</a>
+              </div>
+              <div id="collapseOne" class="accordion-body collapse">
+                <div class="accordion-inner">
+                  <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-group">
+              <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">Collapsible Group Item #2</a>
+              </div>
+              <div id="collapseTwo" class="accordion-body collapse">
+                <div class="accordion-inner">
+                  <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+      </div>
+  </div>-->
+
+</div>
+
+<!-- Modal -->
+<div id="myModalArquivo" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close exit" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Atenção</h3>
+    </div>
+    <div class="modal-body"><p>O anexo não pode ser maior que <?php echo ini_get('upload_max_filesize').'egas';?></p></div>
+    <div class="modal-footer">
+        <button class="btn exit" data-dismiss="modal" aria-hidden="true">Fechar</button>
+    </div>
+</div>
