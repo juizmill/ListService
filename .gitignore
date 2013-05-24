@@ -10,7 +10,6 @@ composer.phar
 vendor/
 .directory
 arquivo
-archives
 .settings
 .metadata
 *.sublime-project
