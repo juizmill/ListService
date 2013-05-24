@@ -77,7 +77,7 @@ class InteractionController extends CrudController
                   //Registra o arquivo
                   if ($_FILES['archive']['name'] && $interaction) {
 
-                      $upload = new UploadFile(new Http(), 'archives', $ticket->getId(), $interaction->getId());
+                      $upload = new UploadFile(new Http(), 'data/uploads', $ticket->getId(), $interaction->getId());
 
                       //Registra o Arquivo
                       $service2 = $this->getServiceLocator()->get('LSBase\Service\Archive');

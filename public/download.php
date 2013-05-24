@@ -5,7 +5,7 @@ set_time_limit(0);
 // Arqui você faz as validações e/ou pega os dados do banco de dados
 
 $aquivoNome = $_GET['archive']; // nome do arquivo que será enviado p/ download
-$arquivoLocal = $_SERVER['DOCUMENT_ROOT'].DIRECTORY_SEPARATOR.'archives'.DIRECTORY_SEPARATOR.$_GET['interaction'].DIRECTORY_SEPARATOR.$_GET['id'].DIRECTORY_SEPARATOR.$aquivoNome; // caminho absoluto do arquivo
+$arquivoLocal = __DIR__ . '/../data/uploads'.DIRECTORY_SEPARATOR.$_GET['interaction'].DIRECTORY_SEPARATOR.$_GET['id'].DIRECTORY_SEPARATOR.$aquivoNome; // caminho absoluto do arquivo
 
 // Verifica se o arquivo não existe
 if (!file_exists($arquivoLocal)) {

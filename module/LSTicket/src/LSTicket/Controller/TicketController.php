@@ -101,7 +101,7 @@ class TicketController extends CrudController
                 //Registra o arquivo
                 if ($_FILES['archive']['name'] && $interaction) {
 
-                    $upload = new UploadFile(new Http(), 'archives', $ticket->getId(), $interaction->getId());
+                    $upload = new UploadFile(new Http(), 'data/uploads', $ticket->getId(), $interaction->getId());
 
                     //Registra o Arquivo
                     $service3 = $this->getServiceLocator()->get('LSBase\Service\Archive');
@@ -136,7 +136,7 @@ class TicketController extends CrudController
 
         if ($delete) {
 
-            $this->delTree('archives'.DIRECTORY_SEPARATOR.$param);
+            $this->delTree('data/uploads'.DIRECTORY_SEPARATOR.$param);
 
             return $this->redirect()->toRoute($this->route, array('controller' => $this->controller));
         } else {
