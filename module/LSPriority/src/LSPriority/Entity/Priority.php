@@ -40,21 +40,21 @@ class Priority
 
     /**
      * __construct
-     * 
+     *
      * @param array $options
      */
     public function __construct(array $options = array())
     {
         $hydrator = new Hydrator\ClassMethods;
         $hydrator->hydrate($options, $this);
-        
+
         $this->active = true;
     }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -64,7 +64,7 @@ class Priority
     /**
      * Set description
      *
-     * @param string $description
+     * @param  string   $description
      * @return Priority
      */
     public function setDescription($description)
@@ -77,7 +77,7 @@ class Priority
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -87,7 +87,7 @@ class Priority
     /**
      * Set active
      *
-     * @param boolean $active
+     * @param  boolean  $active
      * @return Priority
      */
     public function setActive($active)
@@ -100,7 +100,7 @@ class Priority
     /**
      * Get active
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getActive()
     {
@@ -109,12 +109,13 @@ class Priority
 
     /**
      * toArray
-     * 
+     *
      * @return array
      */
     public function toArray()
     {
         $hydrator = new Hydrator\ClassMethods;
+
         return $hydrator->extract($this);
     }
 

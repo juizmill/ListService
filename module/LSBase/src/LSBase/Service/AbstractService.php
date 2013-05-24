@@ -89,6 +89,7 @@ abstract class AbstractService
     if ($entity) {
       $this->em->remove($entity);
       $this->em->flush();
+
       return $entity;
     }
   }

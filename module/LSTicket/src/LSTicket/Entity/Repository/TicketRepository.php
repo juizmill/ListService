@@ -59,7 +59,6 @@ class TicketRepository extends EntityRepository
         return $this->_em->createQuery($query)->getResult();
     }
 
-
     // ==================================================================
     //
     // Metodos para retornar a quantidade de ticket's em andamento, aberto e fechado (geral)
@@ -151,7 +150,7 @@ class TicketRepository extends EntityRepository
     /**
      * [findAllTicket description]
      * @param  [type] $user [description]
-     * @return [type]       [description]
+     * @return [type] [description]
      */
     public function findAllTicket($user)
     {
@@ -168,34 +167,4 @@ class TicketRepository extends EntityRepository
 
     }
 
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -77,7 +77,7 @@ class TypeUserController extends CrudController
 
             $duplicate = $this->getEm ()->getRepository ($this->entity)->findOneBy (array('description' => $data['description']));
 
-            if ( $duplicate ) {
+            if ($duplicate) {
                 return new ViewModel (array('form' => $form, 'duplicate' => 'Já existe um cadastrado com este nome!'));
             }
 
@@ -113,7 +113,7 @@ class TypeUserController extends CrudController
         $repository = $this->getEm ()->getRepository ($this->entity);
         $entity = $repository->find ($param);
 
-        if ( $entity ) {
+        if ($entity) {
 
             $form->setData ($entity->toArray ());
 
@@ -125,7 +125,7 @@ class TypeUserController extends CrudController
 
                 $duplicate = $this->getEm ()->getRepository ($this->entity)->findOneBy (array('description' => $data['description']));
 
-                if ( $duplicate ) {
+                if ($duplicate) {
                     return new ViewModel (array('form' => $form, 'id' => $param, 'duplicate' => 'Já existe um cadastrado com este nome!'));
                 }
                 if ( $form->isValid () ) {

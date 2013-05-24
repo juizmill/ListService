@@ -67,7 +67,7 @@ class UserCategoryTicket
     /**
      * Set categoryTicket
      *
-     * @param \LSCategoryticket\Entity\CategoryTicket $categoryTicket
+     * @param  \LSCategoryticket\Entity\CategoryTicket $categoryTicket
      * @return UserCategoryTicket
      */
     public function setCategoryTicket(\LSCategoryticket\Entity\CategoryTicket $categoryTicket = null)
@@ -90,7 +90,7 @@ class UserCategoryTicket
     /**
      * Set user
      *
-     * @param \LSUser\Entity\User $user
+     * @param  \LSUser\Entity\User $user
      * @return UserCategoryTicket
      */
     public function setUser(\LSUser\Entity\User $user = null)
@@ -118,6 +118,7 @@ class UserCategoryTicket
     public function toArray()
     {
         $hydrator = new Hydrator\ClassMethods;
+
         return $hydrator->extract($this);
     }
 }

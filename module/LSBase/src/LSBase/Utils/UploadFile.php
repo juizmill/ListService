@@ -95,7 +95,6 @@ class UploadFile
         $http->addFilter('Rename', array('target' =>
             $this->destination.DIRECTORY_SEPARATOR.$this->ticket.DIRECTORY_SEPARATOR.$this->path.DIRECTORY_SEPARATOR.$newName, 'overwrite' => true));
 
-
         $files = $http->getFileInfo();
 
         foreach ($files as $file) {
@@ -133,8 +132,8 @@ class UploadFile
      * @param  String $string
      * @return String
      */
-    public function removerCaracter($str){
-
+    public function removerCaracter($str)
+    {
         $aaa = array('/(à|á|â|ã|ä|å|æ|Á|Ã|Â|À|Ä)/','/(è|é|ê|ë|É|Ê|È|Ë)/','/(ì|í|î|ï|Í|Î|Ì|Ï)/','/(ð|ò|ó|ô|õ|ö|ø|Õ|Ó|Ò|Ö)/','/(ù|ú|û|ü|Ú|Ù|Ü)/','/ç/','/þ/','/ñ/','/ß/','/(ý|ÿ)/','/(=|\+|\/|\'|\_|\\n| |\(|\))/');
 
         $bbb = array('a','e','i','o','u','c','d','n','s','y','-','');

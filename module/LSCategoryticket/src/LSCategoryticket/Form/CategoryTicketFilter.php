@@ -33,7 +33,7 @@ class CategoryTicketFilter extends InputFilter
             array('name' => 'NotEmpty', 'options' => array('messages' => array('isEmpty' => 'Não pode estar em branco')))
         )
     ));
-    
+
   }
 
 }
