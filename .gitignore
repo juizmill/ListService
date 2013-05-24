@@ -6,13 +6,13 @@
 .project
 .settings
 composer.lock
-vendor
+composer.phar
 vendor/
 .directory
 arquivo
 archives
 .settings
 .metadata
-revista.sublime-project
-revista.sublime-workspace
+*.sublime-project
+*.sublime-workspace
 nbproject
