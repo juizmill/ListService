@@ -30,4 +30,3 @@ header('Expires: 0');
 
 // Envia o arquivo para o cliente
 readfile($aquivoNome);
-?>

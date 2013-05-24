@@ -36,7 +36,7 @@ class RelatorioController extends CrudController
     public function usuarioAction()
     {
         $user = $this->getEm()->getRepository('LSUser\Entity\User')->findAll();
-	    
+
         return new ViewModel(array('user' => $user));
 
     }
@@ -49,15 +49,13 @@ class RelatorioController extends CrudController
      * @author Jesus Vieira <jesusvieiradelima@gmail.com>
      * @access public
      * @return \Zend\View\Model\ViewModel
-     */	
-	public function ticketAction()
-	{
+     */
+    public function ticketAction()
+    {
         $ticket = $this->getEm()->getRepository('LSTicket\Entity\Ticket')->findAll();
-       
+
         return new ViewModel(array('ticket' => $ticket));
 
-	}
-	
-	
-	
+    }
+
 }

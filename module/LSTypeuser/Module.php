@@ -25,8 +25,7 @@ class Module
   {
     return array(
         'factories' => array(
-            'LSTypeuser\Service\TypeUser' => function($em)
-            {
+            'LSTypeuser\Service\TypeUser' => function($em) {
               return new Service\TypeUser($em->get('Doctrine\ORM\EntityManager'));
             }
         )

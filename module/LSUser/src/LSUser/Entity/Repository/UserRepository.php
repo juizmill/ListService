@@ -21,8 +21,8 @@ class UserRepository extends EntityRepository
      * @param  string $password
      * @return array
      */
-    public function findByLoginAndPassword($login, $password) {
-
+    public function findByLoginAndPassword($login, $password)
+    {
         $query = "SELECT u.id, u.name, u.login, u.password, u.salt,  tu.id as category_id, tu.description as category FROM LSUser\\Entity\\User u JOIN u.typeUse tu  WHERE u.active = true AND tu.active = true AND u.login = '".$login."' ";
 
         $user = $this->_em->createQuery($query)->getResult();
@@ -32,11 +32,11 @@ class UserRepository extends EntityRepository
 
             if ($hashSenha == $user[0]['password']) {
                 return $user;
-            }
-            else
+            } else
+
                 return false;
-        }
-        else
+        } else
+
             return false;
 
     }
@@ -55,7 +55,6 @@ class UserRepository extends EntityRepository
 
         return $this->_em->createQuery($query)->getResult();
     }
-
 
   /**
    * encryptLoginAndPassword

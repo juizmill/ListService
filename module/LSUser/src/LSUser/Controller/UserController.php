@@ -53,7 +53,7 @@ class UserController extends CrudController
                 $service = $this->getServiceLocator()->get($this->service);
                 $data = $service->insert($request->getPost()->toArray());
 
-				/*SS
+                /*SS
                 //Verifica se está vindo alguma imagem do usuário
                 if ($_FILES['image']['name']) {
 
@@ -117,7 +117,7 @@ class UserController extends CrudController
 
                 //Caso o campo senha ou o campo confirmar senha não seja preenchidos
                 //É informado para validar somente os campos nome, login e tipo de usuário
-                if (! ($data['confirmation'] || $data['password']) ){
+                if (! ($data['confirmation'] || $data['password']) ) {
                     if ($user[0]["category_id"] == 1)
                         $form->setValidationGroup('name', 'login', 'TypeUse');
                     else
@@ -135,6 +135,7 @@ class UserController extends CrudController
                     $service->update($data);
 
                     if($user[0]['category_id'] == 1)
+
                         return $this->redirect()->toRoute($this->route, array('controller' => $this->controller));
                     else
                         return $this->redirect()->toRoute('ticket', array('controller' => 'ticket'));
@@ -142,6 +143,7 @@ class UserController extends CrudController
             }
         } else {
             if($user[0]['category_id'] == 1)
+
                 return $this->redirect()->toRoute($this->route, array('controller' => $this->controller));
             else
                 return $this->redirect()->toRoute('ticket', array('controller' => 'ticket'));
@@ -165,7 +167,7 @@ class UserController extends CrudController
 
         $entity = $this->getEm()->getRepository($this->entity)->findOneBy(array('id' => $id));
 
-        if( $entity ) {
+        if ($entity) {
 
             $data = $entity->toArray();
 
@@ -183,6 +185,7 @@ class UserController extends CrudController
             $service = $this->getServiceLocator()->get($this->service);
 
             if( $service->update($data) )
+
                 return $this->redirect()->toRoute($this->route, array('controller' => $this->controller));
             else
                 $this->getResponse()->setStatusCode(404);
@@ -208,7 +211,7 @@ class UserController extends CrudController
         $param = $this->params()->fromRoute('id', 0);
         $list = $this->getEm()->getRepository('LSCategoryticket\Entity\CategoryTicket')->findAll();
 
-        if ($list){
+        if ($list) {
 
             $categoryTicket = $this->getEm()->getRepository('LSBase\Entity\UserCategoryTicket')->findBy(array('user' => $param));
 
@@ -218,11 +221,10 @@ class UserController extends CrudController
             }
 
             return $viewModel->setVariables(array('data' => $list, 'user' => $param, 'categoryId' => $category));
-        }else{
+        } else {
             return $this->redirect()->toRoute($this->route, array('controller' => $this->controller));
         }
     }
-
 
     /**
      * registreCategoryTicketAction
@@ -252,7 +254,6 @@ class UserController extends CrudController
 
         exit();
     }
-
 
     /**
      * HandlesImage
@@ -297,7 +298,7 @@ class UserController extends CrudController
      *
      * @author Jesus Vieira <jesusvieiradelima@gmail.com>
      * @access public
-     * @param  String $dir
+     * @param String $dir
      */
     public static function delTree($dir)
     {

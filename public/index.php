@@ -7,7 +7,7 @@
 //Este IF verifica se a URL termina com uma BARRA, caso ela termine a BARRA é removida.
 //Assim evitando o erro 404.
 /*
-if(preg_match("/^(.*)\/$/", $_SERVER['REQUEST_URI'])){
+if (preg_match("/^(.*)\/$/", $_SERVER['REQUEST_URI'])) {
   $uri = substr_replace($_SERVER['REQUEST_URI'],'', -1, strlen($_SERVER['REQUEST_URI']));
   header("Location: http://{$_SERVER['HTTP_HOST']}{$uri}");
   exit();
@@ -15,7 +15,7 @@ if(preg_match("/^(.*)\/$/", $_SERVER['REQUEST_URI'])){
 */
 
 $host = $_SERVER['REQUEST_URI'];
-if ($host == '/' || $host == '' ){
+if ($host == '/' || $host == '') {
     header('Location: http://'.$_SERVER['SERVER_NAME'].'/auth');
     exit();
 

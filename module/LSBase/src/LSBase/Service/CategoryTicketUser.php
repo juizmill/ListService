@@ -39,18 +39,18 @@ class CategoryTicketUser extends AbstractService
     $categoryTicket = $this->em->getRepository('LSCategoryticket\Entity\CategoryTicket')->findBy(array('id' => $data['categoryTicket']));
     $user           = $this->em->getRepository('LSUser\Entity\User')->findBy(array('id' =>  $data['user']));
 
-    if ($entity){
+    if ($entity) {
         return parent::delete($entity[0]->getId());
-    }else{
+    } else {
 
-        if ($categoryTicket[0] && $user[0]){
+        if ($categoryTicket[0] && $user[0]) {
 
             $data['user']           = $user[0];
             $data['categoryTicket'] = $categoryTicket[0];
 
             return parent::insert($data);
 
-        }else{ return false;}
+        } else { return false;}
 
     }
   }

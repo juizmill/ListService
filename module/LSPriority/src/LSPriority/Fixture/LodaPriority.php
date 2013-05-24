@@ -3,7 +3,7 @@
 /**
  * Este arquivo é responsável por testar a manipulação de registro no banco de dados.
  * Onde o mesmo se refere a tabela priority.
- * 
+ *
  * @author Jesus Vieira E-mail <jesusvieiradelima@gmail.com>
  * @package LSCategoryTicket\Fixture
  */
@@ -19,7 +19,7 @@ class LodaPriority extends AbstractFixture implements OrderedFixtureInterface
 
   /**
    * Carrega o dispositivo de dados com o EntityManager
-   * 
+   *
    * @param \Doctrine\Common\Persistence\ObjectManager $manager
    */
   public function load(\Doctrine\Common\Persistence\ObjectManager $manager)

@@ -115,6 +115,7 @@ class TypeUser
   public function toArray()
   {
     $hydrator = new Hydrator\ClassMethods;
+
     return $hydrator->extract($this);
   }
 

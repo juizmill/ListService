@@ -29,9 +29,9 @@ class PriorityController extends CrudController
 
     /**
      * newAction
-     * 
+     *
      * Exibe pagina de cadastro.
-     * 
+     *
      * @author Jesus Vieira <jesusvieiradelima@gmail.com>
      * @access public
      * @return \Zend\View\Model\ViewModel
@@ -51,7 +51,7 @@ class PriorityController extends CrudController
 
             $duplicate = $this->getEm ()->getRepository ($this->entity)->findOneBy (array('description' => $data['description']));
 
-            if ( $duplicate ) {
+            if ($duplicate) {
                 return new ViewModel (array('form' => $form, 'duplicate' => 'Já existe um cadastrado com este nome!'));
             }
 
@@ -70,9 +70,9 @@ class PriorityController extends CrudController
 
     /**
      * editAction
-     * 
+     *
      * Exibe pagina para editar o registro.
-     * 
+     *
      * @author Jesus Vieira <jesusvieiradelima@gmail.com>
      * @access public
      * @return \Zend\View\Model\ViewModel
@@ -87,7 +87,7 @@ class PriorityController extends CrudController
         $repository = $this->getEm ()->getRepository ($this->entity);
         $entity = $repository->find ($param);
 
-        if ( $entity ) {
+        if ($entity) {
 
             $form->setData ($entity->toArray ());
 
@@ -99,7 +99,7 @@ class PriorityController extends CrudController
 
                 $duplicate = $this->getEm ()->getRepository ($this->entity)->findOneBy (array('description' => $data['description']));
 
-                if ( $duplicate ) {
+                if ($duplicate) {
                     return new ViewModel (array('form' => $form, 'id' => $param, 'duplicate' => 'Já existe um cadastrado com este nome!'));
                 }
                 if ( $form->isValid () ) {

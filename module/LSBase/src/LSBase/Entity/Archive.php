@@ -94,7 +94,7 @@ class Archive
   public function setInteraction(\LSInteraction\Entity\Interaction $interaction = null)
   {
     $this->interaction = $interaction;
-	
+
     return $this;
   }
 
@@ -116,6 +116,7 @@ class Archive
   public function toArray()
   {
     $hydrator = new Hydrator\ClassMethods;
+
     return $hydrator->extract($this);
   }
 

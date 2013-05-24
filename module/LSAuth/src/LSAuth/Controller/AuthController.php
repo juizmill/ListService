@@ -1,6 +1,5 @@
 <?php
 
-
 namespace LSAuth\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController,
@@ -25,8 +24,6 @@ class AuthController extends AbstractActionController
 
         if ($request->isPost()) {
 
-
-
             $form->setData($request->getPost());
 
             if ($form->isValid()) {
@@ -48,9 +45,10 @@ class AuthController extends AbstractActionController
 
                     $identity = $auth->getIdentity();
                     $sessionStorage->write($identity['user'], null);
+
                     return $this->redirect()->toRoute("ticket", array('controller' => 'ticket'));
 
-                }else{
+                } else {
 
                     $error = true;
                 }
@@ -62,8 +60,8 @@ class AuthController extends AbstractActionController
 
     }
 
-    public function logoutAction() {
-
+    public function logoutAction()
+    {
         $auth = new AuthenticationService;
         $auth->setStorage(new SessionStorage('LS'));
         $auth->clearIdentity();

@@ -4,7 +4,6 @@ namespace LSTicket\Service;
 use Doctrine\ORM\EntityManager;
 
 use LSBase\Service\AbstractService;
-use LSInteraction\Entity\Interaction;
 
 /**
  * Ticket
@@ -155,9 +154,5 @@ class Ticket extends AbstractService
             return false;
         }
     }
-
-
-
-
 
 }

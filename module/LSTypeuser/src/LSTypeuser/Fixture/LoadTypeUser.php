@@ -3,7 +3,7 @@
 /**
  * Este arquivo é responsável por testar a manipulação de registro no banco de dados.
  * Onde o mesmo se refere a tabela type_user.
- * 
+ *
  * @author Jesus Vieira E-mail <jesusvieiradelima@gmail.com>
  * @package LSTypeuser\Fixture
  */
@@ -19,7 +19,7 @@ class LoadTypeUser extends AbstractFixture implements OrderedFixtureInterface
 
   /**
    * Carrega o dispositivo de dados com o EntityManager
-   * 
+   *
    * @param \Doctrine\Common\Persistence\ObjectManager $manager
    */
   public function load(\Doctrine\Common\Persistence\ObjectManager $manager)
@@ -35,7 +35,6 @@ class LoadTypeUser extends AbstractFixture implements OrderedFixtureInterface
     $typeUser2 = new TypeUser;
     $typeUser2->setDescription('Cliente')->setActive(true);
     $manager->persist($typeUser2);
-
 
     $manager->flush();
   }
