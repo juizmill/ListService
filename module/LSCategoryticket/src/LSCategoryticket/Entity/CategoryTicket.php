@@ -63,7 +63,7 @@ class CategoryTicket
     /**
      * Set description
      *
-     * @param string $description
+     * @param  string         $description
      * @return CategoryTicket
      */
     public function setDescription($description)
@@ -86,7 +86,7 @@ class CategoryTicket
     /**
      * Set active
      *
-     * @param boolean $active
+     * @param  boolean        $active
      * @return CategoryTicket
      */
     public function setActive($active)
@@ -114,6 +114,7 @@ class CategoryTicket
     public function toArray()
     {
         $hydrator = new Hydrator\ClassMethods;
+
         return $hydrator->extract($this);
     }
 

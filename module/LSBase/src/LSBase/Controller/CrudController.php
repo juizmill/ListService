@@ -69,11 +69,11 @@ abstract class CrudController extends AbstractActionController
 
         $request = $this->getRequest();
 
-        if( $request->isPost() ) {
+        if ( $request->isPost() ) {
 
             $form->setData($request->getPost());
 
-            if( $form->isValid() ) {
+            if ( $form->isValid() ) {
 
                 $service = $this->getServiceLocator()->get($this->service);
                 $service->insert($request->getPost()->toArray());
@@ -105,15 +105,15 @@ abstract class CrudController extends AbstractActionController
         $repository = $this->getEm()->getRepository($this->entity);
         $entity = $repository->find($param);
 
-        if( $entity ) {
+        if ($entity) {
 
             $form->setData($entity->toArray());
 
-            if( $request->isPost() ) {
+            if ( $request->isPost() ) {
 
                 $form->setData($request->getPost());
 
-                if( $form->isValid() ) {
+                if ( $form->isValid() ) {
 
                     $service = $this->getServiceLocator()->get($this->service);
                     $service->update($request->getPost()->toArray());
@@ -142,6 +142,7 @@ abstract class CrudController extends AbstractActionController
     {
         $service = $this->getServiceLocator()->get($this->service);
         if( $service->delete($this->params()->fromRoute('id', 0)) )
+
             return $this->redirect()->toRoute($this->route, array('controller' => $this->controller));
         else
             $this->getResponse()->setStatusCode(404);
@@ -163,7 +164,7 @@ abstract class CrudController extends AbstractActionController
 
         $entity = $this->getEm()->getRepository($this->entity)->findOneBy(array('id' => $id));
 
-        if( $entity ) {
+        if ($entity) {
 
             $data = $entity->toArray();
 
@@ -175,6 +176,7 @@ abstract class CrudController extends AbstractActionController
             $service = $this->getServiceLocator()->get($this->service);
 
             if( $service->update($data) )
+
                 return $this->redirect()->toRoute($this->route, array('controller' => $this->controller));
             else
                 $this->getResponse()->setStatusCode(404);
@@ -197,7 +199,6 @@ abstract class CrudController extends AbstractActionController
             if ($authService->hasIdentity())
                 return $authService->getIdentity();
     }
-
 
     /**
      * getEm

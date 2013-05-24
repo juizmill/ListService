@@ -128,7 +128,7 @@ class HandlesDirectory
      *
      * @author Jesus Vieira <jesusvieiradelima@gmail.com>
      * @access public
-     * @param String $file
+     * @param  String                         $file
      * @return \LSBase\Utils\HandlesDirectory
      */
     public function removeFile($file)

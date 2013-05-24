@@ -24,6 +24,7 @@ class TotalMyTicket extends AbstractHelper
     public function __invoke()
     {
         $total =$this->total;
+
         return $total[0][1];
     }
 

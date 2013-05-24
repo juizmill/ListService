@@ -104,7 +104,6 @@ class UserFilter extends InputFilter
             ),
         ));
 
-
     }
 
     /**
@@ -112,9 +111,9 @@ class UserFilter extends InputFilter
      *
      * Valida campo conforme especificado
      *
-     * @param Integer $min
-     * @param Integer $max
-     * @param String $inputName
+     * @param  Integer                      $min
+     * @param  Integer                      $max
+     * @param  String                       $inputName
      * @return \Zend\Validator\StringLength
      */
     protected function stringLength($min, $max, $inputName)
@@ -133,7 +132,7 @@ class UserFilter extends InputFilter
      *
      * Valida se o campo está em branco
      *
-     * @param String $inputName
+     * @param  String                   $inputName
      * @return \Zend\Validator\NotEmpty
      */
     protected function notEmpty($inputName)
@@ -149,8 +148,8 @@ class UserFilter extends InputFilter
      *
      * Valida se o valor de dois campos são iguais
      *
-     * @param String $inputName
-     * @param String $compare
+     * @param  String                    $inputName
+     * @param  String                    $compare
      * @return \Zend\Validator\Identical
      */
     protected function identical($inputName, $compare)

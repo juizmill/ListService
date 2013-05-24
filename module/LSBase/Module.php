@@ -30,7 +30,8 @@ class Module
         );
     }
 
-    public function getAuthService() {
+    public function getAuthService()
+    {
         return $this->authService;
     }
 
@@ -61,8 +62,7 @@ class Module
                 },
 
                 //esta parte do "programa" é exclusivo para realizar as permissões de cada usuário.
-                'LSUser\Permissions\Acl' => function($sm)
-                {
+                'LSUser\Permissions\Acl' => function($sm) {
                   $em = $sm->get('Doctrine\ORM\EntityManager');
 
                   #Recupera os Papeis de usuários
@@ -89,6 +89,7 @@ class Module
             'factories' => array(
                     'TotalMyTicket' => function($sm){
                         $service = $sm->getServiceLocator()->get('Doctrine\ORM\EntityManager')->getRepository('LSTicket\Entity\Ticket')->TotalMyTicket($this->getUserCurrent());
+
                         return new TotalMyTicket($service);
                     },
                     'TotalMyTicketResolved' => function($sm){

@@ -12,7 +12,6 @@ use LSBase\Utils\UploadFile;
 use Zend\File\Transfer\Adapter\Http;
 use Zend\XmlRpc\Value\DateTime;
 
-
 /**
  * TicketController
  *
@@ -87,7 +86,7 @@ class TicketController extends CrudController
                 $ticket = $service->insert($data);
 
                 //Registra a Interação
-                if ($ticket){
+                if ($ticket) {
 
                     $user = $this->getUserCurrent();
                     $entityUser = $this->getEm()->getRepository('LSUser\Entity\User')->find($user[0]["id"]);
@@ -100,7 +99,7 @@ class TicketController extends CrudController
                 }
 
                 //Registra o arquivo
-                if ($_FILES['archive']['name'] && $interaction){
+                if ($_FILES['archive']['name'] && $interaction) {
 
                     $upload = new UploadFile(new Http(), 'archives', $ticket->getId(), $interaction->getId());
 
@@ -110,7 +109,6 @@ class TicketController extends CrudController
                                                 'pathFile' => $upload->getFileName(),
                                                 'interaction' => $interaction));
                 }
-
 
                 return $this->redirect()->toRoute($this->route, array('controller' => $this->controller));
             }
@@ -136,12 +134,12 @@ class TicketController extends CrudController
         $service = $this->getServiceLocator()->get($this->service);
         $delete = $service->delete($param);
 
-        if($delete){
+        if ($delete) {
 
             $this->delTree('archives'.DIRECTORY_SEPARATOR.$param);
 
             return $this->redirect()->toRoute($this->route, array('controller' => $this->controller));
-        }else{
+        } else {
             $this->getResponse()->setStatusCode(404);
         }
 
@@ -162,7 +160,7 @@ class TicketController extends CrudController
 
         $entity = $this->getEm()->getRepository($this->entity)->findOneBy(array('id' => $id));
 
-        if( $entity ) {
+        if ($entity) {
 
             $data = $entity->toArray();
 
@@ -174,12 +172,12 @@ class TicketController extends CrudController
             $service = $this->getServiceLocator()->get($this->service);
 
             if( $service->updateActive($data) )
+
                 return $this->redirect()->toRoute($this->route, array('controller' => $this->controller));
             else
                 $this->getResponse()->setStatusCode(404);
         }
     }
-
 
     public function dateEstimatedAction()
     {
@@ -221,13 +219,13 @@ class TicketController extends CrudController
 
         $ticket = $this->getEm()->getRepository($this->entity)->find(array('id' => $param));
 
-        if ($list){
+        if ($list) {
 
             if ($ticket->getUser())
                 return $viewModel->setVariables(array('data' => $list, 'id' => $param, 'user' => $ticket->getUser()->getId()));
             else
                 return $viewModel->setVariables(array('data' => $list, 'id' => $param));
-        }else{
+        } else {
             return $this->redirect()->toRoute($this->route, array('controller' => $this->controller));
         }
     }
@@ -261,7 +259,6 @@ class TicketController extends CrudController
         exit();
     }
 
-
     /**
      * priorityAction
      *
@@ -282,13 +279,13 @@ class TicketController extends CrudController
 
         $priority = $this->getEm()->getRepository($this->entity)->find(array('id' => $param));
 
-        if ($list){
+        if ($list) {
 
             if ($priority->getPriority())
                 return $viewModel->setVariables(array('data' => $list, 'id' => $param, 'priority' => $priority->getPriority()->getId()));
             else
                 return $viewModel->setVariables(array('data' => $list, 'id' => $param));
-        }else{
+        } else {
             return $this->redirect()->toRoute($this->route, array('controller' => $this->controller));
         }
     }
@@ -322,7 +319,6 @@ class TicketController extends CrudController
         exit();
     }
 
-
     /**
      * closeAction
      *
@@ -339,16 +335,16 @@ class TicketController extends CrudController
 
         $entity = $this->getEm()->getRepository($this->entity)->findOneBy(array('id' => $id));
 
-        if( $entity ) {
+        if ($entity) {
 
             $data = $entity->toArray();
 
-            if (is_null($data['date_end']) && is_null($data['date_estimated']) ){
+            if (is_null($data['date_end']) && is_null($data['date_estimated']) ) {
                 $data['date_end'] = new \DateTime('now');
                 $data['date_estimated'] = new \DateTime('now');
-            }else if (is_null($data['date_end'])){
+            } elseif (is_null($data['date_end'])) {
                 $data['date_end'] = new \DateTime('now');
-            }else{
+            } else {
                 $data['date_end'] = null;
                 $data['date_estimated'] =  null;
             }
@@ -356,20 +352,15 @@ class TicketController extends CrudController
             $service = $this->getServiceLocator()->get($this->service);
 
             if( $service->updateActive($data) )
+
                 return $this->redirect()->toRoute($this->route, array('controller' => $this->controller));
             else
                 $this->getResponse()->setStatusCode(404);
-        }else{
+        } else {
             return $this->redirect()->toRoute($this->route, array('controller' => $this->controller));
         }
 
     }
-
-
-
-
-
-
 
     /**
      * delTree
@@ -378,7 +369,7 @@ class TicketController extends CrudController
      *
      * @author Jesus Vieira <jesusvieiradelima@gmail.com>
      * @access public
-     * @param  String $dir
+     * @param String $dir
      */
     public static function delTree($dir)
     {

@@ -8,7 +8,6 @@ use Zend\ModuleManager\ModuleManager,
 
 use LSAuth\LSHelpers\UserIdentity as Identity;
 
-
 use LSAuth\Auth\Adapter as AuthAdapter;
 
 class Module
@@ -30,8 +29,8 @@ class Module
         );
     }
 
-    public function init(ModuleManager $moduleManager) {
-
+    public function init(ModuleManager $moduleManager)
+    {
         $sharedEvents = $moduleManager->getEventManager()->getSharedManager();
 
         $sharedEvents->attach("LS", 'dispatch', function($e) {
@@ -59,7 +58,8 @@ class Module
             );
     }
 
-    public function getViewHelperConfig() {
+    public function getViewHelperConfig()
+    {
         return array(
                 'invokables' => array(
                         'UserIdentity' => new Identity()

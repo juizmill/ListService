@@ -51,22 +51,21 @@ class InteractionController extends CrudController
 
         $ticket = $this->getEm()->getRepository('LSTicket\Entity\Ticket')->find($param);
         $description = $this->getEm()->getRepository('LSInteraction\Entity\Interaction')->findBy(array('ticket' => $param));
-		$archive = $this->getEm()->getRepository('LSBase\Entity\Archive')->findAll();
+        $archive = $this->getEm()->getRepository('LSBase\Entity\Archive')->findAll();
 
-		foreach ($archive as $value) {
-			$itens[] = array('path' => $value->getPathFile(), 'interaction_id' => $value->getIntereaction()->getId());		
-		}
-		
-		
-		//\Zend\Debug\Debug::dump($itens);die;
-	
-        if ($ticket){
+        foreach ($archive as $value) {
+            $itens[] = array('path' => $value->getPathFile(), 'interaction_id' => $value->getIntereaction()->getId());
+        }
 
-            if( $this->getRequest()->isPost() ) {
+        //\Zend\Debug\Debug::dump($itens);die;
+
+        if ($ticket) {
+
+            if ( $this->getRequest()->isPost() ) {
 
                 $form->setData($this->getRequest()->getPost());
 
-                if( $form->isValid()) {
+                if ( $form->isValid()) {
 
                     $data = $this->getRequest()->getPost()->toArray();
                     $data['user'] = $user;
@@ -76,7 +75,7 @@ class InteractionController extends CrudController
                     $interaction = $service->insert($data);
 
                   //Registra o arquivo
-                  if ($_FILES['archive']['name'] && $interaction){
+                  if ($_FILES['archive']['name'] && $interaction) {
 
                       $upload = new UploadFile(new Http(), 'archives', $ticket->getId(), $interaction->getId());
 
@@ -92,7 +91,7 @@ class InteractionController extends CrudController
             }
 
             return new ViewModel(array('form' => $form, 'ticket' => $ticket, 'description' => $description, 'archive' => $archive));
-        }else{
+        } else {
             return $this->redirect()->toRoute('ticket', array('controller' => 'ticket'));
         }
 

@@ -16,8 +16,8 @@ class Acl extends ClassAcl
     protected $newResoirces;
     protected $newprivileges;
 
-    public function __construct(array $roles, array $resources, array $privileges) {
-
+    public function __construct(array $roles, array $resources, array $privileges)
+    {
         $this->roles = $roles;
         $this->resources = $resources;
         $this->privileges = $privileges;
@@ -29,12 +29,11 @@ class Acl extends ClassAcl
 
     protected function loadRoles()
     {
-        foreach($this->roles as $role)
-        {
+        foreach ($this->roles as $role) {
 
             $this->addRole(new Role($role['description']));
 
-            if ( ($role['id'] == 1) && ($role['description'] == "adm")  ){
+            if ( ($role['id'] == 1) && ($role['description'] == "adm")  ) {
                 $this->allow($role['description'] ,array(),array());
             }
 
@@ -44,8 +43,7 @@ class Acl extends ClassAcl
 
     protected function loadResources()
     {
-        foreach($this->resources as $resource)
-        {
+        foreach ($this->resources as $resource) {
             $this->addResource(new Resource($resource['description']));
 
             $this->newResoirces[] = $resource['description'];
@@ -58,8 +56,7 @@ class Acl extends ClassAcl
         foreach($this->privileges as $privilege)
             $permissions[] = $privilege['permissions'];
 
-        foreach($this->privileges as $privilege)
-        {
+        foreach ($this->privileges as $privilege) {
             $this->allow($privilege['roles'], $this->newResoirces, $permissions);
         }
     }
