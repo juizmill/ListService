@@ -1,280 +1,338 @@
 <?php
-
 namespace LSUser\Entity;
 
+use LSBase\Entity\AbstractEntity;
 use Doctrine\ORM\Mapping as ORM;
-use Zend\Math\Rand,
-    Zend\Crypt\Key\Derivation\Pbkdf2,
-    Zend\Stdlib\Hydrator;
+use Zend\Crypt\Password\Bcrypt;
+use Zend\Math\Rand;
 
 /**
- * User
+ * Class User
+ * @package Usuario\Entity
  *
- * @ORM\Table(name="user")
  * @ORM\Entity
- * @ORM\Entity(repositoryClass="LSUser\Entity\Repository\UserRepository")
+ * @ORM\Table(name="user")
  * @ORM\HasLifecycleCallbacks
+ * @ORM\Entity(repositoryClass="LSUser\Entity\Repository\UserRepository")
  */
-class User
+class User extends AbstractEntity
 {
 
-  /**
-   * @var integer
-   *
-   * @ORM\Column(name="id", type="integer", nullable=false)
-   * @ORM\Id
-   * @ORM\GeneratedValue(strategy="IDENTITY")
-   */
-  private $id;
+    /**
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @var $id integer
+     */
+    private $id;
 
-  /**
-   * @var string
-   *
-   * @ORM\Column(name="name", type="string", length=80, nullable=false)
-   */
-  private $name;
+    /**
+     * @ORM\Column(name="name", type="string", length=80, nullable=false)
+     * @var $name string
+     */
+    private $name;
 
-  /**
-   * @var string
-   *
-   * @ORM\Column(name="login", type="string", length=255, nullable=false)
-   */
-  private $login;
+    /**
+     * @ORM\Column(name="email", type="string", length=255, nullable=false, unique=true)
+     * @var $email string
+     */
+    private $email;
 
-  /**
-   * @var string
-   *
-   * @ORM\Column(name="password", type="string", length=255, nullable=false)
-   */
-  private $password;
+    /**
+     * @ORM\Column(name="login", type="string", length=255, nullable=false, unique=true)
+     * @var $login
+     */
+    private $login;
 
-  /**
-   * @var \DateTime
-   *
-   * @ORM\Column(name="date_registry", type="datetime", nullable=false)
-   */
-  private $dateRegistry;
+    /**
+     * @ORM\Column(name="password", type="string", length=255, nullable=false)
+     * @var $password string
+     */
+    private $password;
 
-  /**
-   * @var boolean
-   *
-   * @ORM\Column(name="active", type="boolean", nullable=false)
-   */
-  private $active;
+    /**
+     * @ORM\Column(name="registry", type="datetime", nullable=false)
+     * @var $registry \DateTime
+     */
+    private $registry;
 
-  /**
-   * @var string
-   *
-   * @ORM\Column(name="salt", type="string", length=255, nullable=false)
-   */
-  private $salt;
+    /**
+     * @ORM\Column(name="avatar", type="string", length=255, nullable=true)
+     * @var $avatar string
+     */
+    private $avatar;
 
-  /**
-   * @var \TypeUser
-   *
-   * @ORM\ManyToOne(targetEntity="LSTypeuser\Entity\TypeUser")
-   * @ORM\JoinColumns({
-   *   @ORM\JoinColumn(name="type_use_id", referencedColumnName="id")
-   * })
-   */
-  private $typeUse;
+    /**
+     * @ORM\Column(name="active", type="boolean", nullable=false)
+     * @var $active boolean
+     */
+    private $active;
 
-  /**
-   * __construct
-   *
-   * @param array $options
-   */
-  public function __construct(array $options = array())
-  {
-    $this->salt = base64_encode(Rand::getBytes(30, true));
+    /**
+     * @ORM\Column(name="salt", type="string", length=255, nullable=false)
+     * @var $salt string
+     */
+    private $salt;
 
-    $hydrator = new Hydrator\ClassMethods;
-    $hydrator->hydrate($options, $this);
+    /**
+     * @ORM\Column(name="active_key", type="string", length=255, nullable=false)
+     * @var $active_key string
+     */
+    private $active_key;
 
-    $this->active = true;
-  }
+    /**
+     * @ORM\ManyToOne(targetEntity="LSTypeuser\Entity\TypeUser")
+     * @ORM\JoinColumn(name="type_user", referencedColumnName="id", nullable=true, onDelete="SET NULL")
+     * @var $type_user
+     */
+    private $type_user;
 
-  /**
-   * Get id
-   *
-   * @return integer
-   */
-  public function getId()
-  {
-    return $this->id;
-  }
+    /**
+     * @param array $options
+     */
+    public function __construct(Array $options = array())
+    {
+        $this->salt = Rand::getString(35, $this->email, true);
+        $this->active_key = md5($this->email . $this->salt);
 
-  /**
-   * Set name
-   *
-   * @param string $name
-   * @return User
-   */
-  public function setName($name)
-  {
-    $this->name = $name;
+        parent::__construct($options);
+    }
 
-    return $this;
-  }
+    /**
+     * @param $id
+     * @return $this
+     * @throws \InvalidArgumentException
+     */
+    public function setId($id)
+    {
+        if (!is_numeric($id))
+            throw new \InvalidArgumentException('ID aceita apenas números inteiros');
 
-  /**
-   * Get name
-   *
-   * @return string
-   */
-  public function getName()
-  {
-    return $this->name;
-  }
+        if ($id <= 0)
+            throw new \InvalidArgumentException('ID aceita apenas números maiores que zero');
 
-  /**
-   * Set login
-   *
-   * @param string $login
-   * @return User
-   */
-  public function setLogin($login)
-  {
-    $this->login = $login;
+        $this->id = $id;
+        return $this;
+    }
 
-    return $this;
-  }
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
-  /**
-   * Get login
-   *
-   * @return string
-   */
-  public function getLogin()
-  {
-    return $this->login;
-  }
+    /**
+     * @param mixed $name
+     */
+    public function setName($name)
+    {
+        if (strlen($name) > 80)
+            throw new \InvalidArgumentException('NAME aceita apenas 80 caracteres');
 
-  /**
-   * Set password
-   *
-   * @param string $password
-   * @return User
-   */
-  public function setPassword($password)
-  {
-    $this->password = $this->encryptPassword($password);
+        $this->name = $name;
+        return $this;
+    }
 
-    return $this;
-  }
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
 
-  /**
-   * Get password
-   *
-   * @return string
-   */
-  public function getPassword()
-  {
-    return $this->password;
-  }
+    /**
+     * @param mixed $email
+     */
+    public function setEmail($email)
+    {
+        if (strlen($email) > 255)
+            throw new \InvalidArgumentException('EMAIL aceita apenas 255 caracteres');
 
-  /**
-   * Set dateRegistry
-   *
-   * @ORM\PrePersist
-   * @param \DateTime $dateRegistry
-   * @return User
-   */
-  public function setDateRegistry()
-  {
-    $this->dateRegistry = new \DateTime('now');
+        $this->email = $email;
+        return $this;
+    }
 
-    return $this;
-  }
+    /**
+     * @return mixed
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
 
-  /**
-   * Get dateRegistry
-   *
-   * @return \DateTime
-   */
-  public function getDateRegistry()
-  {
-    return $this->dateRegistry;
-  }
+    /**
+     * @param mixed $login
+     */
+    public function setLogin($login)
+    {
+        if (strlen($login) > 255)
+            throw new \InvalidArgumentException('LOGIN aceita apenas 255 caracteres');
 
-  /**
-   * Set active
-   *
-   * @param boolean $active
-   * @return User
-   */
-  public function setActive($active)
-  {
-    $this->active = $active;
+        $this->login = $login;
+        return $this;
+    }
 
-    return $this;
-  }
+    /**
+     * @return mixed
+     */
+    public function getLogin()
+    {
+        return $this->login;
+    }
 
-  /**
-   * Get active
-   *
-   * @return boolean
-   */
-  public function getActive()
-  {
-    return $this->active;
-  }
+    /**
+     * @param $password
+     * @return string
+     */
+    public function encryptPassword($password)
+    {
+        $bcrypt = new Bcrypt();
+        $bcrypt->setSalt($this->salt);
 
-  /**
-   * Get salt
-   *
-   * @return string
-   */
-  public function getSalt()
-  {
-    return $this->salt;
-  }
+        return $bcrypt->create($password);
+    }
 
-  /**
-   * Set typeUse
-   *
-   * @param \LSTypeuser\Entity\TypeUser $typeUse
-   * @return User
-   */
-  public function setTypeUse(\LSTypeuser\Entity\TypeUser $typeUse = null)
-  {
-    $this->typeUse = $typeUse;
+    /**
+     * @param mixed $password
+     */
+    public function setPassword($password)
+    {
+        if (strlen($password) > 255)
+            throw new \InvalidArgumentException('PASSWORD aceita apenas 255 caracteres');
 
-    return $this;
-  }
+        $this->password = $this->encryptPassword($password);;
+        return $this;
+    }
 
-  /**
-   * Get typeUse
-   *
-   * @return \LSTypeuser\Entity\TypeUser
-   */
-  public function getTypeUse()
-  {
-    return $this->typeUse;
-  }
+    /**
+     * @return mixed
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
 
-  /**
-   * encryptLoginAndPassword
-   *
-   * @param string $senhaOrPassword
-   * @param integer $iterations
-   * @return string hash
-   */
-  public function encryptPassword($password)
-  {
-    return base64_encode(Pbkdf2::calc('sha256', $password, $this->salt, 15000, strlen($password * 2)));
-  }
+    /**
+     * @param mixed $registry
+     *
+     */
+    public function setRegistry($registry)
+    {
+        if (is_null($registry))
+            $registry = new \DateTime('now');
 
-  /**
-   * toArray
-   *
-   * @return array
-   */
-  public function toArray()
-  {
-    $hydrator = new Hydrator\ClassMethods;
+        if (!$registry instanceof \DateTime)
+            throw new \InvalidArgumentException('REGISTRY aceita apenas DATETIME');
 
-    return $hydrator->extract($this);
-  }
+        $this->registry = $registry;
+        return $this;
+    }
 
+    /**
+     * @return mixed
+     */
+    public function getRegistry()
+    {
+        return $this->registry;
+    }
+
+    /**
+     * @param mixed $avatar
+     */
+    public function setAvatar($avatar)
+    {
+        if (strlen($avatar) > 255)
+            throw new \InvalidArgumentException('AVATAR aceita apenas 255 caracteres');
+
+        $this->avatar = $avatar;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAvatar()
+    {
+        return $this->avatar;
+    }
+
+    /**
+     * @param mixed $active
+     */
+    public function setActive($active)
+    {
+        if (!is_bool($active))
+            throw new \InvalidArgumentException('ACTIVE aceita apenas booleanos');
+
+        $this->active = $active;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
+
+    /**
+     * @param mixed $salt
+     */
+    public function setSalt($salt)
+    {
+        if (strlen($salt) > 255)
+            throw new \InvalidArgumentException('SALT aceita apenas 255 caracteres');
+
+        $this->salt = $salt;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSalt()
+    {
+        return $this->salt;
+    }
+
+    /**
+     * @param mixed $active_key
+     */
+    public function setActiveKey($active_key)
+    {
+        if (strlen($active_key) > 255)
+            throw new \InvalidArgumentException('ACTIVEKEY aceita apenas 255 caracteres');
+
+        $this->active_key = $active_key;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getActiveKey()
+    {
+        return $this->active_key;
+    }
+
+    /**
+     * @param mixed $type_user
+     */
+    public function setTypeUser(\LSTypeuser\Entity\TypeUser $type_user)
+    {
+        $this->type_user = $type_user;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTypeUser()
+    {
+        return $this->type_user;
+    }
 }

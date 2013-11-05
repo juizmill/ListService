@@ -1,0 +1,11 @@
+<?php
+define('ZF2_PATH', '/vendor/zendframework/zendframework/library');
+
+return array(
+    'modules' => array(
+        'DoctrineModule',
+        'DoctrineORMModule',
+        'LSBase',
+        'LSUser',
+    ),
+);

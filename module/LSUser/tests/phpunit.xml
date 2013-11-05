@@ -1,0 +1,22 @@
+<phpunit bootstrap="./bootstrap.php"
+         colors="true"
+         backupGlobals="false">
+    <testsuites>
+        <testsuite name="LSUser Module Tests">
+            <directory>./LSUserTest</directory>
+        </testsuite>
+    </testsuites>
+
+    <!-- Code Coverage Configuration -->
+    <filter>
+        <whitelist>
+            <directory suffix=".php">../</directory>
+            <exclude>
+                <file>../Module.php</file>
+                <directory>../languageArray</directory>
+                <directory>../config</directory>
+                <directory>../tests</directory>
+            </exclude>
+        </whitelist>
+    </filter>
+</phpunit>

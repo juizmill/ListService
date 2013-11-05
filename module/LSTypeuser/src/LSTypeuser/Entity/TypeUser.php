@@ -1,122 +1,74 @@
 <?php
-
 namespace LSTypeuser\Entity;
 
+use LSBase\Entity\AbstractEntity;
 use Doctrine\ORM\Mapping as ORM;
-use Zend\Stdlib\Hydrator;
 
 /**
- * TypeUser
+ * Class TypeUser
+ * @package LSTypeuser\Entity
  *
- * @ORM\Table(name="type_user")
  * @ORM\Entity
+ * @ORM\Table(name="type_user")
+ * @ORM\HasLifecycleCallbacks
  * @ORM\Entity(repositoryClass="LSTypeuser\Entity\Repository\TypeUserRepository")
  */
-class TypeUser
+class TypeUser extends AbstractEntity
 {
+    /**
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @var $id integer
+     */
+    private $id;
 
-  /**
-   * @var integer
-   *
-   * @ORM\Column(name="id", type="integer", nullable=false)
-   * @ORM\Id
-   * @ORM\GeneratedValue(strategy="IDENTITY")
-   */
-  private $id;
+    /**
+     * @ORM\Column(name="name", type="string", length=30, nullable=false)
+     * @var $name string
+     */
+    private $name;
 
-  /**
-   * @var string
-   *
-   * @ORM\Column(name="description", type="string", length=30, nullable=false)
-   */
-  private $description;
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        if (! is_numeric($id))
+            throw new \InvalidArgumentException('ID aceita apenas números inteiros');
 
-  /**
-   * @var boolean
-   *
-   * @ORM\Column(name="active", type="boolean", nullable=false)
-   */
-  private $active;
+        if ($id <= 0)
+            throw new \InvalidArgumentException('ID aceita apenas números maiores que zero');
 
-  /**
-   * __construct
-   *
-   * @param array $options
-   */
-  public function __construct(array $options = array())
-  {
-    $hydrator = new Hydrator\ClassMethods;
-    $hydrator->hydrate($options, $this);
+        $this->id = $id;
+        return $this;
+    }
 
-    $this->active = true;
-  }
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
-  /**
-   * Get id
-   *
-   * @return integer
-   */
-  public function getId()
-  {
-    return $this->id;
-  }
+    /**
+     * @param mixed $name
+     */
+    public function setName($name)
+    {
+        if (strlen($name) > 30)
+            throw new \InvalidArgumentException('NAME aceita apenas 30 caracteres');
 
-  /**
-   * Set description
-   *
-   * @param string $description
-   * @return TypeUser
-   */
-  public function setDescription($description)
-  {
-    $this->description = $description;
+        $this->name = $name;
+        return $this;
+    }
 
-    return $this;
-  }
-
-  /**
-   * Get description
-   *
-   * @return string
-   */
-  public function getDescription()
-  {
-    return $this->description;
-  }
-
-  /**
-   * Set active
-   *
-   * @param boolean $active
-   * @return TypeUser
-   */
-  public function setActive($active)
-  {
-    $this->active = $active;
-
-    return $this;
-  }
-
-  /**
-   * Get active
-   *
-   * @return boolean
-   */
-  public function getActive()
-  {
-    return $this->active;
-  }
-
-  /**
-   * toArray
-   *
-   * @return array
-   */
-  public function toArray()
-  {
-    $hydrator = new Hydrator\ClassMethods;
-
-    return $hydrator->extract($this);
-  }
-
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
 }
