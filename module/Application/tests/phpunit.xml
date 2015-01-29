@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit bootstrap="Bootstrap.php"
+         colors="true"
+         backupGlobals="false">
+    <testsuites>
+        <testsuite name="Application Test Suite">
+            <directory>./</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist>
+            <directory suffix=".php">../</directory>
+            <exclude>
+                <file>../Module.php</file>
+                <directory suffix=".php">./</directory>
+                <directory>../src/Application/Fixture</directory>
+                <directory>../config</directory>
+                <directory>../tests</directory>
+            </exclude>
+        </whitelist>
+    </filter>
+    <!--<logging>
+        <log type="coverage-html" target="_reports/coverage" title="News Test Suite" charset="UTF-8" yui="true" highlight="true" lowUpperBound="35" highLowerBound="90"/>
+        <log type="testdox-text" target="_reports/testdox/executed.txt"/>
+    </logging>-->
+</phpunit>
