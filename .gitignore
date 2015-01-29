@@ -7,7 +7,6 @@
 .project
 .settings
 composer.lock
-composer.phar
 vendor
 bin
 *.sublime-project
