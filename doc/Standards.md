@@ -15,3 +15,5 @@ The following are the standards to keep the project.
 - Whenever possible, write comments in the code, especially the most complex.
 
 - Code style should follow the PSR-1 / PSR-2
+
+- Whenever possible use TDD (Test Driven Development)
