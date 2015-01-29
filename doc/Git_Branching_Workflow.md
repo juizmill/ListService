@@ -7,7 +7,7 @@ Try to follow the steps below:
 
 ```
 	$ cd ~ /Dev/ListService
-	$ Git clone git@github.com:YOURUSER/ListService.git
+	$ Git clone -b develop git@github.com:YOURUSER/ListService.git
 ```
 
 - Added the remote repository:
