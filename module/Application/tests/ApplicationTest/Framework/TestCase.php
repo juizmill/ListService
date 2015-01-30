@@ -22,6 +22,8 @@ class TestCase extends PHPUnit_Framework_TestCase
 
     protected $modules;
 
+    public $isORM = false;
+
     protected $pathDir;
 
     public function setup()
@@ -45,11 +47,15 @@ class TestCase extends PHPUnit_Framework_TestCase
             $this->modules = $moduleManager->getModules();
 
             $this->serviceManager->setAllowOverride(true);
-            self::initDoctrine($this->serviceManager);
 
-            foreach ($this->filterModules() as $m) {
-                $this->createDatabase($m);
+            if ($this->isORM) {
+                self::initDoctrine($this->serviceManager);
+
+                foreach ($this->filterModules() as $m) {
+                    $this->createDatabase($m);
+                }
             }
+
 
         } else {
             throw new RuntimeException('Arquivo '.$this->pathDir.'/TestConfig.php'.' não foi encontrado!');
@@ -107,28 +113,31 @@ class TestCase extends PHPUnit_Framework_TestCase
     {
 
         $this->tearDown();
-        if (file_exists($this->pathDir.'/../config/module.config.php')) {
-            $config = require $this->pathDir.'/../config/module.config.php';
 
-            if (isset($config['doctrine'])) {
-                $dh = $config['doctrine']['driver'][$module.'_driver']['paths'][0];
+        if ($this->isORM) {
+            if (file_exists($this->pathDir.'/../config/module.config.php')) {
+                $config = require $this->pathDir.'/../config/module.config.php';
 
-                if (is_dir($dh)) {
-                    $dir = opendir($dh);
+                if (isset($config['doctrine'])) {
+                    $dh = $config['doctrine']['driver'][$module.'_driver']['paths'][0];
 
-                    $tool = new SchemaTool($this->getEm());
+                    if (is_dir($dh)) {
+                        $dir = opendir($dh);
 
-                    $class = array();
-                    while (false !== ($filename = readdir($dir))) {
-                        if (substr($filename, -4) == ".php") {
-                            $class[] = $this->getEm()->getClassMetadata($module.'\\Entity\\'.str_replace('.php', '', $filename));
+                        $tool = new SchemaTool($this->getEm());
+
+                        $class = array();
+                        while (false !== ($filename = readdir($dir))) {
+                            if (substr($filename, -4) == ".php") {
+                                $class[] = $this->getEm()->getClassMetadata($module.'\\Entity\\'.str_replace('.php', '', $filename));
+                            }
                         }
+                        $tool->createSchema($class);
                     }
-                    $tool->createSchema($class);
                 }
+            } else {
+                throw new \InvalidArgumentException('Nenhum modulo adicionado');
             }
-        } else {
-            throw new \InvalidArgumentException('Nenhum modulo adicionado');
         }
     }
 
@@ -139,26 +148,28 @@ class TestCase extends PHPUnit_Framework_TestCase
     {
         parent::tearDown();
 
-        $module = $this->filterModules();
+        if ($this->isORM) {
+            $module = $this->filterModules();
 
-        foreach ($module as $m) {
-            if (file_exists($this->pathDir.'/../config/module.config.php')) {
-                $config = require $this->pathDir.'/../config/module.config.php';
+            foreach ($module as $m) {
+                if (file_exists($this->pathDir.'/../config/module.config.php')) {
+                    $config = require $this->pathDir.'/../config/module.config.php';
 
-                if (isset($config['doctrine'])) {
-                    $dh = $config['doctrine']['driver'][$m.'_driver']['paths'][0];
-                    if (is_dir($dh)) {
-                        $dir = opendir($dh);
-                        while (false !== ($filename = readdir($dir))) {
-                            if (substr($filename, -4) == ".php") {
-                                $tool = new SchemaTool($this->getEm());
-                                $class = array(
-                                    $this->getEm()->getClassMetadata($m.'\\Entity\\'.str_replace('.php', '', $filename))
-                                );
-                                $tool->dropSchema($class);
+                    if (isset($config['doctrine'])) {
+                        $dh = $config['doctrine']['driver'][$m.'_driver']['paths'][0];
+                        if (is_dir($dh)) {
+                            $dir = opendir($dh);
+                            while (false !== ($filename = readdir($dir))) {
+                                if (substr($filename, -4) == ".php") {
+                                    $tool = new SchemaTool($this->getEm());
+                                    $class = array(
+                                        $this->getEm()->getClassMetadata($m.'\\Entity\\'.str_replace('.php', '', $filename))
+                                    );
+                                    $tool->dropSchema($class);
+                                }
                             }
-                        }
 
+                        }
                     }
                 }
             }

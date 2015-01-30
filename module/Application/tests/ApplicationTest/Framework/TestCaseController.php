@@ -14,6 +14,7 @@ class TestCaseController extends AbstractHttpControllerTestCase
 {
     protected $em;
     protected $pathDir;
+    public $isORM = false;
 
     public function setUp()
     {
@@ -30,12 +31,14 @@ class TestCaseController extends AbstractHttpControllerTestCase
         $this->setApplicationConfig(include $config);
 
         $this->getApplicationServiceLocator()->setAllowOverride(true);
-        self::initDoctrine($this->getApplicationServiceLocator());
 
-        foreach ($this->filterModules() as $m) {
-            $this->createDatabase($m);
+        if ($this->isORM) {
+            self::initDoctrine($this->getApplicationServiceLocator());
+
+            foreach ($this->filterModules() as $m) {
+                $this->createDatabase($m);
+            }
         }
-
     }
 
     /**
@@ -93,28 +96,31 @@ class TestCaseController extends AbstractHttpControllerTestCase
     {
 
         $this->tearDown();
-        if (file_exists($this->pathDir.'/../config/module.config.php')) {
-            $config = require $this->pathDir.'/../config/module.config.php';
 
-            if (isset($config['doctrine'])) {
-                $dh = $config['doctrine']['driver'][$module.'_driver']['paths'][0];
+        if ($this->isORM) {
+            if (file_exists($this->pathDir.'/../config/module.config.php')) {
+                $config = require $this->pathDir.'/../config/module.config.php';
 
-                if (is_dir($dh)) {
-                    $dir = opendir($dh);
+                if (isset($config['doctrine'])) {
+                    $dh = $config['doctrine']['driver'][$module.'_driver']['paths'][0];
 
-                    $tool = new SchemaTool($this->getEm());
+                    if (is_dir($dh)) {
+                        $dir = opendir($dh);
 
-                    $class = array();
-                    while (false !== ($filename = readdir($dir))) {
-                        if (substr($filename, -4) == ".php") {
-                            $class[] = $this->getEm()->getClassMetadata($module.'\\Entity\\'.str_replace('.php', '', $filename));
+                        $tool = new SchemaTool($this->getEm());
+
+                        $class = array();
+                        while (false !== ($filename = readdir($dir))) {
+                            if (substr($filename, -4) == ".php") {
+                                $class[] = $this->getEm()->getClassMetadata($module.'\\Entity\\'.str_replace('.php', '', $filename));
+                            }
                         }
+                        $tool->createSchema($class);
                     }
-                    $tool->createSchema($class);
                 }
+            } else {
+                throw new RuntimeException('Nenhuma Entity encontrada');
             }
-        } else {
-            throw new RuntimeException('Nenhuma Entity encontrada');
         }
     }
 
@@ -125,30 +131,32 @@ class TestCaseController extends AbstractHttpControllerTestCase
     {
         parent::tearDown();
 
-        $module = $this->filterModules();
+        if ($this->isORM) {
+            $module = $this->filterModules();
 
-        foreach ($module as $m) {
-            if (file_exists($this->pathDir.'/../config/module.config.php')) {
-                $config = require $this->pathDir.'/../config/module.config.php';
+            foreach ($module as $m) {
+                if (file_exists($this->pathDir.'/../config/module.config.php')) {
+                    $config = require $this->pathDir.'/../config/module.config.php';
 
-                if (isset($config['doctrine'])) {
-                    $dh = $config['doctrine']['driver'][$m.'_driver']['paths'][0];
-                    if (is_dir($dh)) {
-                        $dir = opendir($dh);
-                        while (false !== ($filename = readdir($dir))) {
-                            if (substr($filename, -4) == ".php") {
-                                $tool = new SchemaTool($this->getEm());
-                                $class = array(
-                                    $this->getEm()->getClassMetadata($m.'\\Entity\\'.str_replace('.php', '', $filename))
-                                );
-                                $tool->dropSchema($class);
+                    if (isset($config['doctrine'])) {
+                        $dh = $config['doctrine']['driver'][$m.'_driver']['paths'][0];
+                        if (is_dir($dh)) {
+                            $dir = opendir($dh);
+                            while (false !== ($filename = readdir($dir))) {
+                                if (substr($filename, -4) == ".php") {
+                                    $tool = new SchemaTool($this->getEm());
+                                    $class = array(
+                                        $this->getEm()->getClassMetadata($m.'\\Entity\\'.str_replace('.php', '', $filename))
+                                    );
+                                    $tool->dropSchema($class);
+                                }
                             }
-                        }
 
+                        }
                     }
+                } else {
+                    throw new RuntimeException('Nenhuma Entity encontrada');
                 }
-            } else {
-                throw new RuntimeException('Nenhuma Entity encontrada');
             }
         }
     }
