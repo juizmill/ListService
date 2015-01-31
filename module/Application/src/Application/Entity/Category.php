@@ -12,7 +12,7 @@ class Category
 {
     private $id;
     private $description;
-    private $active;
+    private $active = true;
 
     /**
      * construct
@@ -42,6 +42,12 @@ class Category
      */
     public function setId($id)
     {
+        $id = (int) $id;
+
+        if ($id <= 0) {
+            throw new \RuntimeException('setId accept only positive integers greater than zero and');
+        }
+
         $this->id = $id;
         return $this;
     }
@@ -86,9 +92,14 @@ class Category
      */
     public function setActive($active)
     {
-        $this->active = $active;
+        if (! is_bool($active)) {
+            throw new \RuntimeException('setActive accept only boolean');
+        }
+
+        $this->active = (boolean) $active;
         return $this;
     }
+
     /**
      * to array
      *

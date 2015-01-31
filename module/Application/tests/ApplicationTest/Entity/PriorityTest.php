@@ -77,6 +77,37 @@ class PriorityTest extends TestCase
         $this->assertEquals($result, $array);
     }
 
+    /**
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage setId accept only positive integers greater than zero and
+     */
+    public function testReturnsExceptionIfNotAnIntegerParameter()
+    {
+        $class = new Priority();
+        $class->setId('hello');
+
+        $class2 = new Priority();
+        $class2->setId(-1);
+
+        $class3 = new Priority();
+        $class3->setId(0);
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage setActive accept only boolean
+     */
+    public function testReturnsExceptionIfNotABooleanParameter()
+    {
+        $class = new Priority();
+        $class->setActive('hello');
+
+        $class2 = new Priority();
+        $class2->setActive(1);
+
+        $class3 = new Priority();
+        $class3->setActive(0);
+    }
 
     public function testCheckExistMethodToArray()
     {
