@@ -12,3 +12,4 @@ bin
 *.sublime-project
 *.sublime-workspace
 .codeintel
+build
