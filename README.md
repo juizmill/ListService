@@ -3,6 +3,7 @@ ZendSkeletonApplication
 
 [![Build Status](https://travis-ci.org/juizmill/ListService.svg?branch=develop)](https://travis-ci.org/juizmill/ListService)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/juizmill/ListService/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/juizmill/ListService/?branch=develop)
+[![Coverage Status](https://coveralls.io/repos/juizmill/ListService/badge.svg)](https://coveralls.io/r/juizmill/ListService)
 
 Introduction
 ------------
