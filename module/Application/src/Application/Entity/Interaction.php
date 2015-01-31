@@ -134,10 +134,10 @@ class Interaction
     /**
      * set user
      *
-     * @param object $user \Application\Entity\User
+     * @param User|object $user \Application\Entity\User
      * @return $this
      */
-    public function setUser($user)
+    public function setUser(User $user)
     {
         $this->user = $user;
         return $this;
