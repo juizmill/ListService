@@ -2,30 +2,28 @@
 
 namespace ApplicationTest\Entity;
 
-use Application\Entity\User;
 use ApplicationTest\Framework\TestCase;
-use Application\Entity\Interaction;
+use Application\Entity\Priority;
 
 /**
- * Class InteractionTest
+ * Class AbststractEntityTest
  * @package ApplicationTest\Entity
  */
-class InteractionTest extends TestCase
+class AbststractEntityTest extends TestCase
 {
     protected $traceError = true;
 
     public function testClasseExist()
     {
-        $this->assertTrue(class_exists('Application\\Entity\\Interaction'));
-        $this->assertInstanceOf('Application\Entity\AbstractEntity', new Interaction());
+        $this->assertTrue(class_exists('Application\\Entity\\AbstractEntity'));
     }
 
     public function dataProviderAttributes()
     {
         return array(
-            array('date_posted', new \DateTime('2015-01-01 00:00:00')),
-            array('ticket', 'ticket_test'),
-            array('user', new User()),
+            array('id', 1),
+            array('description', 'description_test'),
+            array('active', true),
         );
     }
 
@@ -34,7 +32,7 @@ class InteractionTest extends TestCase
      */
     public function testCheckAttritutesExpected($attribute)
     {
-        $this->assertClassHasAttribute($attribute, 'Application\\Entity\\Interaction');
+        $this->assertClassHasAttribute($attribute, 'Application\\Entity\\AbstractEntity');
     }
 
     /**
@@ -45,7 +43,7 @@ class InteractionTest extends TestCase
         $get = 'get'.str_replace(' ', '', ucwords(str_replace('_', ' ', $attribute)));
         $set = 'set'.str_replace(' ', '', ucwords(str_replace('_', ' ', $attribute)));
 
-        $class = new Interaction();
+        $class = $this->getMockAbstractEntity();
         $class->$set($value);
 
         $this->assertEquals($value, $class->$get());
@@ -58,29 +56,26 @@ class InteractionTest extends TestCase
     {
         $set = 'set'.str_replace(' ', '', ucwords(str_replace('_', ' ', $attribute)));
 
-        $class = new Interaction();
+        $class = $this->getMockAbstractEntity();
         $result = $class->$set($value);
 
-        $this->assertInstanceOf('Application\\Entity\\Interaction', $result);
+        $this->assertInstanceOf('Application\\Entity\\AbstractEntity', $result);
     }
 
     public function testCheckExistMethodToArray()
     {
-        $this->assertTrue(method_exists('Application\\Entity\\Interaction', 'toArray'));
+        $this->assertTrue(method_exists('Application\\Entity\\AbstractEntity', 'toArray'));
     }
 
     public function testCheckMethodConstructSetFullMethods()
     {
         $array = array(
             'id' => 1,
-            'date_posted' => new \DateTime('2015-01-01 00:00:00'),
             'description' => 'description_test',
-            'ticket' => 'ticket_test',
-            'user' => new User(),
             'active' => true
         );
 
-        $class = new Interaction($array);
+        $class = $this->getMockAbstractEntity($array);
 
         $result = $class->toArray();
 
@@ -93,7 +88,7 @@ class InteractionTest extends TestCase
      */
     public function testReturnsExceptionIfNotAnIntegerParameter()
     {
-        $class = new Interaction();
+        $class = $this->getMockAbstractEntity();
         for ($i=0; $i <= 2; $i++) {
             switch ($i) {
                 case 0:
@@ -107,5 +102,34 @@ class InteractionTest extends TestCase
                     break;
             }
         }
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage setActive accept only boolean
+     */
+    public function testReturnsExceptionIfNotABooleanParameter()
+    {
+        $class = $this->getMockAbstractEntity();
+        for ($i=0; $i <= 2; $i++) {
+            switch ($i) {
+                case 0:
+                    $class->setActive('hello');
+                    break;
+                case 1:
+                    $class->setActive(-1);
+                    break;
+                case 2:
+                    $class->setActive(0);
+                    break;
+            }
+        }
+    }
+
+    private function getMockAbstractEntity(Array $options = [])
+    {
+        return $this->getMockForAbstractClass('Application\\Entity\\AbstractEntity', [
+                '__construct' => $options
+            ]);
     }
 }
