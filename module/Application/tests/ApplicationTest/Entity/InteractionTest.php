@@ -17,14 +17,13 @@ class InteractionTest extends TestCase
     public function testClasseExist()
     {
         $this->assertTrue(class_exists('Application\\Entity\\Interaction'));
+        $this->assertInstanceOf('Application\Entity\AbstractEntity', new Interaction());
     }
 
     public function dataProviderAttributes()
     {
         return array(
-            array('id', 1),
             array('date_posted', new \DateTime('2015-01-01 00:00:00')),
-            array('description', 'description_test'),
             array('ticket', 'ticket_test'),
             array('user', new User()),
         );
@@ -77,7 +76,8 @@ class InteractionTest extends TestCase
             'date_posted' => new \DateTime('2015-01-01 00:00:00'),
             'description' => 'description_test',
             'ticket' => 'ticket_test',
-            'user' => new User()
+            'user' => new User(),
+            'active' => true
         );
 
         $class = new Interaction($array);
