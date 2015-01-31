@@ -94,12 +94,18 @@ class InteractionTest extends TestCase
     public function testReturnsExceptionIfNotAnIntegerParameter()
     {
         $class = new Interaction();
-        $class->setId('hello');
-
-        $class2 = new Interaction();
-        $class2->setId(-1);
-
-        $class3 = new Interaction();
-        $class3->setId(0);
+        for ($i=0; $i <= 2; $i++) {
+            switch ($i) {
+                case 0:
+                    $class->setId('hello');
+                    break;
+                case 1:
+                    $class->setId(-1);
+                    break;
+                case 2:
+                    $class->setId(0);
+                    break;
+            }
+        }
     }
 }

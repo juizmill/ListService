@@ -40,7 +40,7 @@ class User extends ZfcUser
      * set display_name
      *
      * @param string $displayName Return display name
-     * @return $this;
+     * @return $this
      */
     public function setDisplayName($displayName)
     {
@@ -62,7 +62,7 @@ class User extends ZfcUser
      * set created_at
      *
      * @param datetime $createdAt Date created
-     * @return $this;
+     * @return $this
      */
     public function setCreatedAt($createdAt)
     {
@@ -84,7 +84,7 @@ class User extends ZfcUser
      * set updated
      *
      * @param datetime $updatedAt Date updated
-     * @return $this;
+     * @return $this
      */
     public function setUpdatedAt($updatedAt)
     {
@@ -106,7 +106,7 @@ class User extends ZfcUser
      * set active
      *
      * @param boolean $active Return a boolean
-     * @return $this;
+     * @return $this
      */
     public function setActive($active)
     {
