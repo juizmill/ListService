@@ -1,6 +1,9 @@
 ZendSkeletonApplication
 =======================
 
+[![Build Status](https://travis-ci.org/juizmill/ListService.svg?branch=develop)](https://travis-ci.org/juizmill/ListService)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/juizmill/ListService/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/juizmill/ListService/?branch=develop)
+
 Introduction
 ------------
 This is a simple, skeleton application using the ZF2 MVC layer and module
