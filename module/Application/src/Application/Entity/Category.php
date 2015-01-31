@@ -45,7 +45,7 @@ class Category
         $id = (int) $id;
 
         if ($id <= 0) {
-            throw new \RuntimeException('setId accept only positive integers greater than zero and');
+            throw new \RuntimeException(__FUNCTION__.' accept only positive integers greater than zero and');
         }
 
         $this->id = $id;
@@ -93,7 +93,7 @@ class Category
     public function setActive($active)
     {
         if (! is_bool($active)) {
-            throw new \RuntimeException('setActive accept only boolean');
+            throw new \RuntimeException(__FUNCTION__.' accept only boolean');
         }
 
         $this->active = (boolean) $active;
