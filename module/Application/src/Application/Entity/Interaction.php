@@ -41,13 +41,11 @@ class Interaction
      * set id
      *
      * @param integer $id Return an integer
-     * @return $this;
+     * @return $this
      */
     public function setId($id)
     {
-        $id = (int) $id;
-
-        if ($id <= 0) {
+        if ((int) $id <= 0) {
             throw new \RuntimeException(__FUNCTION__.' accept only positive integers greater than zero and');
         }
 
@@ -91,7 +89,7 @@ class Interaction
      * set description
      *
      * @param string $description Return long text
-     * @return $this;
+     * @return $this
      */
     public function setDescription($description)
     {

@@ -42,9 +42,7 @@ class Priority
      */
     public function setId($id)
     {
-        $id = (int) $id;
-
-        if ($id <= 0) {
+        if ((int) $id <= 0) {
             throw new \RuntimeException(__FUNCTION__.' accept only positive integers greater than zero and');
         }
 

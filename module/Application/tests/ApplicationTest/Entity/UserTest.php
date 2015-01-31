@@ -102,12 +102,18 @@ class UserTest extends TestCase
     public function testReturnsExceptionIfNotABooleanParameter()
     {
         $class = new User();
-        $class->setActive('hello');
-
-        $class2 = new User();
-        $class2->setActive(1);
-
-        $class3 = new User();
-        $class3->setActive(0);
+        for ($i=0; $i <= 2; $i++) {
+            switch ($i) {
+                case 0:
+                    $class->setActive('hello');
+                    break;
+                case 1:
+                    $class->setActive(-1);
+                    break;
+                case 2:
+                    $class->setActive(0);
+                    break;
+            }
+        }
     }
 }

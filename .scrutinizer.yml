@@ -21,3 +21,12 @@ tools:
                 - 'module/Application/language/*'
                 - 'module/Application/config/*'
                 - 'module/Application/view/*'
+    php_code_sniffer:
+        enabled: true
+        command: phpcs
+        config:
+            standard: PSR2
+        filter:
+            excluded_paths:
+                - 'vendor/*'
+                - 'module/Application/tests/*'

@@ -89,13 +89,19 @@ class PriorityTest extends TestCase
     public function testReturnsExceptionIfNotAnIntegerParameter()
     {
         $class = new Priority();
-        $class->setId('hello');
-
-        $class2 = new Priority();
-        $class2->setId(-1);
-
-        $class3 = new Priority();
-        $class3->setId(0);
+        for ($i=0; $i <= 2; $i++) {
+            switch ($i) {
+                case 0:
+                    $class->setId('hello');
+                    break;
+                case 1:
+                    $class->setId(-1);
+                    break;
+                case 2:
+                    $class->setId(0);
+                    break;
+            }
+        }
     }
 
     /**
@@ -105,12 +111,18 @@ class PriorityTest extends TestCase
     public function testReturnsExceptionIfNotABooleanParameter()
     {
         $class = new Priority();
-        $class->setActive('hello');
-
-        $class2 = new Priority();
-        $class2->setActive(1);
-
-        $class3 = new Priority();
-        $class3->setActive(0);
+        for ($i=0; $i <= 2; $i++) {
+            switch ($i) {
+                case 0:
+                    $class->setActive('hello');
+                    break;
+                case 1:
+                    $class->setActive(-1);
+                    break;
+                case 2:
+                    $class->setActive(0);
+                    break;
+            }
+        }
     }
 }
