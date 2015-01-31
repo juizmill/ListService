@@ -33,18 +33,18 @@ class User extends ZfcUser
      */
     public function getDisplayName()
     {
-        return $this->displayName;
+        return $this->display_name;
     }
 
     /**
      * set display_name
      *
-     * @param string $displayName Return display name
+     * @param string $display_name Return display name
      * @return $this
      */
-    public function setDisplayName($displayName)
+    public function setDisplayName($display_name)
     {
-        $this->displayName = $displayName;
+        $this->display_name = $display_name;
         return $this;
     }
 
@@ -55,18 +55,18 @@ class User extends ZfcUser
      */
     public function getCreatedAt()
     {
-        return $this->createdAt;
+        return $this->created_at;
     }
 
     /**
      * set created_at
      *
-     * @param datetime $createdAt Date created
+     * @param datetime $created_at Date created
      * @return $this
      */
-    public function setCreatedAt($createdAt)
+    public function setCreatedAt($created_at)
     {
-        $this->createdAt = $createdAt;
+        $this->created_at = $created_at;
         return $this;
     }
 
@@ -77,18 +77,18 @@ class User extends ZfcUser
      */
     public function getUpdatedAt()
     {
-        return $this->updatedAt;
+        return $this->updated_at;
     }
 
     /**
      * set updated
      *
-     * @param datetime $updatedAt Date updated
+     * @param datetime $updated_at Date updated
      * @return $this
      */
-    public function setUpdatedAt($updatedAt)
+    public function setUpdatedAt($updated_at)
     {
-        $this->updatedAt = $updatedAt;
+        $this->updated_at = $updated_at;
         return $this;
     }
 
