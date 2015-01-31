@@ -1,10 +1,4 @@
 <?php
-/**
- * WebPatterns (http://webpatterns.com.br/)
- *
- * @copyright Copyright (c) 2014-2014. (http://www.webpatterns.com.br)
- * @license   http://webpatterns.com.br/license
- */
 
 namespace ApplicationTest\Controller;
 
