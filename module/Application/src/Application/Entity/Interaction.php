@@ -80,7 +80,7 @@ class Interaction
     /**
      * get description
      *
-     * @return mixed
+     * @return string
      */
     public function getDescription()
     {
@@ -152,6 +152,4 @@ class Interaction
     {
         return (new ClassMethods())->extract($this);
     }
-
-
 }
