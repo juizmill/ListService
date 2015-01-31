@@ -13,6 +13,8 @@ before_script:
   - php composer.phar self-update
   - php composer.phar install --prefer-source --dev --no-interaction
   - mkdir -p build/logs
+  - rm -rf module/Application/tests/phpunit.xml
+  - cp module/Application/tests/phpunit.xml.disc  module/Application/tests/phpunit.xml
 
 script:
   - bin/phpunit -c module/Application/tests/
