@@ -62,6 +62,11 @@ class CategoryTest extends TestCase
         $this->assertInstanceOf('Application\\Entity\\Category', $result);
     }
 
+    public function testCheckExistMethodToArray()
+    {
+        $this->assertTrue(method_exists('Application\\Entity\\User', 'toArray'));
+    }
+
     public function testCheckMethodConstructSetFullMethods()
     {
         $array = array(
@@ -107,23 +112,5 @@ class CategoryTest extends TestCase
 
         $class3 = new Category();
         $class3->setActive(0);
-    }
-
-    public function testCheckExistMethodToArray()
-    {
-        $class = new Category();
-        $class->setId(1)
-            ->setDescription('description_test')
-            ->setActive(true);
-
-        $result = $class->toArray();
-
-        $array = array(
-            'id' => 1,
-            'description' => 'description_test',
-            'active' => true
-        );
-
-        $this->assertEquals($result, $array);
     }
 }

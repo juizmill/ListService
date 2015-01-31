@@ -69,6 +69,11 @@ class UserTest extends TestCase
         $this->assertInstanceOf('Application\\Entity\\User', $result);
     }
 
+    public function testCheckExistMethodToArray()
+    {
+        $this->assertTrue(method_exists('Application\\Entity\\User', 'toArray'));
+    }
+
     public function testCheckMethodConstructSetFullMethods()
     {
         $array = array(
@@ -104,35 +109,5 @@ class UserTest extends TestCase
 
         $class3 = new User();
         $class3->setActive(0);
-    }
-
-    public function testCheckExistMethodToArray()
-    {
-        $class = new User();
-        $class->setId(1)
-            ->setUsername('username_test')
-            ->setEmail('email_test')
-            ->setDisplayName('display_name_test')
-            ->setPassword('password_test')
-            ->setState('state_test')
-            ->setCreatedAt(new \DateTime('2015-01-01 00:00:00'))
-            ->setUpdatedAt(new \DateTime('2015-01-01 00:00:00'))
-            ->setActive(true);
-
-        $result = $class->toArray();
-
-        $array = array(
-            'id' => 1,
-            'username' => 'username_test',
-            'email' => 'email_test',
-            'display_name' => 'display_name_test',
-            'password' => 'password_test',
-            'state' => 'state_test',
-            'created_at' => new \DateTime('2015-01-01 00:00:00'),
-            'updated_at' => new \DateTime('2015-01-01 00:00:00'),
-            'active' => true,
-        );
-
-        $this->assertEquals($result, $array);
     }
 }
