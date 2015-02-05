@@ -28,6 +28,9 @@
     },
     "minimum-stability": "dev",
     "require-dev": {
+        "squizlabs/php_codesniffer": "2.*",
+        "phpmd/phpmd" : "@stable",
+        "fabpot/php-cs-fixer": "dev-master",
         "phpunit/phpunit": "3.7.*",
         "satooshi/php-coveralls": "dev-master",
         "zendframework/zend-developer-tools": "dev-master"
@@ -35,5 +38,9 @@
     "config": {
         "bin-dir": "bin",
         "process-timeout": 9000
+    },
+    "scripts": {
+        "post-update-cmd": "php setting.php",
+        "post-install-cmd": "php setting.php"
     }
 }
