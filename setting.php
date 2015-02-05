@@ -1,4 +1,73 @@
+<?php
 
+//Create configuration App
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+use Symfony\Component\Filesystem\Filesystem;
+
+$dir = __DIR__ . '/config/autoload/';
+
+$fs = new Filesystem();
+
+try {
+    //Add permission in config/autoload
+    $fs->chmod($dir, 0777, 0000, true);
+    //Add permission in data/
+    $fs->chmod('data/', 0777, 0000, true);
+
+    //Configure doctrine ORM, create an filename: doctrine.orm.local.php,
+    //to contain the username and password database
+    if (!$fs->exists($dir.'doctrine.orm.local.php')) {
+        $fs->dumpFile($dir.'doctrine.orm.local.php', "
+<?php
+//ADD password and Usser name for database
+return array(
+    'doctrine' => array(
+        'connection' => array(
+            'orm_default' => array(
+                'params' => array(
+                    'user'     => 'username',
+                    'password' => 'password',
+                )
+            )
+        )
+    ),
+);
+");
+    }
+
+    //Set doctrine ORM, create a file with the name doctrine.orm.global.php,
+    //this file should contain the configuration of access to the database.
+    if (!$fs->exists($dir.'doctrine.orm.global.php')) {
+        $fs->dumpFile($dir.'doctrine.orm.global.php', "
+<?php
+return array(
+    'doctrine' => array(
+        'connection' => array(
+            // default connection name
+            'orm_default' => array(
+                'driverClass' => 'Doctrine\DBAL\Driver\PDOMySql\Driver',
+                'params' => array(
+                    'host'     => 'localhost',
+                    'port'     => '3306',
+                    'dbname'   => 'listservice',
+                )
+            )
+        )
+    ),
+);
+");
+
+    }
+
+    //Create configuration file zenddevelopertools module, with the name of zenddevelopertools.local.php
+    $originFile = __DIR__ . '/vendor/zendframework/zend-developer-tools/config/zenddevelopertools.local.php.dist';
+    $fs->copy($originFile, $dir.'zenddevelopertools.local.php');
+
+    //Create the configuration file bjyauthorize module, with the name of bjyauthorize.global.php
+    if (!$fs->exists($dir.'bjyauthorize.global.php')) {
+        $fs->dumpFile($dir.'bjyauthorize.global.php', "
 <?php
 
 // For PHP <= 5.4, you should replace any ::class references with strings
@@ -12,7 +81,7 @@ return [
 
         /* this module uses a meta-role that inherits from any roles that should
          * be applied to the active user. the identity provider tells us which
-         * roles the "identity role" should inherit from.
+         * roles the \"identity role\" should inherit from.
          * for ZfcUser, this will be your default identity provider
         */
         'identity_provider' => \BjyAuthorize\Provider\Identity\ZfcUserZendDb::class,
@@ -80,7 +149,7 @@ return [
             \BjyAuthorize\Provider\Rule\Config::class => [
                 'allow' => [
                     // allow guests and users (and admins, through inheritance)
-                    // the "wear" privilege on the resource "pants"
+                    // the \"wear\" privilege on the resource \"pants\"
                     [['guest', 'user'], 'pants', 'wear'],
                 ],
 
@@ -105,8 +174,8 @@ return [
                 ['controller' => 'index', 'action' => 'index', 'roles' => ['guest','user']],
                 ['controller' => 'index', 'action' => 'stuff', 'roles' => ['user']],
                 // You can also specify an array of actions or an array of controllers (or both)
-                // allow "guest" and "admin" to access actions "list" and "manage" on these "index",
-                // "static" and "console" controllers
+                // allow \"guest\" and \"admin\" to access actions \"list\" and \"manage\" on these \"index\",
+                // \"static\" and \"console\" controllers
                 [
                     'controller' => ['index', 'static', 'console'],
                     'action' => ['list', 'manage'],
@@ -135,3 +204,10 @@ return [
         ],
     ],
 ];
+");
+
+    }
+
+} catch (\Symfony\Component\Filesystem\Exception\IOExceptionInterface $e) {
+    echo "An error occurred while creating your directory at ".$e->getPath();
+}
