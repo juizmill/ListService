@@ -2,28 +2,102 @@
 
 namespace Application\Entity;
 
-use ZfcUserDoctrineORM\Entity\User as ZfcUser;
+use ZfcUser\Entity\UserInterface;
 use Zend\Stdlib\Hydrator\ClassMethods;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class User
  * @package Application\Entity
+ * @ORM\Table(name="user")
+ * @ORM\Entity
  */
-class User extends ZfcUser
+class User extends AbstractEntity implements UserInterface
 {
-    private $display_name;
-    private $created_at;
-    private $updated_at;
-    private $active = true;
+    /**
+     * @ORM\Column(name="user_name", type="text", nullable=true)
+     * @var string
+     */
+    private $user_name;
 
     /**
-     * construct
-     *
-     * @param array $options Receives an array
+     * @ORM\Column(name="email", type="text", nullable=true)
+     * @var string
      */
-    public function __construct(Array $options = [])
+    private $email;
+
+    /**
+     * @ORM\Column(name="display_name", type="text", nullable=true)
+     * @var string
+     */
+    private $display_name;
+
+    /**
+     * @ORM\Column(name="password", type="text", nullable=false)
+     * @var datetime
+     */
+    private $password;
+
+    /**
+     * @ORM\Column(name="state", type="text", nullable=false)
+     * @var datetime
+     */
+    private $state;
+
+    /**
+     * @ORM\Column(name="created_at", type="datetime", nullable=false)
+     * @var datetime
+     */
+    private $created_at;
+
+    /**
+     * @ORM\Column(name="updated_at", type="datetime", nullable=false)
+     * @var datetime
+     */
+    private $updated_at;
+
+
+    /**
+     * get username
+     *
+     * @return string  username
+     */
+    public function getUserName()
     {
-        (new ClassMethods)->hydrate($options, $this);
+        return $this->userName;
+    }
+
+    /**
+     * set username
+     *
+     * @param string $nuser_name Return username
+     */
+    public function setUserName($user_name)
+    {
+        $this->userName = $user_name;
+        return $this;
+    }
+
+    /**
+     * get email
+     *
+     * @return string Return string email
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * set email
+     *
+     * @param String $email Return string email
+     * @return $this
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+        return $this;
     }
 
     /**
@@ -45,6 +119,48 @@ class User extends ZfcUser
     public function setDisplayName($display_name)
     {
         $this->display_name = $display_name;
+        return $this;
+    }
+
+    /**
+     * get password
+     *
+     * @return string return password
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * set password
+     *
+     * @param String $password  return password
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+        return $this;
+    }
+
+    /**
+     * get state
+     *
+     * @return string Return state
+     */
+    public function getState()
+    {
+        return $this->state;
+    }
+
+    /**
+     * set state
+     *
+     * @param String $state Return state
+     */
+    public function setState($state)
+    {
+        $this->state = $state;
         return $this;
     }
 
@@ -90,40 +206,5 @@ class User extends ZfcUser
     {
         $this->updated_at = $updated_at;
         return $this;
-    }
-
-    /**
-     * get active
-     *
-     * @return boolean Return a boolean
-     */
-    public function getActive()
-    {
-        return $this->active;
-    }
-
-    /**
-     * set active
-     *
-     * @param boolean $active Return a boolean
-     * @return $this
-     */
-    public function setActive($active)
-    {
-        if (! is_bool($active)) {
-            throw new \RuntimeException(__FUNCTION__.' accept only boolean');
-        }
-
-        return $this;
-    }
-
-    /**
-     * to array
-     *
-     * @return array Return array list
-     */
-    public function toArray()
-    {
-        return (new ClassMethods())->extract($this);
     }
 }

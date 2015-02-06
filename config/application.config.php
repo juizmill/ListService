@@ -6,10 +6,10 @@ return array(
         'DoctrineModule',
         'DoctrineORMModule',
         'DoctrineDataFixtureModule',
-        #'ZfcBase',
-        #'ZfcUser',
+        'ZfcBase',
+        'ZfcUser',
         #'BjyAuthorize',
-        #'ZfcUserDoctrineORM',
+        'ZfcUserDoctrineORM',
         'Application',
     ),
 

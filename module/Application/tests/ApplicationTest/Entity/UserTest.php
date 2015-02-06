@@ -16,21 +16,20 @@ class UserTest extends TestCase
     public function testClasseExist()
     {
         $this->assertTrue(class_exists('Application\\Entity\\User'));
-        $this->assertInstanceOf('ZfcUserDoctrineORM\\Entity\\User', new User());
+        $this->assertInstanceOf('Application\\Entity\\AbstractEntity', new User());
+        $this->assertInstanceOf('ZfcUser\\Entity\\UserInterface', new User());
     }
 
     public function dataProviderAttributes()
     {
         return array(
-            array('id', 1),
-            array('username', 'username_test'),
+            array('user_name', 'username_test'),
             array('email', 'email_test'),
             array('display_name', 'display_name_test'),
             array('password', 'password_test'),
             array('state', 'state_test'),
             array('created_at', new \DateTime('2015-01-01 00:00:00')),
             array('updated_at', new \DateTime('2015-01-01 00:00:00')),
-            array('active', true),
         );
     }
 
@@ -78,9 +77,10 @@ class UserTest extends TestCase
     {
         $array = array(
             'id' => 1,
-            'username' => 'username_test',
+            'user_name' => 'username_test',
             'email' => 'email_test',
             'display_name' => 'display_name_test',
+            'description' => 'description_test',
             'password' => 'password_test',
             'state' => 'state_test',
             'created_at' => new \DateTime('2015-01-01 00:00:00'),
