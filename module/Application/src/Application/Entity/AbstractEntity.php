@@ -27,7 +27,7 @@ abstract class AbstractEntity
     private $description;
 
     /**
-     * @ORM\Column(name="active", type="boolean", nullable=false)
+     * @ORM\Column(name="active", type="boolean", nullable=false, options={"default" = 1})
      * @var boolean
      */
     private $active = true;

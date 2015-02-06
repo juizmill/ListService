@@ -4,6 +4,7 @@ namespace Application\Entity;
 
 use DateTime;
 use Zend\Stdlib\Hydrator\ClassMethods;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -15,16 +16,18 @@ use Doctrine\ORM\Mapping as ORM;
 class Interaction extends AbstractEntity
 {
     /**
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="date_posted", type="datetime", nullable=false)
      * @var datetime
      */
     private $date_posted;
+
     private $ticket;
 
     /**
     * @ORM\ManyToOne(targetEntity="Application\Entity\User")
     * @ORM\JoinColumns({
-    *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+    *   @ORM\JoinColumn(name="user", referencedColumnName="id")
     * })
     * @var \Application\Entity\User
     */
