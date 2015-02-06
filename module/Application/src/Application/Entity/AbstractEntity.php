@@ -4,11 +4,13 @@ namespace Application\Entity;
 
 use Zend\Stdlib\Hydrator\ClassMethods;
 use Doctrine\ORM\Mapping as ORM;
+use Zend\Form\Annotation as Form;
 
 /**
  * Class AbstractEntity
  * @package Application\Entity
  * @ORM\MappedSuperclass
+ * @Form\Hydrator("Zend\Stdlib\Hydrator\ClassMethods")
  */
 abstract class AbstractEntity
 {
@@ -16,12 +18,20 @@ abstract class AbstractEntity
      * @ORM\Id
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Form\Exclude()
      * @var $id integer
      */
     private $id;
 
     /**
      * @ORM\Column(name="description", type="text", nullable=false)
+     * @Form\Required(true)
+     * @Form\Validator({"name":"NotEmpty"})
+     * @Form\Filter({"name":"StringTrim"})
+     * @Form\Filter({"name":"StripTags"})
+     * @Form\Validator({"name":"StringLength"})
+     * @Form\Attributes({"type":"text", "class":"form-control"})
+     * @Form\Options({"label":"Description:"})
      * @var $description string
      */
     private $description;

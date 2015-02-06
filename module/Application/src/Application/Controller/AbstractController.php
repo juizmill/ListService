@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\Criteria;
 use DoctrineModule\Paginator\Adapter\Selectable;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Zend\View\Model\JsonModel;
 use Zend\Paginator\Paginator;
 
 /**
@@ -15,11 +16,11 @@ use Zend\Paginator\Paginator;
 abstract class AbstractController extends AbstractActionController
 {
     private $em;
-    protected $itensPerPage = 20;
-    protected $controller;
-    protected $entity;
-    protected $route;
-    protected $form;
+    public $itensPerPage = 20;
+    public $controller;
+    public $entity;
+    public $route;
+    public $form;
 
     /**
      * __construct
@@ -58,17 +59,18 @@ abstract class AbstractController extends AbstractActionController
 
         if ($this->getRequest()->isPost()) {
             $form->setData($this->getRequest()->getPost()->toArray());
-
-            if ($form->isValid()) {
-                $entity = new $this->entity;
-                $hydrator = $form->getHydrator();
-                $hydrator->hydrate($form->getData(), $entity);
-                $this->getEm()->persist($entity);
-                $this->getEm()->flush();
-                $this->flashMessenger()->addSuccessMessage('Successfully registered!');
-                return $this->redirect()->toRoute($this->route, ['controller' => $this->controller, 'action' => 'index']);
-            }
         }
+
+        if ($this->getRequest()->isPost() && $form->isValid()) {
+            $entity = new $this->entity;
+            $hydrator = $form->getHydrator();
+            $hydrator->hydrate($form->getData(), $entity);
+            $this->getEm()->persist($entity);
+            $this->getEm()->flush();
+            $this->flashMessenger()->addSuccessMessage('Successfully registered!');
+            return $this->redirect()->toRoute($this->route, ['controller' => $this->controller, 'action' => 'index']);
+        }
+
         return new ViewModel(array('form' => $form));
     }
 
@@ -81,27 +83,28 @@ abstract class AbstractController extends AbstractActionController
     {
         $entity = $this->getEm()->getRepository($this->entity)->find($this->params()->fromRoute('id'));
 
-        if ($entity) {
-            $form = $this->getServiceLocator()->get('FormElementManager')->get($this->form);
-            $form->setData($entity->getArrayCopy());
-
-            if ($this->getRequest()->isPost()) {
-                $form->setData($this->getRequest()->getPost()->toArray());
-
-                if ($form->isValid()) {
-                    $hydrator = $form->getHydrator();
-                    $hydrator->hydrate($form->getData(), $entity);
-                    $this->getEm()->persist($entity);
-                    $this->getEm()->flush();
-                    $this->flashMessenger()->addSuccessMessage('Updated successfully!');
-                    return $this->redirect()->toRoute($this->route, ['controller' => $this->controller, 'action' => 'edite', 'id' => $this->params()->fromRoute('id')]);
-                }
-            }
-
-            return new ViewModel(array('form' => $form, 'id' => $this->params()->fromRoute('id')));
+        if (!$entity) {
+            $this->flashMessenger()->addErrorMessage('Record not found');
+            return $this->redirect()->toRoute($this->route, array('controller' => $this->controller, 'action' => 'index'));
         }
-        $this->flashMessenger()->addErrorMessage('Record not found');
-        return $this->redirect()->toRoute($this->route, array('controller' => $this->controller, 'action' => 'index'));
+
+        $form = $this->getServiceLocator()->get('FormElementManager')->get($this->form);
+        $form->setData($entity->toArray());
+
+        if ($this->getRequest()->isPost()) {
+            $form->setData($this->getRequest()->getPost()->toArray());
+        }
+
+        if ($this->getRequest()->isPost() && $form->isValid()) {
+            $hydrator = $form->getHydrator();
+            $hydrator->hydrate($form->getData(), $entity);
+            $this->getEm()->persist($entity);
+            $this->getEm()->flush();
+            $this->flashMessenger()->addSuccessMessage('Updated successfully!');
+            return $this->redirect()->toRoute($this->route, ['controller' => $this->controller, 'action' => 'edit', 'id' => $this->params()->fromRoute('id')]);
+        }
+
+        return new ViewModel(array('form' => $form, 'id' => $this->params()->fromRoute('id')));
     }
 
     /**

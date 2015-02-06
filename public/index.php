@@ -1,4 +1,9 @@
 <?php
+
+//Config for development
+ini_set('display_errors', true);
+error_reporting(E_ALL | E_STRICT);
+
 /**
  * This makes our life easier when dealing with paths. Everything is relative
  * to the application root now.

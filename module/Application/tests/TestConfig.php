@@ -16,11 +16,14 @@ return array(
             '../../../config/autoload/{,*.}{global,local}.php',
         ),
         'module_paths' => array(
-            './module',
-            './vendor',
+            'module',
+            'vendor',
         ),
     ),
     //Configuração para não carregar as entidades dos módulos
     'not_load_entity' => array(
+        'ZfcBase',
+        'ZfcUser',
+        'ZfcUserDoctrineORM'
     )
 );
