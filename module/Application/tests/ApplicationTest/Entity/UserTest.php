@@ -4,6 +4,7 @@ namespace ApplicationTest\Entity;
 
 use ApplicationTest\Framework\TestCase;
 use Application\Entity\User;
+use Zend\Crypt\Password\Bcrypt;
 
 /**
  * Class UserTest
@@ -16,21 +17,22 @@ class UserTest extends TestCase
     public function testClasseExist()
     {
         $this->assertTrue(class_exists('Application\\Entity\\User'));
-        $this->assertInstanceOf('ZfcUserDoctrineORM\\Entity\\User', new User());
+        $this->assertInstanceOf('Application\\Entity\\AbstractEntity', new User());
+        $this->assertInstanceOf('ZfcUser\\Entity\\UserInterface', new User());
     }
 
     public function dataProviderAttributes()
     {
         return array(
-            array('id', 1),
-            array('username', 'username_test'),
+            array('user_name', 'username_test'),
             array('email', 'email_test'),
             array('display_name', 'display_name_test'),
             array('password', 'password_test'),
-            array('state', 'state_test'),
+            array('state', true),
             array('created_at', new \DateTime('2015-01-01 00:00:00')),
             array('updated_at', new \DateTime('2015-01-01 00:00:00')),
-            array('active', true),
+            array('salt', 'salt_test'),
+            array('active_key', 'active_key_test'),
         );
     }
 
@@ -53,7 +55,9 @@ class UserTest extends TestCase
         $class = new User();
         $class->$set($value);
 
-        $this->assertEquals($value, $class->$get());
+        if ($attribute != 'password') {
+            $this->assertEquals($value, $class->$get());
+        }
     }
 
     /**
@@ -69,6 +73,23 @@ class UserTest extends TestCase
         $this->assertInstanceOf('Application\\Entity\\User', $result);
     }
 
+    public function testCheckMethodsExistsENCRIPTPASSWORD()
+    {
+        $this->assertTrue(method_exists('Application\\Entity\\User', 'encryptPassword'));
+
+    }
+
+    public function testCheckreturnMethodPassword()
+    {
+        $class = new User();
+        $class->setPassword('password_test');
+
+        $bcrypt = new Bcrypt();
+        $bcrypt->setSalt($class->getSalt());
+
+        $this->assertEquals($class->getPassword(), $bcrypt->create('password_test'));
+    }
+
     public function testCheckExistMethodToArray()
     {
         $this->assertTrue(method_exists('Application\\Entity\\User', 'toArray'));
@@ -78,11 +99,12 @@ class UserTest extends TestCase
     {
         $array = array(
             'id' => 1,
-            'username' => 'username_test',
+            'user_name' => 'username_test',
             'email' => 'email_test',
             'display_name' => 'display_name_test',
+            'description' => 'description_test',
             'password' => 'password_test',
-            'state' => 'state_test',
+            'state' => true,
             'created_at' => new \DateTime('2015-01-01 00:00:00'),
             'updated_at' => new \DateTime('2015-01-01 00:00:00'),
             'active' => true,
@@ -91,6 +113,9 @@ class UserTest extends TestCase
         $class = new User($array);
 
         $result = $class->toArray();
+        $array['salt'] = $class->getSalt();
+        $array['password'] = $class->getPassword();
+        $array['active_key'] = $class->getActiveKey();
 
         $this->assertEquals($result, $array);
     }
@@ -112,6 +137,28 @@ class UserTest extends TestCase
                     break;
                 case 2:
                     $class->setActive(0);
+                    break;
+            }
+        }
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage setState accept only boolean
+     */
+    public function testReturnsExceptionIfNotABooleanParameterInSetState()
+    {
+        $class = new User();
+        for ($i=0; $i <= 2; $i++) {
+            switch ($i) {
+                case 0:
+                    $class->setState('hello');
+                    break;
+                case 1:
+                    $class->setState(-1);
+                    break;
+                case 2:
+                    $class->setState(0);
                     break;
             }
         }

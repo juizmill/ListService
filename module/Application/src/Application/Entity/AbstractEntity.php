@@ -3,15 +3,33 @@
 namespace Application\Entity;
 
 use Zend\Stdlib\Hydrator\ClassMethods;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class AbstractEntity
  * @package Application\Entity
+ * @ORM\MappedSuperclass
  */
 abstract class AbstractEntity
 {
+    /**
+     * @ORM\Id
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @var $id integer
+     */
     private $id;
+
+    /**
+     * @ORM\Column(name="description", type="text", nullable=false)
+     * @var $description string
+     */
     private $description;
+
+    /**
+     * @ORM\Column(name="active", type="boolean", nullable=false, options={"default" = 1})
+     * @var boolean
+     */
     private $active = true;
 
     /**

@@ -96,6 +96,13 @@ return array(
     ),
 
     'doctrine' => array(
+        'eventmanager' => array(
+            'orm_default' => array(
+                'subscribers' => array(
+                    'Gedmo\Timestampable\TimestampableListener',
+                ),
+            ),
+        ),
         'driver' => array(
             __NAMESPACE__ . '_driver' => array(
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
@@ -108,7 +115,7 @@ return array(
                 ),
             ),
         ),
-        'data-fixture' => array(
+        'fixture' => array(
             __NAMESPACE__ . '_fixture' => __DIR__ . '/../src/' . __NAMESPACE__ . '/Fixture',
         ),
     ),

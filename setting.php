@@ -65,6 +65,9 @@ return array(
     $originFile = __DIR__ . '/vendor/zendframework/zend-developer-tools/config/zenddevelopertools.local.php.dist';
     $fs->copy($originFile, $dir.'zenddevelopertools.local.php');
 
+    $originFile = __DIR__ . '/vendor/zf-commons/zfc-user/config/zfcuser.global.php.dist';
+    $fs->copy($originFile, $dir.'zfcuser.global.php');
+
     //Create the configuration file bjyauthorize module, with the name of bjyauthorize.global.php
     if (!$fs->exists($dir.'bjyauthorize.global.php')) {
         $fs->dumpFile($dir.'bjyauthorize.global.php', "
@@ -207,6 +210,11 @@ return [
 ");
 
     }
+
+    //Add permission in config/autoload
+    $fs->chmod($dir, 0777, 0000, true);
+    //Add permission in data/
+    $fs->chmod('data/', 0777, 0000, true);
 
 } catch (\Symfony\Component\Filesystem\Exception\IOExceptionInterface $e) {
     echo "An error occurred while creating your directory at ".$e->getPath();

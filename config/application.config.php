@@ -3,12 +3,13 @@ return array(
     // This should be an array of module namespaces used in the application.
     'modules' => array(
         'ZendDeveloperTools',
-        #'DoctrineModule',
-        #'DoctrineORMModule',
-        #'ZfcBase',
-        #'ZfcUser',
+        'DoctrineModule',
+        'DoctrineORMModule',
+        'DoctrineDataFixtureModule',
+        'ZfcBase',
+        'ZfcUser',
         #'BjyAuthorize',
-        #'ZfcUserDoctrineORM',
+        'ZfcUserDoctrineORM',
         'Application',
     ),
 
