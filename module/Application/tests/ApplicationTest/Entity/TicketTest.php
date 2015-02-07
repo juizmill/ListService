@@ -2,6 +2,7 @@
 
 namespace ApplicationTest\Entity;
 
+use Application\Entity\Priority;
 use Application\Entity\User;
 use ApplicationTest\Framework\TestCase;
 use Application\Entity\Ticket;
@@ -17,20 +18,19 @@ class TicketTest extends TestCase
     public function testClasseExist()
     {
         $this->assertTrue(class_exists('Application\\Entity\\Ticket'));
-        $this->assertInstanceOf('Application\Entity\AbstractEntity', new Ticket());
     }
 
     public function dataProviderAttributes()
     {
         return array(
-            array('title', 'title'),
-            array('dateBegin', new \DateTime('2015-01-01 00:00:00')),
-            array('dateEnd', new \DateTime('2015-01-01 00:00:00')),
-            array('dateEstimated', new \DateTime('2015-01-01 00:00:00')),
-            array('sought', true),
+            array('id', 1),
+            array('title', 'test_title'),
+            array('date_start', new \DateTime('2015-01-01 00:00:00')),
+            array('date_end', new \DateTime('2015-01-01 00:00:00')),
+            array('date_estimated', new \DateTime('2015-01-01 00:00:00')),
+            array('sought', 'test_sought'),
             array('active', true),
-            array('categoryTicket', 'category_ticket_test'),
-            array('priority', 'priority_test'),
+            array('priority', new Priority()),
             array('user', new User()),
         );
     }
@@ -79,11 +79,14 @@ class TicketTest extends TestCase
     {
         $array = array(
             'id' => 1,
-            'date_posted' => new \DateTime('2015-01-01 00:00:00'),
-            'description' => 'description_test',
-            'ticket' => 'ticket_test',
+            'title' => 'test_title',
+            'date_start' => new \DateTime('2015-01-01 00:00:00'),
+            'date_end' => new \DateTime('2015-01-01 00:00:00'),
+            'date_estimated' => new \DateTime('2015-01-01 00:00:00'),
+            'sought' => 'test_sought',
+            'active' => true,
+            'priority'=> new Priority(),
             'user' => new User(),
-            'active' => true
         );
 
         $class = new Ticket($array);

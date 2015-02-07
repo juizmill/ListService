@@ -3,6 +3,7 @@
 namespace ApplicationTest\Entity;
 
 use Application\Entity\User;
+use Application\Entity\Ticket;
 use ApplicationTest\Framework\TestCase;
 use Application\Entity\Interaction;
 
@@ -24,7 +25,7 @@ class InteractionTest extends TestCase
     {
         return array(
             array('date_posted', new \DateTime('2015-01-01 00:00:00')),
-            array('ticket', 'ticket_test'),
+            array('ticket', new Ticket()),
             array('user', new User()),
         );
     }
@@ -75,7 +76,7 @@ class InteractionTest extends TestCase
             'id' => 1,
             'date_posted' => new \DateTime('2015-01-01 00:00:00'),
             'description' => 'description_test',
-            'ticket' => 'ticket_test',
+            'ticket' => new Ticket(),
             'user' => new User(),
             'active' => true
         );
