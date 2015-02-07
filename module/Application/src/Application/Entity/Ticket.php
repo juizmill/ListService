@@ -4,12 +4,15 @@ namespace Application\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Zend\Stdlib\Hydrator\ClassMethods;
+use Zend\Form\Annotation as Form;
 
 /**
  * Class Ticket
  * @package Application\Entity
  * @ORM\Table(name="ticket")
  * @ORM\Entity
+ * @Form\Name("ticket")
+ * @Form\Hydrator("Zend\Stdlib\Hydrator\ClassMethods")
  */
 class Ticket
 {
@@ -17,6 +20,7 @@ class Ticket
      * @ORM\Id
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Form\Exclude()
      * @var $id integer
      */
     private $id;
@@ -25,6 +29,14 @@ class Ticket
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=60, nullable=false)
+     * @Form\Required(true)
+     * @Form\Validator({"name":"NotEmpty"})
+     * @Form\Filter({"name":"StringTrim"})
+     * @Form\Filter({"name":"StripTags"})
+     * @Form\Validator({"name":"StringLength"})
+     * @Form\Attributes({"type":"text", "class":"form-control"})
+     * @Form\Options({"label":"Title:"})
+     * @var $description string
      */
     private $title;
 
@@ -32,6 +44,7 @@ class Ticket
      * @var \DateTime
      *
      * @ORM\Column(name="date_start", type="datetime", nullable=true)
+     * @Form\Exclude()
      */
     private $date_start;
 
@@ -39,6 +52,7 @@ class Ticket
      * @var \DateTime
      *
      * @ORM\Column(name="date_end", type="datetime", nullable=true)
+     * @Form\Exclude()
      */
     private $date_end;
 
@@ -46,6 +60,7 @@ class Ticket
      * @var \DateTime
      *
      * @ORM\Column(name="date_estimated", type="datetime", nullable=true)
+     * @Form\Exclude()
      */
     private $date_estimated;
 
@@ -53,6 +68,14 @@ class Ticket
      * @var string
      *
      * @ORM\Column(name="sought", type="string", length=45, nullable=false)
+     * @Form\Required(true)
+     * @Form\Validator({"name":"NotEmpty"})
+     * @Form\Filter({"name":"StringTrim"})
+     * @Form\Filter({"name":"StripTags"})
+     * @Form\Validator({"name":"StringLength"})
+     * @Form\Attributes({"type":"text", "class":"form-control"})
+     * @Form\Options({"label":"Sought:"})
+     * @var $description string
      */
     private $sought;
 
@@ -60,6 +83,7 @@ class Ticket
      * @var boolean
      *
      * @ORM\Column(name="active", type="boolean", nullable=false)
+     * @Form\Exclude()
      */
     private $active = true;
 
@@ -68,8 +92,9 @@ class Ticket
      *
      * @ORM\ManyToOne(targetEntity="Application\Entity\Priority")
      * @ORM\JoinColumns({
-     * @ORM\JoinColumn(name="priority", referencedColumnName="id")
+     *     @ORM\JoinColumn(name="priority", referencedColumnName="id")
      * })
+     * @Form\Exclude()
      */
     private $priority;
 
@@ -78,14 +103,15 @@ class Ticket
      *
      * @ORM\ManyToOne(targetEntity="Application\Entity\User")
      * @ORM\JoinColumns({
-     * @ORM\JoinColumn(name="user", referencedColumnName="id")
+     *     @ORM\JoinColumn(name="user", referencedColumnName="id")
      * })
+     * @Form\Exclude()
      */
     private $user;
 
     public function __construct(Array $options = [])
     {
-        (new ClassMethods())->hydrate($options,$this);
+        (new ClassMethods())->hydrate($options, $this);
     }
 
     /**
