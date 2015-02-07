@@ -21,6 +21,22 @@ return array(
                      ),
                  ),
             ),
+            'priority' => array(
+                 'type'    => 'segment',
+                 'options' => array(
+                     'route'    => '/priority[/page/:page][/:action][/:id]',
+                     'constraints' => array(
+                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                         'id'     => '\d+',
+                         'page'   => '\d+'
+                     ),
+                     'defaults' => array(
+                         'controller' => __NAMESPACE__.'\\Controller\\Priority',
+                         'action' => 'index',
+                         'page' => 1
+                     ),
+                 ),
+            ),
         ),
     ),
     'service_manager' => array(
@@ -44,7 +60,8 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
-            __NAMESPACE__.'\\Controller\\Category' => __NAMESPACE__.'\\Controller\\CategoryController'
+            __NAMESPACE__.'\\Controller\\Category' => __NAMESPACE__.'\\Controller\\CategoryController',
+            __NAMESPACE__.'\\Controller\\Priority' => __NAMESPACE__.'\\Controller\\PriorityController',
         ),
     ),
     'view_manager' => array(
