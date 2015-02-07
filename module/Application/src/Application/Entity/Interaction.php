@@ -39,6 +39,12 @@ class Interaction extends AbstractEntity
     private $date_posted;
 
     /**
+     * @var \Ticket
+     *
+     * @ORM\ManyToOne(targetEntity="Application\Entity\Ticket")
+     * @ORM\JoinColumns({
+     *     @ORM\JoinColumn(name="ticket", referencedColumnName="id")
+     * })
      * @Form\Exclude()
      */
     private $ticket;
@@ -47,7 +53,7 @@ class Interaction extends AbstractEntity
     * @Form\Exclude()
     * @ORM\ManyToOne(targetEntity="Application\Entity\User")
     * @ORM\JoinColumns({
-    *   @ORM\JoinColumn(name="user", referencedColumnName="id")
+    *     @ORM\JoinColumn(name="user", referencedColumnName="id")
     * })
     * @var \Application\Entity\User
     */
@@ -91,7 +97,7 @@ class Interaction extends AbstractEntity
      * @param object $ticket \Application\Entity\Ticket
      * @return $this
      */
-    public function setTicket($ticket)
+    public function setTicket(Ticket $ticket = null)
     {
         $this->ticket = $ticket;
         return $this;
