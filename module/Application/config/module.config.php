@@ -53,6 +53,22 @@ return array(
                      ),
                  ),
             ),
+            'ticket' => array(
+                 'type'    => 'segment',
+                 'options' => array(
+                     'route'    => '/ticket[/page/:page][/:action][/:id]',
+                     'constraints' => array(
+                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                         'id'     => '\d+',
+                         'page'   => '\d+'
+                     ),
+                     'defaults' => array(
+                         'controller' => __NAMESPACE__.'\\Controller\\Ticket',
+                         'action' => 'index',
+                         'page' => 1
+                     ),
+                 ),
+            ),
         ),
     ),
     'service_manager' => array(
@@ -79,6 +95,7 @@ return array(
             __NAMESPACE__.'\\Controller\\Category' => __NAMESPACE__.'\\Controller\\CategoryController',
             __NAMESPACE__.'\\Controller\\Priority' => __NAMESPACE__.'\\Controller\\PriorityController',
             __NAMESPACE__.'\\Controller\\Interaction' => __NAMESPACE__.'\\Controller\\InteractionController',
+            __NAMESPACE__.'\\Controller\\Ticket' => __NAMESPACE__.'\\Controller\\TicketController',
         ),
     ),
     'view_manager' => array(

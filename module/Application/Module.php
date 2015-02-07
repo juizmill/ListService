@@ -15,6 +15,7 @@ use Zend\Form\Factory;
 use Zend\Form\Element\Button;
 use Application\Entity\Category;
 use Application\Entity\Priority;
+use Application\Entity\Ticket;
 use Application\Entity\Interaction;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
@@ -83,6 +84,14 @@ class Module
                     $builder = new AnnotationBuilder();
                     $builder->setFormFactory(new Factory($sm->get('FormElementManager')));
                     $form = $builder->createForm(new Interaction());
+
+                    return $form;
+                },
+                'ticket.form' => function($sm) {
+                    $em = $sm->get('Doctrine\ORM\EntityManager');
+                    $builder = new AnnotationBuilder();
+                    $builder->setFormFactory(new Factory($sm->get('FormElementManager')));
+                    $form = $builder->createForm(new Ticket());
 
                     return $form;
                 }
