@@ -1,0 +1,7 @@
+<?php
+
+$form = $this->form;
+$form->setAttribute('action', $this->url('category', array('action' => 'edit', 'id' => $this->id)))->prepare();
+echo $this->form()->openTag($form);
+echo $this->formCollection($form);
+echo $this->form()->closeTag();
