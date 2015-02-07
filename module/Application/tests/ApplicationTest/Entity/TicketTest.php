@@ -2,30 +2,35 @@
 
 namespace ApplicationTest\Entity;
 
+use Application\Entity\Priority;
 use Application\Entity\User;
-use Application\Entity\Ticket;
 use ApplicationTest\Framework\TestCase;
-use Application\Entity\Interaction;
+use Application\Entity\Ticket;
 
 /**
- * Class InteractionTest
+ * Class TicketTest
  * @package ApplicationTest\Entity
  */
-class InteractionTest extends TestCase
+class TicketTest extends TestCase
 {
     protected $traceError = true;
 
     public function testClasseExist()
     {
-        $this->assertTrue(class_exists('Application\\Entity\\Interaction'));
-        $this->assertInstanceOf('Application\Entity\AbstractEntity', new Interaction());
+        $this->assertTrue(class_exists('Application\\Entity\\Ticket'));
     }
 
     public function dataProviderAttributes()
     {
         return array(
-            array('date_posted', new \DateTime('2015-01-01 00:00:00')),
-            array('ticket', new Ticket()),
+            array('id', 1),
+            array('title', 'test_title'),
+            array('date_start', new \DateTime('2015-01-01 00:00:00')),
+            array('date_end', new \DateTime('2015-01-01 00:00:00')),
+            array('date_estimated', new \DateTime('2015-01-01 00:00:00')),
+            array('sought', 'test_sought'),
+            array('active', true),
+            array('priority', new Priority()),
             array('user', new User()),
         );
     }
@@ -35,7 +40,7 @@ class InteractionTest extends TestCase
      */
     public function testCheckAttritutesExpected($attribute)
     {
-        $this->assertClassHasAttribute($attribute, 'Application\\Entity\\Interaction');
+        $this->assertClassHasAttribute($attribute, 'Application\\Entity\\Ticket');
     }
 
     /**
@@ -46,7 +51,7 @@ class InteractionTest extends TestCase
         $get = 'get'.str_replace(' ', '', ucwords(str_replace('_', ' ', $attribute)));
         $set = 'set'.str_replace(' ', '', ucwords(str_replace('_', ' ', $attribute)));
 
-        $class = new Interaction();
+        $class = new Ticket();
         $class->$set($value);
 
         $this->assertEquals($value, $class->$get());
@@ -59,29 +64,32 @@ class InteractionTest extends TestCase
     {
         $set = 'set'.str_replace(' ', '', ucwords(str_replace('_', ' ', $attribute)));
 
-        $class = new Interaction();
+        $class = new Ticket();
         $result = $class->$set($value);
 
-        $this->assertInstanceOf('Application\\Entity\\Interaction', $result);
+        $this->assertInstanceOf('Application\\Entity\\Ticket', $result);
     }
 
     public function testCheckExistMethodToArray()
     {
-        $this->assertTrue(method_exists('Application\\Entity\\Interaction', 'toArray'));
+        $this->assertTrue(method_exists('Application\\Entity\\Ticket', 'toArray'));
     }
 
     public function testCheckMethodConstructSetFullMethods()
     {
         $array = array(
             'id' => 1,
-            'date_posted' => new \DateTime('2015-01-01 00:00:00'),
-            'description' => 'description_test',
-            'ticket' => new Ticket(),
+            'title' => 'test_title',
+            'date_start' => new \DateTime('2015-01-01 00:00:00'),
+            'date_end' => new \DateTime('2015-01-01 00:00:00'),
+            'date_estimated' => new \DateTime('2015-01-01 00:00:00'),
+            'sought' => 'test_sought',
+            'active' => true,
+            'priority'=> new Priority(),
             'user' => new User(),
-            'active' => true
         );
 
-        $class = new Interaction($array);
+        $class = new Ticket($array);
 
         $result = $class->toArray();
 
@@ -94,7 +102,7 @@ class InteractionTest extends TestCase
      */
     public function testReturnsExceptionIfNotAnIntegerParameter()
     {
-        $class = new Interaction();
+        $class = new Ticket();
         for ($i=0; $i <= 2; $i++) {
             switch ($i) {
                 case 0:

@@ -28,6 +28,9 @@ class CategoryControllerTest extends TestCaseController
         $this->getEm()->flush();
     }
 
+    /**
+     *
+     */
     public function testClasseExist()
     {
         $this->assertTrue(class_exists('Application\\Controller\\CategoryController'));
