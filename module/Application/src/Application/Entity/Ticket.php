@@ -61,7 +61,7 @@ class Ticket
      *
      * @ORM\Column(name="active", type="boolean", nullable=false)
      */
-    private $active;
+    private $active = true;
 
     /**
      * @var object
