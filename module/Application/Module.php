@@ -15,6 +15,7 @@ use Zend\Form\Factory;
 use Zend\Form\Element\Button;
 use Application\Entity\Category;
 use Application\Entity\Priority;
+use Application\Entity\Interaction;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 
@@ -74,6 +75,14 @@ class Module
                         'fields' => array('description'),
                         'messages' => array('objectFound' => 'Description exists')
                     )));
+
+                    return $form;
+                },
+                'interaction.form' => function($sm) {
+                    $em = $sm->get('Doctrine\ORM\EntityManager');
+                    $builder = new AnnotationBuilder();
+                    $builder->setFormFactory(new Factory($sm->get('FormElementManager')));
+                    $form = $builder->createForm(new Interaction());
 
                     return $form;
                 }
