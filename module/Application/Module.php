@@ -9,6 +9,9 @@
 
 namespace Application;
 
+use Application\Helpers\ContentHeader;
+use Application\Controller\CategoryController;
+
 use Zend\Form\Annotation\AnnotationBuilder;
 use DoctrineModule\Validator\NoObjectExists;
 use Zend\Form\Factory;
@@ -27,6 +30,15 @@ class Module
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
+
+        $sharedEvents = $eventManager->getSharedManager();
+
+        $sharedEvents->attach('Application\Controller\CategoryController', 'dispatch', function($e) {
+            $sm = $e->getApplication()->getServiceManager();
+            $translate = $sm->get('viewhelpermanager')->get('translate');
+            $placeholder = $sm->get('viewhelpermanager')->get('placeholder');
+            $placeholder->getContainer('contentHeader')->set('<h1>'.$translate('Category').'<small>'.$translate('Content category').'</small></h1>');
+        }, 99);
     }
 
     public function getConfig()
@@ -42,6 +54,15 @@ class Module
                     __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
                 ),
             ),
+        );
+    }
+
+    public function getViewHelperConfig()
+    {
+        return array(
+           'invokables' => array(
+               'contentHeader' => 'Application\Helpers\ContentHeader',
+           ),
         );
     }
 
