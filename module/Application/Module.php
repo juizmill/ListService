@@ -31,8 +31,37 @@ class Module
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
 
+        /**
+         * @var $sharedEvents \Zend\EventManager\SharedEventManager
+         */
         $sharedEvents = $eventManager->getSharedManager();
 
+        //edit template login
+        $sharedEvents->attach('ZfcUser\Controller\UserController', MvcEvent::EVENT_DISPATCH, function(MvcEvent $event) {
+
+            /**
+             * @var $event \Zend\Mvc\MvcEvent
+             * @var $routeMatch \Zend\Mvc\Router\Http\RouteMatch
+             * @var $viewModel \Zend\View\Model\ViewModel
+             */
+            $routeMatch = $event->getRouteMatch();
+            $viewModel = $event->getResult();
+
+            if (($viewModel instanceof \Zend\View\Model\ViewModel) and
+                ($routeMatch->getParam('action') == 'login') or
+                ($routeMatch->getParam('action') == 'register')
+            ) {
+                $viewModel->setTerminal(true);
+            }
+
+            $sm = $event->getApplication()->getServiceManager();
+            $translate = $sm->get('viewhelpermanager')->get('translate');
+            $placeholder = $sm->get('viewhelpermanager')->get('placeholder');
+            $placeholder->getContainer('contentHeader')->set('<h1>'.$translate('User').'<small>'.$translate('Control panel').'</small></h1>');
+
+        }, -99);
+
+        //Add content header in pages.
         $sharedEvents->attach('Application\Controller\CategoryController', 'dispatch', function($e) {
             $sm = $e->getApplication()->getServiceManager();
             $translate = $sm->get('viewhelpermanager')->get('translate');

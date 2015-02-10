@@ -143,7 +143,7 @@ $settings = array(
      * Default value: 'zfc-user/user/login.phtml'
      * Accepted values: string path to a view script
      */
-    //'user_login_widget_view_template' => 'zfc-user/user/login.phtml',
+    'user_login_widget_view_template' => 'zfc-user/login/template-login.phtml',
 
     /**
      * Login Redirect Route
