@@ -31,7 +31,7 @@ $settings = array(
      *
      * Accepted values: boolean true or false
      */
-    //'enable_registration' => true,
+    'enable_registration' => true,
 
     /**
      * Enable Username
@@ -41,9 +41,9 @@ $settings = array(
      *
      * Accepted values: boolean true or false
      */
-    //'enable_username' => false,
+    'enable_username' => true,
 
-    /**     
+    /**
      * Authentication Adapters
      *
      * Specify the adapters that will be used to try and authenticate the user
@@ -61,7 +61,7 @@ $settings = array(
      *
      * Accepted values: boolean true or false
      */
-    //'enable_display_name' => true,
+    'enable_display_name' => true,
 
     /**
      * Modes for authentication identity match
@@ -72,7 +72,7 @@ $settings = array(
      * Default value: array containing 'email'
      * Accepted values: array containing one or more of: email, username
      */
-    //'auth_identity_fields' => array( 'email' ),
+    'auth_identity_fields' => array( 'email' ),
 
     /**
      * Login form timeout
@@ -110,7 +110,7 @@ $settings = array(
      * Determines if a captcha should be utilized on the user registration form.
      * Default value is false.
      */
-    //'use_registration_form_captcha' => false,
+    //'use_registration_form_captcha' => true,
 
     /**
      * Form Captcha Options
@@ -119,14 +119,14 @@ $settings = array(
      * this to configure which Zend\Captcha adapter to use, and the options to
      * pass to it. The default uses the Figlet captcha.
      */
-    /*'form_captcha_options' => array(
-        'class'   => 'figlet',
-        'options' => array(
-            'wordLen'    => 5,
-            'expiration' => 300,
-            'timeout'    => 300,
-        ),
-    ),*/
+    // 'form_captcha_options' => array(
+    //     'class'   => 'figlet',
+    //     'options' => array(
+    //         'wordLen'    => 5,
+    //         'expiration' => 300,
+    //         'timeout'    => 300,
+    //     ),
+    // ),
 
     /**
      * Use Redirect Parameter If Present
@@ -138,11 +138,11 @@ $settings = array(
     //'use_redirect_parameter_if_present' => true,
 
     /**
-	 * Sets the view template for the user login widget
-	 *
-	 * Default value: 'zfc-user/user/login.phtml'
+     * Sets the view template for the user login widget
+     *
+     * Default value: 'zfc-user/user/login.phtml'
      * Accepted values: string path to a view script
-	 */
+     */
     //'user_login_widget_view_template' => 'zfc-user/user/login.phtml',
 
     /**
@@ -191,33 +191,33 @@ $settings = array(
 
     /**
      * Enable user state usage
-     * 
+     *
      * Should user's state be used in the registration/login process?
      */
-    //'enable_user_state' => true,
-    
+    'enable_user_state' => true,
+
     /**
      * Default user state upon registration
-     * 
+     *
      * What state user should have upon registration?
      * Allowed value type: integer
      */
     //'default_user_state' => 1,
-    
+
     /**
      * States which are allowing user to login
-     * 
+     *
      * When user tries to login, is his/her state one of the following?
      * Include null if you want user's with no state to login as well.
      * Allowed value types: null and integer
      */
     //'allowed_login_states' => array( null, 1 ),
-    
+
     /**
      * User table name
      */
     //'table_name' => 'user',
-    
+
     /**
      * End of ZfcUser configuration
      */

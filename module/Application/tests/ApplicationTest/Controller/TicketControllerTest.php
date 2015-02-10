@@ -28,7 +28,7 @@ class TicketControllerTest extends TestCaseController
             ->setUserName('teste')
             ->setPassword('12345')
             ->setDisplayName('teste_display_name')
-            ->setDescription('description_test');
+            ->setState(true);
         $this->getEm()->persist($user);
         $this->getEm()->flush();
     }

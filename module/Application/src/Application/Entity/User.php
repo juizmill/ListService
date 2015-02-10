@@ -15,13 +15,21 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="user")
  * @ORM\Entity
  */
-class User extends AbstractEntity implements UserInterface
+class User implements UserInterface
 {
     /**
-     * @ORM\Column(name="user_name", type="text", length=80, nullable=false)
+     * @ORM\Id
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @var $id integer
+     */
+    private $id;
+
+    /**
+     * @ORM\Column(name="username", type="text", length=80, nullable=true)
      * @var string
      */
-    private $user_name;
+    private $username;
 
     /**
      * @ORM\Column(name="email", type="text", length=255, nullable=false)
@@ -45,7 +53,7 @@ class User extends AbstractEntity implements UserInterface
      * @ORM\Column(name="state", type="boolean", nullable=false, options={"default" = 0})
      * @var datetime
      */
-    private $state = false;
+    private $state;
 
     /**
      * @Gedmo\Timestampable(on="create")
@@ -62,25 +70,46 @@ class User extends AbstractEntity implements UserInterface
     private $updated_at;
 
     /**
-     * @ORM\Column(name="salt", type="string", length=255, nullable=false)
-     * @var $salt string
-     */
-    protected $salt;
-
-    /**
      * @ORM\Column(name="active_key", type="string", length=255, nullable=false)
      * @var $active_key string
      */
-    protected $active_key;
+    private $active_key;
+
+    /**
+     * @ORM\Column(name="active", type="boolean", nullable=false, options={"default" = 1})
+     * @var boolean
+     */
+    private $active = true;
 
     /**
      * construct
      */
     public function __construct(Array $options = [])
     {
-        $this->setSalt(Rand::getString(35, $this->email, true));
-        $this->setActiveKey(md5($this->email . $this->salt . date('Y-m-d H:m:s')));
-        parent::__construct($options);
+        $this->setActiveKey(md5($this->email . date('Y-m-d H:m:s')));
+        (new ClassMethods)->hydrate($options, $this);
+    }
+
+    /**
+     * get id
+     *
+     * @return integer return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * set id
+     *
+     * @param integer $id Return integer
+     * @return $this;
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+        return $this;
     }
 
     /**
@@ -88,19 +117,19 @@ class User extends AbstractEntity implements UserInterface
      *
      * @return string  username
      */
-    public function getUserName()
+    public function getUsername()
     {
-        return $this->user_name;
+        return $this->username;
     }
 
     /**
      * set username
      *
-     * @param string $user_name Return username
+     * @param string $username Return username
      */
-    public function setUserName($user_name)
+    public function setUsername($username)
     {
-        $this->user_name = $user_name;
+        $this->username = $username;
         return $this;
     }
 
@@ -149,18 +178,6 @@ class User extends AbstractEntity implements UserInterface
     }
 
     /**
-     * @param $password
-     * @return string
-     */
-    public function encryptPassword($password)
-    {
-        $bcrypt = new Bcrypt();
-        $bcrypt->setSalt($this->salt);
-
-        return $bcrypt->create($password);
-    }
-
-    /**
      * get password
      *
      * @return string return password
@@ -177,7 +194,7 @@ class User extends AbstractEntity implements UserInterface
      */
     public function setPassword($password)
     {
-        $this->password = $this->encryptPassword($password);
+        $this->password = $password;
         return $this;
     }
 
@@ -198,10 +215,7 @@ class User extends AbstractEntity implements UserInterface
      */
     public function setState($state)
     {
-        if (! is_bool($state)) {
-            throw new \RuntimeException(__FUNCTION__.' accept only boolean');
-        }
-        $this->state = (boolean) $state;
+        $this->state = $state;
         return $this;
     }
 
@@ -250,24 +264,6 @@ class User extends AbstractEntity implements UserInterface
     }
 
     /**
-     * @param string $salt
-     * @return $this
-     */
-    public function setSalt($salt)
-    {
-        $this->salt = $salt;
-        return $this;
-    }
-
-    /**
-     * @return string return string salt
-     */
-    public function getSalt()
-    {
-        return $this->salt;
-    }
-
-    /**
      * @param string $active_key
      * @return $this
      */
@@ -283,5 +279,40 @@ class User extends AbstractEntity implements UserInterface
     public function getActiveKey()
     {
         return $this->active_key;
+    }
+    /**
+     * get active
+     *
+     * @return boolean Return a boolean
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
+
+    /**
+     * set active
+     *
+     * @param boolean $active Return a boolean
+     * @return $this
+     */
+    public function setActive($active)
+    {
+        if (! is_bool($active)) {
+            throw new \RuntimeException(__FUNCTION__.' accept only boolean');
+        }
+
+        $this->active = (boolean) $active;
+        return $this;
+    }
+
+    /**
+     * to array
+     *
+     * @return array Return array list
+     */
+    public function toArray()
+    {
+        return (new ClassMethods())->extract($this);
     }
 }
