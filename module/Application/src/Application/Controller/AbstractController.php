@@ -67,7 +67,8 @@ abstract class AbstractController extends AbstractActionController
             $hydrator->hydrate($form->getData(), $entity);
             $this->getEm()->persist($entity);
             $this->getEm()->flush();
-            $this->flashMessenger()->addSuccessMessage('Successfully registered!');
+            $translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
+            $this->flashMessenger()->addSuccessMessage($translate('Successfully registered!'));
             return $this->redirect()->toRoute($this->route, ['controller' => $this->controller, 'action' => 'index']);
         }
 
@@ -81,10 +82,11 @@ abstract class AbstractController extends AbstractActionController
      */
     public function editAction()
     {
+        $translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
         $entity = $this->getEm()->getRepository($this->entity)->find($this->params()->fromRoute('id'));
 
         if (!$entity) {
-            $this->flashMessenger()->addErrorMessage('Record not found');
+            $this->flashMessenger()->addErrorMessage($translate('Record not found'));
             return $this->redirect()->toRoute($this->route, array('controller' => $this->controller, 'action' => 'index'));
         }
 
@@ -100,7 +102,7 @@ abstract class AbstractController extends AbstractActionController
             $hydrator->hydrate($form->getData(), $entity);
             $this->getEm()->persist($entity);
             $this->getEm()->flush();
-            $this->flashMessenger()->addSuccessMessage('Updated successfully!');
+            $this->flashMessenger()->addSuccessMessage($translate('Updated successfully!'));
             return $this->redirect()->toRoute($this->route, ['controller' => $this->controller, 'action' => 'edit', 'id' => $this->params()->fromRoute('id')]);
         }
 
@@ -114,6 +116,7 @@ abstract class AbstractController extends AbstractActionController
      */
     public function deleteAction()
     {
+        $translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
         if ($this->getRequest()->isXmlHttpRequest()) {
             $entity = $this->getEm()->getRepository($this->entity)->find($this->params()->fromRoute('id'));
             if ($entity) {
@@ -125,7 +128,7 @@ abstract class AbstractController extends AbstractActionController
 
             return new JsonModel(array(false));
         }
-        $this->flashMessenger()->addInfoMessage('Operation denied');
+        $this->flashMessenger()->addInfoMessage($translate('Operation denied'));
         return $this->redirect()->toRoute($this->route, array('controller' => $this->controller, 'action' => 'index'));
     }
 
