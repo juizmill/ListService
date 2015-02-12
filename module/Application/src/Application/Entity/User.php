@@ -2,6 +2,7 @@
 
 namespace Application\Entity;
 
+use DateTime;
 use ZfcUser\Entity\UserInterface;
 use Zend\Stdlib\Hydrator\ClassMethods;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -80,7 +81,7 @@ class User implements UserInterface
     private $active = true;
 
     /**
-     * construct
+     * @param array $options
      */
     public function __construct(Array $options = [])
     {
@@ -96,7 +97,6 @@ class User implements UserInterface
     public function getId()
     {
         return $this->id;
-
     }
 
     /**
@@ -126,6 +126,7 @@ class User implements UserInterface
      * set username
      *
      * @param string $username Return username
+     * @return $this|UserInterface
      */
     public function setUsername($username)
     {
@@ -194,6 +195,7 @@ class User implements UserInterface
      * set password
      *
      * @param String $password return password
+     * @return $this|UserInterface
      */
     public function setPassword($password)
     {
@@ -216,6 +218,7 @@ class User implements UserInterface
      * set state
      *
      * @param String $state Return state
+     * @return $this|UserInterface
      */
     public function setState($state)
     {
@@ -225,9 +228,7 @@ class User implements UserInterface
     }
 
     /**
-     * set created_at
-     *
-     * @return datetime date created
+     * @return datetime
      */
     public function getCreatedAt()
     {
@@ -235,9 +236,7 @@ class User implements UserInterface
     }
 
     /**
-     * set created_at
-     *
-     * @param  datetime $created_at Date created
+     * @param $created_at
      * @return $this
      */
     public function setCreatedAt($created_at)
@@ -248,9 +247,7 @@ class User implements UserInterface
     }
 
     /**
-     * get updated_at
-     *
-     * @return datetime date updated
+     * @return DateTime
      */
     public function getUpdatedAt()
     {
@@ -258,9 +255,7 @@ class User implements UserInterface
     }
 
     /**
-     * set updated
-     *
-     * @param  datetime $updated_at Date updated
+     * @param $updated_at
      * @return $this
      */
     public function setUpdatedAt($updated_at)
@@ -271,7 +266,7 @@ class User implements UserInterface
     }
 
     /**
-     * @param  string $active_key
+     * @param $active_key
      * @return $this
      */
     public function setActiveKey($active_key)
@@ -282,16 +277,15 @@ class User implements UserInterface
     }
 
     /**
-     * @return string active_key
+     * @return string
      */
     public function getActiveKey()
     {
         return $this->active_key;
     }
+
     /**
-     * get active
-     *
-     * @return boolean Return a boolean
+     * @return bool
      */
     public function getActive()
     {
@@ -299,9 +293,7 @@ class User implements UserInterface
     }
 
     /**
-     * set active
-     *
-     * @param  boolean $active Return a boolean
+     * @param $active
      * @return $this
      */
     public function setActive($active)
@@ -316,9 +308,7 @@ class User implements UserInterface
     }
 
     /**
-     * to array
-     *
-     * @return array Return array list
+     * @return array
      */
     public function toArray()
     {
