@@ -123,7 +123,7 @@ class Ticket
     }
 
     /**
-     * @param int $id
+     * @param  int   $id
      * @return $this
      */
     public function setId($id)
@@ -133,6 +133,7 @@ class Ticket
         }
 
         $this->id = $id;
+
         return $this;
     }
 
@@ -145,12 +146,13 @@ class Ticket
     }
 
     /**
-     * @param mixed $title
+     * @param  mixed $title
      * @return $this
      */
     public function setTitle($title)
     {
         $this->title = $title;
+
         return $this;
     }
 
@@ -163,12 +165,13 @@ class Ticket
     }
 
     /**
-     * @param mixed $date_start
+     * @param  mixed $date_start
      * @return $this
      */
     public function setDateStart($date_start)
     {
         $this->date_start = $date_start;
+
         return $this;
     }
 
@@ -181,12 +184,13 @@ class Ticket
     }
 
     /**
-     * @param mixed $date_end
+     * @param  mixed $date_end
      * @return $this
      */
     public function setDateEnd($date_end)
     {
         $this->date_end = $date_end;
+
         return $this;
     }
 
@@ -199,12 +203,13 @@ class Ticket
     }
 
     /**
-     * @param mixed $date_estimated
+     * @param  mixed $date_estimated
      * @return $this
      */
     public function setDateEstimated($date_estimated)
     {
         $this->date_estimated = $date_estimated;
+
         return $this;
     }
 
@@ -217,12 +222,13 @@ class Ticket
     }
 
     /**
-     * @param mixed $sought
+     * @param  mixed $sought
      * @return $this
      */
     public function setSought($sought)
     {
         $this->sought = $sought;
+
         return $this;
     }
 
@@ -235,12 +241,13 @@ class Ticket
     }
 
     /**
-     * @param mixed $active
+     * @param  mixed $active
      * @return $this
      */
     public function setActive($active)
     {
         $this->active = $active;
+
         return $this;
     }
 
@@ -253,12 +260,13 @@ class Ticket
     }
 
     /**
-     * @param mixed $priority
+     * @param  mixed $priority
      * @return $this
      */
     public function setPriority($priority)
     {
         $this->priority = $priority;
+
         return $this;
     }
 
@@ -271,12 +279,13 @@ class Ticket
     }
 
     /**
-     * @param mixed $user
+     * @param  mixed $user
      * @return $this
      */
     public function setUser($user)
     {
         $this->user = $user;
+
         return $this;
     }
 

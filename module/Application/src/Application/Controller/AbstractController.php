@@ -69,6 +69,7 @@ abstract class AbstractController extends AbstractActionController
             $this->getEm()->flush();
             $translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
             $this->flashMessenger()->addSuccessMessage($translate('Successfully registered!'));
+
             return $this->redirect()->toRoute($this->route, ['controller' => $this->controller, 'action' => 'index']);
         }
 
@@ -87,7 +88,8 @@ abstract class AbstractController extends AbstractActionController
 
         if (!$entity) {
             $this->flashMessenger()->addErrorMessage($translate('Record not found'));
-            return $this->redirect()->toRoute($this->route, array('controller' => $this->controller, 'action' => 'index'));
+
+            return $this->redirect()->toRoute($this->route, ['controller' => $this->controller, 'action' => 'index']);
         }
 
         $form = $this->getServiceLocator()->get('FormElementManager')->get($this->form);
@@ -103,7 +105,12 @@ abstract class AbstractController extends AbstractActionController
             $this->getEm()->persist($entity);
             $this->getEm()->flush();
             $this->flashMessenger()->addSuccessMessage($translate('Updated successfully!'));
-            return $this->redirect()->toRoute($this->route, ['controller' => $this->controller, 'action' => 'edit', 'id' => $this->params()->fromRoute('id')]);
+
+            return $this->redirect()->toRoute($this->route, [
+                "controller" => $this->controller,
+                'action' => 'edit',
+                'id' => $this->params()->fromRoute('id')
+            ]);
         }
 
         return new ViewModel(array('form' => $form, 'id' => $this->params()->fromRoute('id')));
@@ -129,6 +136,7 @@ abstract class AbstractController extends AbstractActionController
             return new JsonModel(array(false));
         }
         $this->flashMessenger()->addInfoMessage($translate('Operation denied'));
+
         return $this->redirect()->toRoute($this->route, array('controller' => $this->controller, 'action' => 'index'));
     }
 

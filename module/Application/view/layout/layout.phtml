@@ -234,10 +234,14 @@
                             <ul class="dropdown-menu">
                                 <!-- User image -->
                                 <li class="user-header bg-light-blue">
-                                    <?php echo $this->gravatar($this->zfcUserIdentity()->getEmail(), [], ['class' => 'img-circle']) ?>
+                                    <?php if ($this->zfcUserIdentity()): ?>
+                                        <?php echo $this->gravatar($this->zfcUserIdentity()->getEmail(), [], ['class' => 'img-circle']); ?>
+                                    <?php endif; ?>
                                     <p>
-                                        <?php echo $this->zfcUserDisplayName() ?>
-                                        <small><?php echo $this->translate('Member since'); ?> <?php echo $this->dateFormat($this->zfcUserIdentity()->getCreatedAt(), IntlDateFormatter::MEDIUM); ?></small>
+                                        <?php if ($this->zfcUserIdentity()): ?>
+                                            <?php echo $this->zfcUserDisplayName() ?>
+                                            <small><?php echo $this->translate('Member since'); ?> <?php echo $this->dateFormat($this->zfcUserIdentity()->getCreatedAt(), IntlDateFormatter::MEDIUM); ?></small>
+                                        <?php endif; ?>
                                     </p>
                                 </li>
                                 <!-- Menu Body -->
@@ -275,10 +279,14 @@
                     <!-- Sidebar user panel -->
                     <div class="user-panel">
                         <div class="pull-left image">
+                            <?php if ($this->zfcUserIdentity()): ?>
                             <?php echo $this->gravatar($this->zfcUserIdentity()->getEmail(), [], ['class' => 'img-circle']) ?>
+                            <?php endif; ?>
                         </div>
                         <div class="pull-left info">
-                            <p><?php echo $this->translate('Hello'); ?>, <?php echo $this->zfcUserDisplayName() ?></p>
+                            <?php if ($this->zfcUserIdentity()): ?>
+                                <p><?php echo $this->translate('Hello'); ?>, <?php echo $this->zfcUserDisplayName() ?></p>
+                            <?php endif; ?>
 
                             <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                         </div>

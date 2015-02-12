@@ -4,8 +4,6 @@ namespace Application\Entity;
 
 use ZfcUser\Entity\UserInterface;
 use Zend\Stdlib\Hydrator\ClassMethods;
-use Zend\Crypt\Password\Bcrypt;
-use Zend\Math\Rand;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -98,24 +96,26 @@ class User implements UserInterface
     public function getId()
     {
         return $this->id;
+
     }
 
     /**
      * set id
      *
-     * @param integer $id Return integer
+     * @param  integer $id Return integer
      * @return $this;
      */
     public function setId($id)
     {
         $this->id = $id;
+
         return $this;
     }
 
     /**
      * get username
      *
-     * @return string  username
+     * @return string username
      */
     public function getUsername()
     {
@@ -130,6 +130,7 @@ class User implements UserInterface
     public function setUsername($username)
     {
         $this->username = $username;
+
         return $this;
     }
 
@@ -146,12 +147,13 @@ class User implements UserInterface
     /**
      * set email
      *
-     * @param String $email Return string email
+     * @param  String $email Return string email
      * @return $this
      */
     public function setEmail($email)
     {
         $this->email = $email;
+
         return $this;
     }
 
@@ -168,12 +170,13 @@ class User implements UserInterface
     /**
      * set display_name
      *
-     * @param string $display_name Return display name
+     * @param  string $display_name Return display name
      * @return $this
      */
     public function setDisplayName($display_name)
     {
         $this->display_name = $display_name;
+
         return $this;
     }
 
@@ -190,11 +193,12 @@ class User implements UserInterface
     /**
      * set password
      *
-     * @param String $password  return password
+     * @param String $password return password
      */
     public function setPassword($password)
     {
         $this->password = $password;
+
         return $this;
     }
 
@@ -216,6 +220,7 @@ class User implements UserInterface
     public function setState($state)
     {
         $this->state = $state;
+
         return $this;
     }
 
@@ -232,12 +237,13 @@ class User implements UserInterface
     /**
      * set created_at
      *
-     * @param datetime $created_at Date created
+     * @param  datetime $created_at Date created
      * @return $this
      */
     public function setCreatedAt($created_at)
     {
         $this->created_at = $created_at;
+
         return $this;
     }
 
@@ -254,22 +260,24 @@ class User implements UserInterface
     /**
      * set updated
      *
-     * @param datetime $updated_at Date updated
+     * @param  datetime $updated_at Date updated
      * @return $this
      */
     public function setUpdatedAt($updated_at)
     {
         $this->updated_at = $updated_at;
+
         return $this;
     }
 
     /**
-     * @param string $active_key
+     * @param  string $active_key
      * @return $this
      */
     public function setActiveKey($active_key)
     {
         $this->active_key = $active_key;
+
         return $this;
     }
 
@@ -293,7 +301,7 @@ class User implements UserInterface
     /**
      * set active
      *
-     * @param boolean $active Return a boolean
+     * @param  boolean $active Return a boolean
      * @return $this
      */
     public function setActive($active)
@@ -303,6 +311,7 @@ class User implements UserInterface
         }
 
         $this->active = (boolean) $active;
+
         return $this;
     }
 

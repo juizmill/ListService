@@ -9,13 +9,9 @@
 
 namespace Application;
 
-use Application\Helpers\ContentHeader;
-use Application\Controller\CategoryController;
-
 use Zend\Form\Annotation\AnnotationBuilder;
 use DoctrineModule\Validator\NoObjectExists;
 use Zend\Form\Factory;
-use Zend\Form\Element\Button;
 use Application\Entity\Category;
 use Application\Entity\Priority;
 use Application\Entity\Ticket;
@@ -37,7 +33,7 @@ class Module
         $sharedEvents = $eventManager->getSharedManager();
 
         //edit template login
-        $sharedEvents->attach('ZfcUser\Controller\UserController', MvcEvent::EVENT_DISPATCH, function(MvcEvent $event) {
+        $sharedEvents->attach('ZfcUser\Controller\UserController', MvcEvent::EVENT_DISPATCH, function (MvcEvent $event) {
 
             /**
              * @var $event \Zend\Mvc\MvcEvent
@@ -62,7 +58,7 @@ class Module
         }, -99);
 
         //Add content header in pages.
-        $sharedEvents->attach('Application\Controller\CategoryController', 'dispatch', function($e) {
+        $sharedEvents->attach('Application\Controller\CategoryController', 'dispatch', function ($e) {
             $sm = $e->getApplication()->getServiceManager();
             $translate = $sm->get('viewhelpermanager')->get('translate');
             $placeholder = $sm->get('viewhelpermanager')->get('placeholder');
@@ -99,7 +95,7 @@ class Module
     {
         return array(
             'factories' => array(
-                'category.form' => function($sm) {
+                'category.form' => function ($sm) {
                     $em = $sm->get('Doctrine\ORM\EntityManager');
                     $builder = new AnnotationBuilder();
                     $builder->setFormFactory(new Factory($sm->get('FormElementManager')));
@@ -114,7 +110,7 @@ class Module
 
                     return $form;
                 },
-                'priority.form' => function($sm) {
+                'priority.form' => function ($sm) {
                     $em = $sm->get('Doctrine\ORM\EntityManager');
                     $builder = new AnnotationBuilder();
                     $builder->setFormFactory(new Factory($sm->get('FormElementManager')));
@@ -129,7 +125,7 @@ class Module
 
                     return $form;
                 },
-                'interaction.form' => function($sm) {
+                'interaction.form' => function ($sm) {
                     $em = $sm->get('Doctrine\ORM\EntityManager');
                     $builder = new AnnotationBuilder();
                     $builder->setFormFactory(new Factory($sm->get('FormElementManager')));
@@ -137,7 +133,7 @@ class Module
 
                     return $form;
                 },
-                'ticket.form' => function($sm) {
+                'ticket.form' => function ($sm) {
                     $em = $sm->get('Doctrine\ORM\EntityManager');
                     $builder = new AnnotationBuilder();
                     $builder->setFormFactory(new Factory($sm->get('FormElementManager')));

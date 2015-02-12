@@ -4,7 +4,6 @@ namespace ApplicationTest\Entity;
 
 use ApplicationTest\Framework\TestCase;
 use Application\Entity\User;
-use Zend\Crypt\Password\Bcrypt;
 
 /**
  * Class UserTest

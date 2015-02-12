@@ -10,7 +10,7 @@ class UserLoad extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
      * User load
-     * @param  \Doctrine\Common\Persistence\ObjectManager $manager
+     * @param \Doctrine\Common\Persistence\ObjectManager $manager
      */
     public function load(\Doctrine\Common\Persistence\ObjectManager $manager)
     {

@@ -20,7 +20,6 @@ class TicketControllerTest extends TestCaseController
     protected $traceError = true;
     public $isORM = true;
 
-
     public function creatadUser()
     {
         $user = new User;

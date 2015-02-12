@@ -3,7 +3,6 @@
 namespace ApplicationTest\Entity;
 
 use ApplicationTest\Framework\TestCase;
-use Application\Entity\Priority;
 
 /**
  * Class AbststractEntityTest

@@ -56,7 +56,6 @@ class TestCase extends PHPUnit_Framework_TestCase
                 }
             }
 
-
         } else {
             throw new RuntimeException('Arquivo '.$this->pathDir.'/TestConfig.php'.' não foi encontrado!');
         }
@@ -80,7 +79,6 @@ class TestCase extends PHPUnit_Framework_TestCase
         $serviceManager->setService('Config', $config);
         $serviceManager->get('doctrine.entity_resolver.orm_default');
     }
-
 
     /**
      * @return array

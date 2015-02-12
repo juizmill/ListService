@@ -65,7 +65,7 @@ abstract class AbstractEntity
     /**
      * set id
      *
-     * @param integer $id Return an integer
+     * @param  integer $id Return an integer
      * @return $this
      */
     public function setId($id)
@@ -75,6 +75,7 @@ abstract class AbstractEntity
         }
 
         $this->id = $id;
+
         return $this;
     }
 
@@ -91,12 +92,13 @@ abstract class AbstractEntity
     /**
      * set description
      *
-     * @param string $description Return long text
+     * @param  string $description Return long text
      * @return $this
      */
     public function setDescription($description)
     {
         $this->description = $description;
+
         return $this;
     }
 
@@ -113,7 +115,7 @@ abstract class AbstractEntity
     /**
      * set active
      *
-     * @param boolean $active Return a boolean
+     * @param  boolean $active Return a boolean
      * @return $this
      */
     public function setActive($active)
@@ -123,6 +125,7 @@ abstract class AbstractEntity
         }
 
         $this->active = (boolean) $active;
+
         return $this;
     }
 

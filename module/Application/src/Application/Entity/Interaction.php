@@ -72,12 +72,13 @@ class Interaction extends AbstractEntity
     /**
      * set date_posted
      *
-     * @param datetime $date_posted Return datetime
+     * @param  datetime $date_posted Return datetime
      * @return $this
      */
     public function setDatePosted($date_posted)
     {
         $this->date_posted = $date_posted;
+
         return $this;
     }
 
@@ -94,12 +95,13 @@ class Interaction extends AbstractEntity
     /**
      * set ticket
      *
-     * @param object $ticket \Application\Entity\Ticket
+     * @param  object $ticket \Application\Entity\Ticket
      * @return $this
      */
     public function setTicket(Ticket $ticket = null)
     {
         $this->ticket = $ticket;
+
         return $this;
     }
 
@@ -116,12 +118,13 @@ class Interaction extends AbstractEntity
     /**
      * set user
      *
-     * @param User|object $user \Application\Entity\User
+     * @param  User|object $user \Application\Entity\User
      * @return $this
      */
     public function setUser(User $user)
     {
         $this->user = $user;
+
         return $this;
     }
 }
