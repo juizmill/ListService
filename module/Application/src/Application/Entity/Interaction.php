@@ -2,8 +2,6 @@
 
 namespace Application\Entity;
 
-use DateTime;
-use Zend\Stdlib\Hydrator\ClassMethods;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Zend\Form\Annotation as Form;
@@ -15,6 +13,7 @@ use Zend\Form\Annotation as Form;
  * @ORM\Entity
  * @Form\Name("interaction")
  * @Form\Hydrator("Zend\Stdlib\Hydrator\ClassMethods")
+ * @SuppressWarnings(PHPMD)
  */
 class Interaction extends AbstractEntity
 {
@@ -34,18 +33,17 @@ class Interaction extends AbstractEntity
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="date_posted", type="datetime", nullable=false)
      * @Form\Exclude()
-     * @var datetime
+     * @var \DateTime
      */
     private $date_posted;
 
     /**
-     * @var \Ticket
-     *
      * @ORM\ManyToOne(targetEntity="Application\Entity\Ticket")
      * @ORM\JoinColumns({
      *     @ORM\JoinColumn(name="ticket", referencedColumnName="id")
      * })
      * @Form\Exclude()
+     * @var Ticket
      */
     private $ticket;
 
@@ -55,13 +53,11 @@ class Interaction extends AbstractEntity
     * @ORM\JoinColumns({
     *     @ORM\JoinColumn(name="user", referencedColumnName="id")
     * })
-    * @var \Application\Entity\User
+    * @var User
     */
     private $user;
 
     /**
-     * get date_posted
-     *
      * @return \DateTime
      */
     public function getDatePosted()
@@ -70,9 +66,7 @@ class Interaction extends AbstractEntity
     }
 
     /**
-     * set date_posted
-     *
-     * @param  datetime $date_posted Return datetime
+     * @param $date_posted
      * @return $this
      */
     public function setDatePosted($date_posted)
@@ -83,9 +77,7 @@ class Interaction extends AbstractEntity
     }
 
     /**
-     * get ticket
-     *
-     * @return \Application\Entity\Ticket
+     * @return Ticket
      */
     public function getTicket()
     {
@@ -93,9 +85,7 @@ class Interaction extends AbstractEntity
     }
 
     /**
-     * set ticket
-     *
-     * @param  object $ticket \Application\Entity\Ticket
+     * @param Ticket $ticket
      * @return $this
      */
     public function setTicket(Ticket $ticket = null)
@@ -106,9 +96,7 @@ class Interaction extends AbstractEntity
     }
 
     /**
-     * get user
-     *
-     * @return \Application\Entity\User
+     * @return User
      */
     public function getUser()
     {
@@ -116,9 +104,7 @@ class Interaction extends AbstractEntity
     }
 
     /**
-     * set user
-     *
-     * @param  User|object $user \Application\Entity\User
+     * @param User $user
      * @return $this
      */
     public function setUser(User $user)

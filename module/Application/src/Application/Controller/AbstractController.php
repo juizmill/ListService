@@ -4,6 +4,7 @@ namespace Application\Controller;
 
 use Doctrine\Common\Collections\Criteria;
 use DoctrineModule\Paginator\Adapter\Selectable;
+use Zend\Http\Request;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
@@ -11,7 +12,10 @@ use Zend\Paginator\Paginator;
 
 /**
  * Class AbstractController
+ *
  * @package Application\Controller
+ * @method object|Request getRequest()
+ * @SuppressWarnings(PHPMD)
  */
 abstract class AbstractController extends AbstractActionController
 {
@@ -30,9 +34,7 @@ abstract class AbstractController extends AbstractActionController
     abstract public function __construct();
 
     /**
-     * index action
-     *
-     * @return \Zend\View\Model\ViewModel Return an view model
+     * @return \Zend\View\Model\ViewModel
      */
     public function indexAction()
     {
@@ -49,12 +51,13 @@ abstract class AbstractController extends AbstractActionController
     }
 
     /**
-     * new action
-     *
-     * @return \Zend\View\Model\ViewModel Return an view model
+     * @return \Zend\Http\Response|\Zend\View\Model\ViewModel
      */
     public function newAction()
     {
+        /**
+         * @var $form \Zend\Form\Form
+         */
         $form = $this->getServiceLocator()->get('FormElementManager')->get($this->form);
 
         if ($this->getRequest()->isPost()) {
@@ -77,9 +80,7 @@ abstract class AbstractController extends AbstractActionController
     }
 
     /**
-     * edit action
-     *
-     * @return \Zend\View\Model\ViewModel Return an view model
+     * @return \Zend\Http\Response|\Zend\View\Model\ViewModel
      */
     public function editAction()
     {
@@ -92,6 +93,9 @@ abstract class AbstractController extends AbstractActionController
             return $this->redirect()->toRoute($this->route, ['controller' => $this->controller, 'action' => 'index']);
         }
 
+        /**
+         * @var $form \Zend\Form\Form
+         */
         $form = $this->getServiceLocator()->get('FormElementManager')->get($this->form);
         $form->setData($entity->toArray());
 
@@ -117,9 +121,7 @@ abstract class AbstractController extends AbstractActionController
     }
 
     /**
-     * delete action
-     *
-     * @return \Zend\View\Model\JsonModel Return an Json
+     * @return \Zend\Http\Response|\Zend\View\Model\JsonModel
      */
     public function deleteAction()
     {
@@ -141,9 +143,7 @@ abstract class AbstractController extends AbstractActionController
     }
 
     /**
-     * get em
-     *
-     * @return \Doctrine\ORM\EntityManager Return Entity Manager
+     * @return \Doctrine\ORM\EntityManager
      */
     public function getEm()
     {

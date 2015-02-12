@@ -9,6 +9,7 @@ use Application\Entity\Ticket;
 
 /**
  * Class TicketTest
+ *
  * @package ApplicationTest\Entity
  */
 class TicketTest extends TestCase

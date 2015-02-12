@@ -7,6 +7,7 @@ use Application\Entity\Priority;
 
 /**
  * Class PriorityTest
+ *
  * @package ApplicationTest\Entity
  */
 class PriorityTest extends TestCase

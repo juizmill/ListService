@@ -11,7 +11,9 @@ use RuntimeException;
 
 /**
  * Class TestCase
+ *
  * @package ApplicationTest\Framework
+ * @SuppressWarnings(PHPMD)
  */
 class TestCase extends PHPUnit_Framework_TestCase
 {
@@ -94,7 +96,11 @@ class TestCase extends PHPUnit_Framework_TestCase
 
         $array = array();
         foreach ($this->modules as $m) {
-            if (! in_array($m, array_merge($config['not_load_entity'], array('DoctrineModule','DoctrineORMModule', 'ZendDeveloperTools')))) {
+            if (! in_array($m, array_merge($config['not_load_entity'], array(
+                'DoctrineModule',
+                'DoctrineORMModule',
+                'ZendDeveloperTools'
+            )))) {
                 $array[] = $m;
             }
         }
@@ -127,7 +133,8 @@ class TestCase extends PHPUnit_Framework_TestCase
                         $class = array();
                         while (false !== ($filename = readdir($dir))) {
                             if (substr($filename, -4) == ".php") {
-                                $class[] = $this->getEm()->getClassMetadata($module.'\\Entity\\'.str_replace('.php', '', $filename));
+                                $fileFull = $module.'\\Entity\\'.str_replace('.php', '', $filename);
+                                $class[] = $this->getEm()->getClassMetadata($fileFull);
                             }
                         }
                         $tool->createSchema($class);
@@ -160,8 +167,9 @@ class TestCase extends PHPUnit_Framework_TestCase
                             while (false !== ($filename = readdir($dir))) {
                                 if (substr($filename, -4) == ".php") {
                                     $tool = new SchemaTool($this->getEm());
+                                    $fileFull = $m.'\\Entity\\'.str_replace('.php', '', $filename);
                                     $class = array(
-                                        $this->getEm()->getClassMetadata($m.'\\Entity\\'.str_replace('.php', '', $filename))
+                                        $this->getEm()->getClassMetadata($fileFull)
                                     );
                                     $tool->dropSchema($class);
                                 }

@@ -7,6 +7,7 @@ use Application\Entity\User;
 
 /**
  * Class UserTest
+ *
  * @package ApplicationTest\Entity
  */
 class UserTest extends TestCase

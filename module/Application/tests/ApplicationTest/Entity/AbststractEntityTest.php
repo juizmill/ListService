@@ -6,6 +6,7 @@ use ApplicationTest\Framework\TestCase;
 
 /**
  * Class AbststractEntityTest
+ *
  * @package ApplicationTest\Entity
  */
 class AbststractEntityTest extends TestCase

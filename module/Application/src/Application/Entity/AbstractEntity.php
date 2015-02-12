@@ -11,6 +11,7 @@ use Zend\Form\Annotation as Form;
  * @package Application\Entity
  * @ORM\MappedSuperclass
  * @Form\Hydrator("Zend\Stdlib\Hydrator\ClassMethods")
+ * @SuppressWarnings(PHPMD)
  */
 abstract class AbstractEntity
 {
@@ -53,9 +54,7 @@ abstract class AbstractEntity
     }
 
     /**
-     * get id
-     *
-     * @return integer Return an integer
+     * @return int
      */
     public function getId()
     {
@@ -63,9 +62,7 @@ abstract class AbstractEntity
     }
 
     /**
-     * set id
-     *
-     * @param  integer $id Return an integer
+     * @param $id
      * @return $this
      */
     public function setId($id)
@@ -80,9 +77,7 @@ abstract class AbstractEntity
     }
 
     /**
-     * get description
-     *
-     * @return string Return long text
+     * @return string
      */
     public function getDescription()
     {
@@ -90,9 +85,7 @@ abstract class AbstractEntity
     }
 
     /**
-     * set description
-     *
-     * @param  string $description Return long text
+     * @param $description
      * @return $this
      */
     public function setDescription($description)
@@ -103,9 +96,7 @@ abstract class AbstractEntity
     }
 
     /**
-     * get active
-     *
-     * @return boolean Return a boolean
+     * @return bool
      */
     public function getActive()
     {
@@ -113,9 +104,7 @@ abstract class AbstractEntity
     }
 
     /**
-     * set active
-     *
-     * @param  boolean $active Return a boolean
+     * @param $active
      * @return $this
      */
     public function setActive($active)
@@ -130,9 +119,7 @@ abstract class AbstractEntity
     }
 
     /**
-     * to array
-     *
-     * @return array Return array list
+     * @return array
      */
     public function toArray()
     {

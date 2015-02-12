@@ -13,6 +13,7 @@ use Zend\Form\Annotation as Form;
  * @ORM\Entity
  * @Form\Name("ticket")
  * @Form\Hydrator("Zend\Stdlib\Hydrator\ClassMethods")
+ * @SuppressWarnings(PHPMD)
  */
 class Ticket
 {

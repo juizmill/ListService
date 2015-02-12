@@ -2,6 +2,11 @@
 
 namespace Application\Controller;
 
+/**
+ * Class PriorityController
+ *
+ * @package Application\Controller
+ */
 class PriorityController extends AbstractController
 {
     public function __construct()

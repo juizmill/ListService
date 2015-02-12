@@ -12,6 +12,7 @@ use Application\Entity\Interaction;
 
 /**
  * Class InteractionControllerTest
+ *
  * @package ApplicationTest\Controller
  */
 class InteractionControllerTest extends TestCaseController
@@ -56,7 +57,7 @@ class InteractionControllerTest extends TestCaseController
     {
         $this->setupDB();
 
-        $result = $this->dispatch('/interaction');
+        $this->dispatch('/interaction');
         $this->assertResponseStatusCode(200);
 
         $this->assertModuleName('Application');

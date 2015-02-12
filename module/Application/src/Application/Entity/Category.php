@@ -2,7 +2,6 @@
 
 namespace Application\Entity;
 
-use Zend\Stdlib\Hydrator\ClassMethods;
 use Doctrine\ORM\Mapping as ORM;
 use Zend\Form\Annotation as Form;
 
@@ -13,6 +12,7 @@ use Zend\Form\Annotation as Form;
  * @ORM\Entity
  * @Form\Name("category")
  * @Form\Hydrator("Zend\Stdlib\Hydrator\ClassMethods")
+ * @SuppressWarnings(PHPMD)
  */
 class Category extends AbstractEntity
 {

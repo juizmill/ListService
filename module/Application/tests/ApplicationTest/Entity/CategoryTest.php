@@ -7,6 +7,7 @@ use Application\Entity\Category;
 
 /**
  * Class CategoryTest
+ *
  * @package ApplicationTest\Entity
  */
 class CategoryTest extends TestCase

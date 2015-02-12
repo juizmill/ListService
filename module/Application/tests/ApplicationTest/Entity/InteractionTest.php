@@ -9,6 +9,7 @@ use Application\Entity\Interaction;
 
 /**
  * Class InteractionTest
+ *
  * @package ApplicationTest\Entity
  */
 class InteractionTest extends TestCase

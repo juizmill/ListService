@@ -13,6 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @package Application\Entity
  * @ORM\Table(name="user")
  * @ORM\Entity
+ * @SuppressWarnings(PHPMD)
  */
 class User implements UserInterface
 {

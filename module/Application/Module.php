@@ -1,11 +1,4 @@
 <?php
-/**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- */
 
 namespace Application;
 
@@ -19,6 +12,12 @@ use Application\Entity\Interaction;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 
+/**
+ * Class Module
+ *
+ * @package Application
+ * @SuppressWarnings(PHPMD)
+ */
 class Module
 {
     public function onBootstrap(MvcEvent $e)
@@ -33,36 +32,39 @@ class Module
         $sharedEvents = $eventManager->getSharedManager();
 
         //edit template login
-        $sharedEvents->attach('ZfcUser\Controller\UserController', MvcEvent::EVENT_DISPATCH, function (MvcEvent $event) {
+        $sharedEvents->attach(
+            'ZfcUser\Controller\UserController',
+            MvcEvent::EVENT_DISPATCH,
+            function (MvcEvent $event) {
 
-            /**
-             * @var $event \Zend\Mvc\MvcEvent
-             * @var $routeMatch \Zend\Mvc\Router\Http\RouteMatch
-             * @var $viewModel \Zend\View\Model\ViewModel
-             */
-            $routeMatch = $event->getRouteMatch();
-            $viewModel = $event->getResult();
+                $routeMatch = $event->getRouteMatch();
+                $viewModel = $event->getResult();
 
-            if (($viewModel instanceof \Zend\View\Model\ViewModel) and
-                ($routeMatch->getParam('action') == 'login') or
-                ($routeMatch->getParam('action') == 'register')
-            ) {
-                $viewModel->setTerminal(true);
-            }
+                if (($viewModel instanceof \Zend\View\Model\ViewModel) and
+                    ($routeMatch->getParam('action') == 'login') or
+                    ($routeMatch->getParam('action') == 'register')
+                ) {
+                    $viewModel->setTerminal(true);
+                }
 
-            $sm = $event->getApplication()->getServiceManager();
-            $translate = $sm->get('viewhelpermanager')->get('translate');
-            $placeholder = $sm->get('viewhelpermanager')->get('placeholder');
-            $placeholder->getContainer('contentHeader')->set('<h1>'.$translate('User').'<small>'.$translate('Control panel').'</small></h1>');
-
-        }, -99);
+                $sm = $event->getApplication()->getServiceManager();
+                $translate = $sm->get('viewhelpermanager')->get('translate');
+                $placeholder = $sm->get('viewhelpermanager')->get('placeholder');
+                $placeholder->getContainer('contentHeader')->set(
+                    '<h1>'.$translate('User').'<small>'.$translate('Control panel').'</small></h1>'
+                );
+            },
+            -99
+        );
 
         //Add content header in pages.
         $sharedEvents->attach('Application\Controller\CategoryController', 'dispatch', function ($e) {
             $sm = $e->getApplication()->getServiceManager();
             $translate = $sm->get('viewhelpermanager')->get('translate');
             $placeholder = $sm->get('viewhelpermanager')->get('placeholder');
-            $placeholder->getContainer('contentHeader')->set('<h1>'.$translate('Category').'<small>'.$translate('Content category').'</small></h1>');
+            $placeholder->getContainer('contentHeader')->set(
+                '<h1>'.$translate('Category').'<small>'.$translate('Content category').'</small></h1>'
+            );
         }, 99);
     }
 
@@ -126,7 +128,6 @@ class Module
                     return $form;
                 },
                 'interaction.form' => function ($sm) {
-                    $em = $sm->get('Doctrine\ORM\EntityManager');
                     $builder = new AnnotationBuilder();
                     $builder->setFormFactory(new Factory($sm->get('FormElementManager')));
                     $form = $builder->createForm(new Interaction());
@@ -134,7 +135,6 @@ class Module
                     return $form;
                 },
                 'ticket.form' => function ($sm) {
-                    $em = $sm->get('Doctrine\ORM\EntityManager');
                     $builder = new AnnotationBuilder();
                     $builder->setFormFactory(new Factory($sm->get('FormElementManager')));
                     $form = $builder->createForm(new Ticket());
