@@ -31,12 +31,13 @@ trait ManyToOnePriorityTrait
     }
 
     /**
-     * @param Priority $priority
+     * @param  Priority $priority
      * @return $this
      */
     public function setPriority(Priority $priority)
     {
         $this->priority = $priority;
+
         return $this;
     }
 }

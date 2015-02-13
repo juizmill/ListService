@@ -134,7 +134,7 @@ class AbststractEntityTest extends TestCase
     }
 
     /**
-     * @param array $options
+     * @param  array                                    $options
      * @return \PHPUnit_Framework_MockObject_MockObject
      */
     private function getMockAbstractEntity(Array $options = [])

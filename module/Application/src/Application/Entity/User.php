@@ -84,7 +84,7 @@ class User extends AbstractEntity implements UserInterface
     }
 
     /**
-     * @param int $identity
+     * @param  int   $identity
      * @return $this
      */
     public function setId($identity)
@@ -103,7 +103,7 @@ class User extends AbstractEntity implements UserInterface
     }
 
     /**
-     * @param string $username
+     * @param  string $username
      * @return $this
      */
     public function setUsername($username)
@@ -122,7 +122,7 @@ class User extends AbstractEntity implements UserInterface
     }
 
     /**
-     * @param string $email
+     * @param  string $email
      * @return $this
      */
     public function setEmail($email)
@@ -141,7 +141,7 @@ class User extends AbstractEntity implements UserInterface
     }
 
     /**
-     * @param string $displayName
+     * @param  string $displayName
      * @return $this
      */
     public function setDisplayName($displayName)
@@ -160,7 +160,7 @@ class User extends AbstractEntity implements UserInterface
     }
 
     /**
-     * @param string $password
+     * @param  string $password
      * @return $this
      */
     public function setPassword($password)
@@ -179,7 +179,7 @@ class User extends AbstractEntity implements UserInterface
     }
 
     /**
-     * @param int $state
+     * @param  int   $state
      * @return $this
      */
     public function setState($state)

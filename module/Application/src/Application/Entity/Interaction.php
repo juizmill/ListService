@@ -69,7 +69,7 @@ class Interaction extends AbstractEntity
     }
 
     /**
-     * @param \Application\Entity\Ticket $ticket
+     * @param  \Application\Entity\Ticket $ticket
      * @return $this
      */
     public function setTicket(Ticket $ticket = null)

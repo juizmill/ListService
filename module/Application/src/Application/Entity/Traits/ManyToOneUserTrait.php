@@ -31,12 +31,13 @@ trait ManyToOneUserTrait
     }
 
     /**
-     * @param UserApp $user
+     * @param  UserApp $user
      * @return $this
      */
     public function setUser(UserApp $user)
     {
         $this->user = $user;
+
         return $this;
     }
 }
