@@ -12,7 +12,6 @@ use Zend\Form\Annotation as Form;
  * @ORM\Entity
  * @Form\Name("category")
  * @Form\Hydrator("Zend\Stdlib\Hydrator\ClassMethods")
- * @SuppressWarnings(PHPMD)
  */
 class Category extends AbstractEntity
 {
@@ -24,7 +23,6 @@ class Category extends AbstractEntity
      * @Form\Validator({"name":"StringLength"})
      * @Form\Attributes({"type":"text", "class":"form-control"})
      * @Form\Options({"label":"Description:"})
-     * @var $description string
      */
-    private $description;
+    protected $description;
 }

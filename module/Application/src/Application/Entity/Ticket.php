@@ -2,6 +2,7 @@
 
 namespace Application\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Zend\Stdlib\Hydrator\ClassMethods;
 use Zend\Form\Annotation as Form;
@@ -27,8 +28,6 @@ class Ticket
     private $id;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="title", type="string", length=60, nullable=false)
      * @Form\Required(true)
      * @Form\Validator({"name":"NotEmpty"})
@@ -42,32 +41,27 @@ class Ticket
     private $title;
 
     /**
-     * @var \DateTime
-     *
      * @ORM\Column(name="date_start", type="datetime", nullable=true)
      * @Form\Exclude()
+     * @var $date_start datetime
      */
     private $date_start;
 
     /**
-     * @var \DateTime
-     *
      * @ORM\Column(name="date_end", type="datetime", nullable=true)
      * @Form\Exclude()
+     * @var $date_end datetime
      */
     private $date_end;
 
     /**
-     * @var \DateTime
-     *
      * @ORM\Column(name="date_estimated", type="datetime", nullable=true)
      * @Form\Exclude()
+     * @var $date_estimated datetime
      */
     private $date_estimated;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="sought", type="string", length=45, nullable=false)
      * @Form\Required(true)
      * @Form\Validator({"name":"NotEmpty"})
@@ -76,40 +70,40 @@ class Ticket
      * @Form\Validator({"name":"StringLength"})
      * @Form\Attributes({"type":"text", "class":"form-control"})
      * @Form\Options({"label":"Sought:"})
-     * @var $description string
+     * @var $sought string
      */
     private $sought;
 
     /**
-     * @var boolean
-     *
      * @ORM\Column(name="active", type="boolean", nullable=false)
      * @Form\Exclude()
+     * @var $active bool
      */
     private $active = true;
 
     /**
-     * @var object
-     *
      * @ORM\ManyToOne(targetEntity="Application\Entity\Priority")
      * @ORM\JoinColumns({
      *     @ORM\JoinColumn(name="priority", referencedColumnName="id")
      * })
      * @Form\Exclude()
+     * @var $priority Priority
      */
     private $priority;
 
     /**
-     * @var object
-     *
      * @ORM\ManyToOne(targetEntity="Application\Entity\User")
      * @ORM\JoinColumns({
      *     @ORM\JoinColumn(name="user", referencedColumnName="id")
      * })
      * @Form\Exclude()
+     * @var $user User
      */
     private $user;
 
+    /**
+     * @param array $options
+     */
     public function __construct(Array $options = [])
     {
         (new ClassMethods())->hydrate($options, $this);
@@ -124,7 +118,7 @@ class Ticket
     }
 
     /**
-     * @param  int   $id
+     * @param $id
      * @return $this
      */
     public function setId($id)
@@ -139,7 +133,7 @@ class Ticket
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getTitle()
     {
@@ -147,7 +141,7 @@ class Ticket
     }
 
     /**
-     * @param  mixed $title
+     * @param $title
      * @return $this
      */
     public function setTitle($title)
@@ -158,7 +152,7 @@ class Ticket
     }
 
     /**
-     * @return mixed
+     * @return \DateTime
      */
     public function getDateStart()
     {
@@ -166,7 +160,7 @@ class Ticket
     }
 
     /**
-     * @param  mixed $date_start
+     * @param $date_start
      * @return $this
      */
     public function setDateStart($date_start)
@@ -177,7 +171,7 @@ class Ticket
     }
 
     /**
-     * @return mixed
+     * @return \DateTime
      */
     public function getDateEnd()
     {
@@ -185,7 +179,7 @@ class Ticket
     }
 
     /**
-     * @param  mixed $date_end
+     * @param $date_end
      * @return $this
      */
     public function setDateEnd($date_end)
@@ -196,7 +190,7 @@ class Ticket
     }
 
     /**
-     * @return mixed
+     * @return \DateTime
      */
     public function getDateEstimated()
     {
@@ -204,7 +198,7 @@ class Ticket
     }
 
     /**
-     * @param  mixed $date_estimated
+     * @param $date_estimated
      * @return $this
      */
     public function setDateEstimated($date_estimated)
@@ -215,7 +209,7 @@ class Ticket
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getSought()
     {
@@ -223,7 +217,7 @@ class Ticket
     }
 
     /**
-     * @param  mixed $sought
+     * @param $sought
      * @return $this
      */
     public function setSought($sought)
@@ -234,7 +228,7 @@ class Ticket
     }
 
     /**
-     * @return mixed
+     * @return bool
      */
     public function getActive()
     {
@@ -242,7 +236,7 @@ class Ticket
     }
 
     /**
-     * @param  mixed $active
+     * @param $active
      * @return $this
      */
     public function setActive($active)
@@ -253,7 +247,7 @@ class Ticket
     }
 
     /**
-     * @return mixed
+     * @return Priority
      */
     public function getPriority()
     {
@@ -261,7 +255,7 @@ class Ticket
     }
 
     /**
-     * @param  mixed $priority
+     * @param $priority
      * @return $this
      */
     public function setPriority($priority)
@@ -272,7 +266,7 @@ class Ticket
     }
 
     /**
-     * @return mixed
+     * @return User
      */
     public function getUser()
     {
@@ -280,7 +274,7 @@ class Ticket
     }
 
     /**
-     * @param  mixed $user
+     * @param $user
      * @return $this
      */
     public function setUser($user)
@@ -292,7 +286,6 @@ class Ticket
 
     /**
      * @return array
-     * @return $this
      */
     public function toArray()
     {

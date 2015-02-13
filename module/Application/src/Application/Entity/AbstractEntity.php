@@ -22,31 +22,22 @@ abstract class AbstractEntity
      * @Form\Exclude()
      * @var $id integer
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(name="description", type="text", nullable=false)
-     * @Form\Required(true)
-     * @Form\Validator({"name":"NotEmpty"})
-     * @Form\Filter({"name":"StringTrim"})
-     * @Form\Filter({"name":"StripTags"})
-     * @Form\Validator({"name":"StringLength"})
-     * @Form\Attributes({"type":"text", "class":"form-control"})
-     * @Form\Options({"label":"Description:"})
      * @var $description string
      */
-    private $description;
+    protected $description;
 
     /**
      * @ORM\Column(name="active", type="boolean", nullable=false, options={"default" = 1})
-     * @var boolean
+     * @var $active boolean
      */
-    private $active = true;
+    protected $active = true;
 
     /**
-     * construct
-     *
-     * @param array $options Receives an array
+     * @param array $options
      */
     public function __construct(Array $options = [])
     {

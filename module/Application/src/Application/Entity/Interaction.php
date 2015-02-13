@@ -2,6 +2,7 @@
 
 namespace Application\Entity;
 
+use DateTime;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Zend\Form\Annotation as Form;
@@ -25,15 +26,14 @@ class Interaction extends AbstractEntity
      * @Form\Validator({"name":"StringLength"})
      * @Form\Attributes({"type":"text", "class":"form-control"})
      * @Form\Options({"label":"Description:"})
-     * @var $description string
      */
-    private $description;
+    protected $description;
 
     /**
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="date_posted", type="datetime", nullable=false)
      * @Form\Exclude()
-     * @var \DateTime
+     * @var $date_posted datetime
      */
     private $date_posted;
 
@@ -43,18 +43,18 @@ class Interaction extends AbstractEntity
      *     @ORM\JoinColumn(name="ticket", referencedColumnName="id")
      * })
      * @Form\Exclude()
-     * @var Ticket
+     * @var $ticket Ticket
      */
     private $ticket;
 
     /**
-    * @Form\Exclude()
-    * @ORM\ManyToOne(targetEntity="Application\Entity\User")
-    * @ORM\JoinColumns({
-    *     @ORM\JoinColumn(name="user", referencedColumnName="id")
-    * })
-    * @var User
-    */
+     * @ORM\ManyToOne(targetEntity="Application\Entity\User")
+     * @ORM\JoinColumns({
+     *     @ORM\JoinColumn(name="user", referencedColumnName="id")
+     * })
+     * @Form\Exclude()
+     * @var $user User
+     */
     private $user;
 
     /**
@@ -77,7 +77,7 @@ class Interaction extends AbstractEntity
     }
 
     /**
-     * @return Ticket
+     * @return \Application\Entity\Ticket
      */
     public function getTicket()
     {
@@ -85,7 +85,7 @@ class Interaction extends AbstractEntity
     }
 
     /**
-     * @param Ticket $ticket
+     * @param \Application\Entity\Ticket $ticket
      * @return $this
      */
     public function setTicket(Ticket $ticket = null)
@@ -96,7 +96,7 @@ class Interaction extends AbstractEntity
     }
 
     /**
-     * @return User
+     * @return \Application\Entity\User
      */
     public function getUser()
     {
@@ -104,7 +104,7 @@ class Interaction extends AbstractEntity
     }
 
     /**
-     * @param User $user
+     * @param \Application\Entity\User $user
      * @return $this
      */
     public function setUser(User $user)

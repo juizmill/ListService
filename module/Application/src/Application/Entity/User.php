@@ -51,7 +51,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(name="state", type="boolean", nullable=false, options={"default" = 0})
-     * @var datetime
+     * @var boolean
      */
     private $state;
 
@@ -71,7 +71,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(name="active_key", type="string", length=255, nullable=false)
-     * @var $active_key string
+     * @var string
      */
     private $active_key;
 
@@ -91,9 +91,7 @@ class User implements UserInterface
     }
 
     /**
-     * get id
-     *
-     * @return integer return integer
+     * @return int
      */
     public function getId()
     {
@@ -101,10 +99,8 @@ class User implements UserInterface
     }
 
     /**
-     * set id
-     *
-     * @param  integer $id Return integer
-     * @return $this;
+     * @param int $id
+     * @return $this
      */
     public function setId($id)
     {
@@ -114,9 +110,7 @@ class User implements UserInterface
     }
 
     /**
-     * get username
-     *
-     * @return string username
+     * @return string
      */
     public function getUsername()
     {
@@ -124,10 +118,8 @@ class User implements UserInterface
     }
 
     /**
-     * set username
-     *
-     * @param string $username Return username
-     * @return $this|UserInterface
+     * @param string $username
+     * @return $this
      */
     public function setUsername($username)
     {
@@ -137,9 +129,7 @@ class User implements UserInterface
     }
 
     /**
-     * get email
-     *
-     * @return string Return string email
+     * @return string
      */
     public function getEmail()
     {
@@ -147,9 +137,7 @@ class User implements UserInterface
     }
 
     /**
-     * set email
-     *
-     * @param  String $email Return string email
+     * @param string $email
      * @return $this
      */
     public function setEmail($email)
@@ -160,9 +148,7 @@ class User implements UserInterface
     }
 
     /**
-     * get display_name
-     *
-     * @return string return display name
+     * @return string
      */
     public function getDisplayName()
     {
@@ -170,9 +156,7 @@ class User implements UserInterface
     }
 
     /**
-     * set display_name
-     *
-     * @param  string $display_name Return display name
+     * @param string $display_name
      * @return $this
      */
     public function setDisplayName($display_name)
@@ -183,9 +167,7 @@ class User implements UserInterface
     }
 
     /**
-     * get password
-     *
-     * @return string return password
+     * @return \DateTime
      */
     public function getPassword()
     {
@@ -193,10 +175,8 @@ class User implements UserInterface
     }
 
     /**
-     * set password
-     *
-     * @param String $password return password
-     * @return $this|UserInterface
+     * @param string $password
+     * @return $this
      */
     public function setPassword($password)
     {
@@ -206,9 +186,7 @@ class User implements UserInterface
     }
 
     /**
-     * get state
-     *
-     * @return string Return state
+     * @return bool
      */
     public function getState()
     {
@@ -216,10 +194,8 @@ class User implements UserInterface
     }
 
     /**
-     * set state
-     *
-     * @param String $state Return state
-     * @return $this|UserInterface
+     * @param bool $state
+     * @return $this
      */
     public function setState($state)
     {
@@ -229,7 +205,7 @@ class User implements UserInterface
     }
 
     /**
-     * @return datetime
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -248,7 +224,7 @@ class User implements UserInterface
     }
 
     /**
-     * @return DateTime
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
