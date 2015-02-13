@@ -27,57 +27,57 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(name="username", type="text", length=80, nullable=true)
-     * @var string
+     * @var $username string
      */
     private $username;
 
     /**
      * @ORM\Column(name="email", type="text", length=255, nullable=false)
-     * @var string
+     * @var $email string
      */
     private $email;
 
     /**
      * @ORM\Column(name="display_name", type="text", length=255, nullable=true)
-     * @var string
+     * @var $display_name string
      */
     private $display_name;
 
     /**
      * @ORM\Column(name="password", type="text", length=255, nullable=false)
-     * @var datetime
+     * @var $password string
      */
     private $password;
 
     /**
      * @ORM\Column(name="state", type="boolean", nullable=false, options={"default" = 0})
-     * @var boolean
+     * @var $state boolean
      */
     private $state;
 
     /**
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
-     * @var datetime
+     * @var $created_at datetime
      */
     private $created_at;
 
     /**
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(name="updated_at", type="datetime", nullable=true)
-     * @var datetime
+     * @var $updated_at datetime
      */
     private $updated_at;
 
     /**
      * @ORM\Column(name="active_key", type="string", length=255, nullable=false)
-     * @var string
+     * @var $active_key string
      */
     private $active_key;
 
     /**
      * @ORM\Column(name="active", type="boolean", nullable=false, options={"default" = 1})
-     * @var boolean
+     * @var $active boolean
      */
     private $active = true;
 

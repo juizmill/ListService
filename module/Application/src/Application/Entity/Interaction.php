@@ -43,7 +43,7 @@ class Interaction extends AbstractEntity
      *     @ORM\JoinColumn(name="ticket", referencedColumnName="id")
      * })
      * @Form\Exclude()
-     * @var $ticket Ticket
+     * @var $ticket \Application\Entity\Ticket
      */
     private $ticket;
 
@@ -53,7 +53,7 @@ class Interaction extends AbstractEntity
      *     @ORM\JoinColumn(name="user", referencedColumnName="id")
      * })
      * @Form\Exclude()
-     * @var $user User
+     * @var $user \Application\Entity\User
      */
     private $user;
 
