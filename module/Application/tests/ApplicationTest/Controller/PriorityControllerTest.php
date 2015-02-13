@@ -12,6 +12,7 @@ use Application\Entity\Priority;
 
 /**
  * Class PriorityControllerTest
+ *
  * @package ApplicationTest\Controller
  */
 class PriorityControllerTest extends TestCaseController
@@ -21,9 +22,9 @@ class PriorityControllerTest extends TestCaseController
 
     public function setupDB()
     {
-        $Priority = new Priority;
-        $Priority->setDescription('teste_priority')->setActive(true);
-        $this->getEm()->persist($Priority);
+        $priority = new Priority;
+        $priority->setDescription('teste_priority')->setActive(true);
+        $this->getEm()->persist($priority);
 
         $this->getEm()->flush();
     }
@@ -54,7 +55,7 @@ class PriorityControllerTest extends TestCaseController
     {
         $this->setupDB();
 
-        $result = $this->dispatch('/priority');
+        $this->dispatch('/priority');
         $this->assertResponseStatusCode(200);
 
         $this->assertModuleName('Application');

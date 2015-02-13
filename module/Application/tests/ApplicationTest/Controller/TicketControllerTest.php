@@ -13,13 +13,13 @@ use Application\Entity\User;
 
 /**
  * Class TicketControllerTest
+ *
  * @package ApplicationTest\Controller
  */
 class TicketControllerTest extends TestCaseController
 {
     protected $traceError = true;
     public $isORM = true;
-
 
     public function creatadUser()
     {
@@ -28,7 +28,7 @@ class TicketControllerTest extends TestCaseController
             ->setUserName('teste')
             ->setPassword('12345')
             ->setDisplayName('teste_display_name')
-            ->setDescription('description_test');
+            ->setState(true);
         $this->getEm()->persist($user);
         $this->getEm()->flush();
     }
@@ -77,7 +77,7 @@ class TicketControllerTest extends TestCaseController
     {
         $this->setupDB();
 
-        $result = $this->dispatch('/ticket');
+        $this->dispatch('/ticket');
         $this->assertResponseStatusCode(200);
 
         $this->assertModuleName('Application');
@@ -208,7 +208,6 @@ class TicketControllerTest extends TestCaseController
     {
         $this->setupDB();
 
-        $user = $this->getEm()->getRepository('Application\Entity\User')->find(1);
         $this->dispatch('/ticket/edit/1', Request::METHOD_POST, array(
             'title' => 'test_title_edit',
             'sought' => 'test_sought_edit'

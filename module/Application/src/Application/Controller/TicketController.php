@@ -2,8 +2,11 @@
 
 namespace Application\Controller;
 
-use Zend\View\Model\ViewModel;
-
+/**
+ * Class TicketController
+ *
+ * @package Application\Controller
+ */
 class TicketController extends AbstractController
 {
     public function __construct()

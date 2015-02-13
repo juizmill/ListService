@@ -4,15 +4,21 @@ namespace Application\Fixture;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
+use Doctrine\Common\Persistence\ObjectManager;
 use Application\Entity\Category;
 
+/**
+ * Class CategoryLoad
+ *
+ * @package Application\Fixture
+ */
 class CategoryLoad extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
      * Category load
-     * @param  \Doctrine\Common\Persistence\ObjectManager $manager
+     * @param \Doctrine\Common\Persistence\ObjectManager $manager
      */
-    public function load(\Doctrine\Common\Persistence\ObjectManager $manager)
+    public function load(ObjectManager $manager)
     {
         $category = new Category;
         $category->setDescription('Development')->setActive(true);
@@ -27,6 +33,10 @@ class CategoryLoad extends AbstractFixture implements OrderedFixtureInterface
         $manager->persist($category2);
 
         $manager->flush();
+
+        $this->setReference('category1', $category);
+        $this->setReference('category2', $category1);
+        $this->setReference('category3', $category2);
     }
     /**
     * @return int

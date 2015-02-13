@@ -20,11 +20,11 @@
         "php": ">=5.4",
         "zendframework/zendframework": "2.3.*",
         "doctrine/common": ">=2.1",
-        "doctrine/doctrine-orm-module": "dev-master",
+        "doctrine/doctrine-orm-module": "0.9.*@dev",
         "hounddog/doctrine-data-fixture-module": "dev-master",
-        "zf-commons/zfc-user-doctrine-orm": "0.1.*@dev",
+        "zf-commons/zfc-user-doctrine-orm": "1.0.0",
         "bjyoungblood/bjy-authorize": "1.5.*@dev",
-        "gedmo/doctrine-extensions": "dev-master"
+        "gedmo/doctrine-extensions": "2.3.*@dev"
     },
     "minimum-stability": "dev",
     "require-dev": {
@@ -35,6 +35,11 @@
     "config": {
         "bin-dir": "bin",
         "process-timeout": 9000
+    },
+    "autoload": {
+        "psr-0": {
+            "ApplicationTest\\": "module/Application/tests"
+        }
     },
     "scripts": {
         "post-update-cmd": "php setting.php",

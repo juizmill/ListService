@@ -4,18 +4,24 @@ namespace Application\Fixture;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
+use Doctrine\Common\Persistence\ObjectManager;
 use Application\Entity\Interaction;
 
+/**
+ * Class InteractionLoad
+ *
+ * @package Application\Fixture
+ */
 class InteractionLoad extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
      * Interaction load
-     * @param  \Doctrine\Common\Persistence\ObjectManager $manager
+     * @param \Doctrine\Common\Persistence\ObjectManager $manager
      */
-    public function load(\Doctrine\Common\Persistence\ObjectManager $manager)
+    public function load(ObjectManager $manager)
     {
-        $user = $manager->getReference('Application\Entity\User', 1);
-        //$ticket = $manager->getReference('LSTicket\Entity\Ticket', 1);
+        $user = $this->getReference('user1');
+        $ticket = $this->getReference('ticket1');
         $interaction = new Interaction();
         $interaction->setDescription('Mussum ipsum cacilds, vidis litro abertis.
                                       Consetis adipiscings elitis. Pra lá , depois
@@ -26,10 +32,12 @@ class InteractionLoad extends AbstractFixture implements OrderedFixtureInterface
                                       nois paga. Sapien in monti palavris qui num
                                       significa nadis i pareci latim. Interessantiss
                                       quisso pudia ce receita de bolis, mais bolis eu num gostis.')
-          //      ->setTicket($ticket)
+                ->setTicket($ticket)
                 ->setUser($user);
         $manager->persist($interaction);
         $manager->flush();
+
+        $this->setReference('interaction1', $interaction);
     }
     /**
     * @return int

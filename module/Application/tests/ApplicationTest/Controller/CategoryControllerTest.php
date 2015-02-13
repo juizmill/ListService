@@ -12,6 +12,7 @@ use Application\Entity\Category;
 
 /**
  * Class CategoryControllerTest
+ *
  * @package ApplicationTest\Controller
  */
 class CategoryControllerTest extends TestCaseController
@@ -57,7 +58,7 @@ class CategoryControllerTest extends TestCaseController
     {
         $this->setupDB();
 
-        $result = $this->dispatch('/category');
+        $this->dispatch('/category');
         $this->assertResponseStatusCode(200);
 
         $this->assertModuleName('Application');

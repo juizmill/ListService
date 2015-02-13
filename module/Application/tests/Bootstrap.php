@@ -10,6 +10,12 @@ use RuntimeException;
 
 error_reporting(E_ALL | E_STRICT);
 
+/**
+ * Class Bootstrap
+ *
+ * @package ApplicationTest
+ * @SuppressWarnings(PHPMD)
+ */
 class Bootstrap
 {
     protected static $serviceManager;
@@ -107,6 +113,7 @@ class Bootstrap
 
             $previousDir = $dir;
         }
+
         return $dir . '/' . $path;
     }
 }

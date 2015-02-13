@@ -4,6 +4,7 @@ namespace Application\Controller;
 
 use Doctrine\Common\Collections\Criteria;
 use DoctrineModule\Paginator\Adapter\Selectable;
+use Zend\Http\Request;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
@@ -11,7 +12,10 @@ use Zend\Paginator\Paginator;
 
 /**
  * Class AbstractController
+ *
  * @package Application\Controller
+ * @method object|Request getRequest()
+ * @SuppressWarnings(PHPMD)
  */
 abstract class AbstractController extends AbstractActionController
 {
@@ -30,9 +34,7 @@ abstract class AbstractController extends AbstractActionController
     abstract public function __construct();
 
     /**
-     * index action
-     *
-     * @return \Zend\View\Model\ViewModel Return an view model
+     * @return \Zend\View\Model\ViewModel
      */
     public function indexAction()
     {
@@ -49,12 +51,13 @@ abstract class AbstractController extends AbstractActionController
     }
 
     /**
-     * new action
-     *
-     * @return \Zend\View\Model\ViewModel Return an view model
+     * @return \Zend\Http\Response|\Zend\View\Model\ViewModel
      */
     public function newAction()
     {
+        /**
+         * @var $form \Zend\Form\Form
+         */
         $form = $this->getServiceLocator()->get('FormElementManager')->get($this->form);
 
         if ($this->getRequest()->isPost()) {
@@ -67,7 +70,9 @@ abstract class AbstractController extends AbstractActionController
             $hydrator->hydrate($form->getData(), $entity);
             $this->getEm()->persist($entity);
             $this->getEm()->flush();
-            $this->flashMessenger()->addSuccessMessage('Successfully registered!');
+            $translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
+            $this->flashMessenger()->addSuccessMessage($translate('Successfully registered!'));
+
             return $this->redirect()->toRoute($this->route, ['controller' => $this->controller, 'action' => 'index']);
         }
 
@@ -75,19 +80,22 @@ abstract class AbstractController extends AbstractActionController
     }
 
     /**
-     * edit action
-     *
-     * @return \Zend\View\Model\ViewModel Return an view model
+     * @return \Zend\Http\Response|\Zend\View\Model\ViewModel
      */
     public function editAction()
     {
+        $translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
         $entity = $this->getEm()->getRepository($this->entity)->find($this->params()->fromRoute('id'));
 
         if (!$entity) {
-            $this->flashMessenger()->addErrorMessage('Record not found');
-            return $this->redirect()->toRoute($this->route, array('controller' => $this->controller, 'action' => 'index'));
+            $this->flashMessenger()->addErrorMessage($translate('Record not found'));
+
+            return $this->redirect()->toRoute($this->route, ['controller' => $this->controller, 'action' => 'index']);
         }
 
+        /**
+         * @var $form \Zend\Form\Form
+         */
         $form = $this->getServiceLocator()->get('FormElementManager')->get($this->form);
         $form->setData($entity->toArray());
 
@@ -100,20 +108,24 @@ abstract class AbstractController extends AbstractActionController
             $hydrator->hydrate($form->getData(), $entity);
             $this->getEm()->persist($entity);
             $this->getEm()->flush();
-            $this->flashMessenger()->addSuccessMessage('Updated successfully!');
-            return $this->redirect()->toRoute($this->route, ['controller' => $this->controller, 'action' => 'edit', 'id' => $this->params()->fromRoute('id')]);
+            $this->flashMessenger()->addSuccessMessage($translate('Updated successfully!'));
+
+            return $this->redirect()->toRoute($this->route, [
+                "controller" => $this->controller,
+                'action' => 'edit',
+                'id' => $this->params()->fromRoute('id')
+            ]);
         }
 
         return new ViewModel(array('form' => $form, 'id' => $this->params()->fromRoute('id')));
     }
 
     /**
-     * delete action
-     *
-     * @return \Zend\View\Model\JsonModel Return an Json
+     * @return \Zend\Http\Response|\Zend\View\Model\JsonModel
      */
     public function deleteAction()
     {
+        $translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
         if ($this->getRequest()->isXmlHttpRequest()) {
             $entity = $this->getEm()->getRepository($this->entity)->find($this->params()->fromRoute('id'));
             if ($entity) {
@@ -125,14 +137,13 @@ abstract class AbstractController extends AbstractActionController
 
             return new JsonModel(array(false));
         }
-        $this->flashMessenger()->addInfoMessage('Operation denied');
+        $this->flashMessenger()->addInfoMessage($translate('Operation denied'));
+
         return $this->redirect()->toRoute($this->route, array('controller' => $this->controller, 'action' => 'index'));
     }
 
     /**
-     * get em
-     *
-     * @return \Doctrine\ORM\EntityManager Return Entity Manager
+     * @return \Doctrine\ORM\EntityManager
      */
     public function getEm()
     {
