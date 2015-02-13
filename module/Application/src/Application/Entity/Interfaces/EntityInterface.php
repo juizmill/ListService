@@ -26,10 +26,10 @@ interface EntityInterface
     public function isActive();
 
     /**
-     * @param $active bool
-     * @return bool
+     * @param $isActive bool
+     * @return $this
      */
-    public function setActive($active);
+    public function setActive($isActive);
 
     /**
      * @return array
