@@ -4,27 +4,18 @@ namespace Application\Entity;
 
 use DateTime;
 use ZfcUser\Entity\UserInterface;
-use Zend\Stdlib\Hydrator\ClassMethods;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class User
+ *
  * @package Application\Entity
  * @ORM\Table(name="user")
  * @ORM\Entity
- * @SuppressWarnings(PHPMD)
  */
-class User implements UserInterface
+class User extends AbstractEntity implements UserInterface
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @var $id integer
-     */
-    private $id;
-
     /**
      * @ORM\Column(name="username", type="text", length=80, nullable=true)
      * @var $username string
@@ -39,9 +30,9 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(name="display_name", type="text", length=255, nullable=true)
-     * @var $display_name string
+     * @var $displayName string
      */
-    private $display_name;
+    private $displayName;
 
     /**
      * @ORM\Column(name="password", type="text", length=255, nullable=false)
@@ -50,8 +41,8 @@ class User implements UserInterface
     private $password;
 
     /**
-     * @ORM\Column(name="state", type="boolean", nullable=false, options={"default" = 0})
-     * @var $state boolean
+     * @ORM\Column(name="state", type="integer", nullable=true)
+     * @var $state int
      */
     private $state;
 
@@ -60,34 +51,28 @@ class User implements UserInterface
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
      * @var $created_at datetime
      */
-    private $created_at;
+    private $createdAt;
 
     /**
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      * @var $updated_at datetime
      */
-    private $updated_at;
+    private $updatedAt;
 
     /**
      * @ORM\Column(name="active_key", type="string", length=255, nullable=false)
      * @var $active_key string
      */
-    private $active_key;
-
-    /**
-     * @ORM\Column(name="active", type="boolean", nullable=false, options={"default" = 1})
-     * @var $active boolean
-     */
-    private $active = true;
+    private $activeKey;
 
     /**
      * @param array $options
      */
     public function __construct(Array $options = [])
     {
+        parent::__construct($options);
         $this->setActiveKey(md5($this->email . date('Y-m-d H:m:s')));
-        (new ClassMethods)->hydrate($options, $this);
     }
 
     /**
@@ -95,16 +80,16 @@ class User implements UserInterface
      */
     public function getId()
     {
-        return $this->id;
+        return $this->identity;
     }
 
     /**
-     * @param int $id
+     * @param int $identity
      * @return $this
      */
-    public function setId($id)
+    public function setId($identity)
     {
-        $this->id = $id;
+        $this->identity = $identity;
 
         return $this;
     }
@@ -152,16 +137,16 @@ class User implements UserInterface
      */
     public function getDisplayName()
     {
-        return $this->display_name;
+        return $this->displayName;
     }
 
     /**
-     * @param string $display_name
+     * @param string $displayName
      * @return $this
      */
-    public function setDisplayName($display_name)
+    public function setDisplayName($displayName)
     {
-        $this->display_name = $display_name;
+        $this->displayName = $displayName;
 
         return $this;
     }
@@ -186,7 +171,7 @@ class User implements UserInterface
     }
 
     /**
-     * @return bool
+     * @return int
      */
     public function getState()
     {
@@ -194,7 +179,7 @@ class User implements UserInterface
     }
 
     /**
-     * @param bool $state
+     * @param int $state
      * @return $this
      */
     public function setState($state)
@@ -209,16 +194,16 @@ class User implements UserInterface
      */
     public function getCreatedAt()
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
     /**
-     * @param $created_at
+     * @param $createdAt
      * @return $this
      */
-    public function setCreatedAt($created_at)
+    public function setCreatedAt($createdAt)
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
@@ -228,27 +213,27 @@ class User implements UserInterface
      */
     public function getUpdatedAt()
     {
-        return $this->updated_at;
+        return $this->updatedAt;
     }
 
     /**
-     * @param $updated_at
+     * @param $updatedAt
      * @return $this
      */
-    public function setUpdatedAt($updated_at)
+    public function setUpdatedAt($updatedAt)
     {
-        $this->updated_at = $updated_at;
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
 
     /**
-     * @param $active_key
+     * @param $activeKey
      * @return $this
      */
-    public function setActiveKey($active_key)
+    public function setActiveKey($activeKey)
     {
-        $this->active_key = $active_key;
+        $this->activeKey = $activeKey;
 
         return $this;
     }
@@ -258,37 +243,6 @@ class User implements UserInterface
      */
     public function getActiveKey()
     {
-        return $this->active_key;
-    }
-
-    /**
-     * @return bool
-     */
-    public function getActive()
-    {
-        return $this->active;
-    }
-
-    /**
-     * @param $active
-     * @return $this
-     */
-    public function setActive($active)
-    {
-        if (! is_bool($active)) {
-            throw new \RuntimeException(__FUNCTION__.' accept only boolean');
-        }
-
-        $this->active = (boolean) $active;
-
-        return $this;
-    }
-
-    /**
-     * @return array
-     */
-    public function toArray()
-    {
-        return (new ClassMethods())->extract($this);
+        return $this->activeKey;
     }
 }

@@ -4,9 +4,11 @@ namespace Application\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Zend\Form\Annotation as Form;
+use Application\Entity\Traits\DescriptionTraint;
 
 /**
  * Class Category
+ *
  * @package Application\Entity
  * @ORM\Table(name="category")
  * @ORM\Entity
@@ -15,14 +17,5 @@ use Zend\Form\Annotation as Form;
  */
 class Category extends AbstractEntity
 {
-    /**
-     * @Form\Required(true)
-     * @Form\Validator({"name":"NotEmpty"})
-     * @Form\Filter({"name":"StringTrim"})
-     * @Form\Filter({"name":"StripTags"})
-     * @Form\Validator({"name":"StringLength"})
-     * @Form\Attributes({"type":"text", "class":"form-control"})
-     * @Form\Options({"label":"Description:"})
-     */
-    protected $description;
+    use DescriptionTraint;
 }

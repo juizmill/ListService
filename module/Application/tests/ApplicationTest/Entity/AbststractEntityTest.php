@@ -21,9 +21,8 @@ class AbststractEntityTest extends TestCase
     public function dataProviderAttributes()
     {
         return array(
-            array('id', 1),
-            array('description', 'description_test'),
-            array('active', true),
+            array('identity', 1),
+            array('isActive', true),
         );
     }
 
@@ -40,8 +39,13 @@ class AbststractEntityTest extends TestCase
      */
     public function testCheckGetAndSetExpected($attribute, $value)
     {
-        $get = 'get'.str_replace(' ', '', ucwords(str_replace('_', ' ', $attribute)));
-        $set = 'set'.str_replace(' ', '', ucwords(str_replace('_', ' ', $attribute)));
+        if ($attribute == 'isActive') {
+            $get = str_replace(' ', '', str_replace('_', ' ', $attribute));
+            $set = 'setActive';
+        } else {
+            $get = 'get'.str_replace(' ', '', ucwords(str_replace('_', ' ', $attribute)));
+            $set = 'set'.str_replace(' ', '', ucwords(str_replace('_', ' ', $attribute)));
+        }
 
         $class = $this->getMockAbstractEntity();
         $class->$set($value);
@@ -54,7 +58,11 @@ class AbststractEntityTest extends TestCase
      */
     public function testCheckMethodsFluid($attribute, $value)
     {
-        $set = 'set'.str_replace(' ', '', ucwords(str_replace('_', ' ', $attribute)));
+        if ($attribute == 'isActive') {
+            $set = 'setActive';
+        } else {
+            $set = 'set'.str_replace(' ', '', ucwords(str_replace('_', ' ', $attribute)));
+        }
 
         $class = $this->getMockAbstractEntity();
         $result = $class->$set($value);
@@ -70,9 +78,8 @@ class AbststractEntityTest extends TestCase
     public function testCheckMethodConstructSetFullMethods()
     {
         $array = array(
-            'id' => 1,
-            'description' => 'description_test',
-            'active' => true
+            'identity' => 1,
+            'isActive' => true
         );
 
         $class = $this->getMockAbstractEntity($array);
@@ -84,7 +91,7 @@ class AbststractEntityTest extends TestCase
 
     /**
      * @expectedException \RuntimeException
-     * @expectedExceptionMessage setId accept only positive integers greater than zero and
+     * @expectedExceptionMessage setIdentity accept only positive integers greater than zero and
      */
     public function testReturnsExceptionIfNotAnIntegerParameter()
     {
@@ -92,13 +99,13 @@ class AbststractEntityTest extends TestCase
         for ($i=0; $i <= 2; $i++) {
             switch ($i) {
                 case 0:
-                    $class->setId('hello');
+                    $class->setIdentity('hello');
                     break;
                 case 1:
-                    $class->setId(-1);
+                    $class->setIdentity(-1);
                     break;
                 case 2:
-                    $class->setId(0);
+                    $class->setIdentity(0);
                     break;
             }
         }
@@ -117,15 +124,19 @@ class AbststractEntityTest extends TestCase
                     $class->setActive('hello');
                     break;
                 case 1:
-                    $class->setActive(-1);
+                    $class->isActive(-1);
                     break;
                 case 2:
-                    $class->setActive(0);
+                    $class->isActive(0);
                     break;
             }
         }
     }
 
+    /**
+     * @param array $options
+     * @return \PHPUnit_Framework_MockObject_MockObject
+     */
     private function getMockAbstractEntity(Array $options = [])
     {
         return $this->getMockForAbstractClass('Application\\Entity\\AbstractEntity', [

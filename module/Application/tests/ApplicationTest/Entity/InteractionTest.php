@@ -2,8 +2,6 @@
 
 namespace ApplicationTest\Entity;
 
-use Application\Entity\User;
-use Application\Entity\Ticket;
 use ApplicationTest\Framework\TestCase;
 use Application\Entity\Interaction;
 
@@ -14,20 +12,29 @@ use Application\Entity\Interaction;
  */
 class InteractionTest extends TestCase
 {
-    protected $traceError = true;
+    /**
+     * @var $interaction \Application\Entity\Interaction
+     */
+    private $interaction;
+
+    public function setUp()
+    {
+        parent::setup();
+        $this->interaction = new Interaction();
+    }
 
     public function testClasseExist()
     {
-        $this->assertTrue(class_exists('Application\\Entity\\Interaction'));
-        $this->assertInstanceOf('Application\Entity\AbstractEntity', new Interaction());
+        $this->assertTrue(class_exists('\\Application\\Entity\\Interaction'));
+        $this->assertInstanceOf('\\Application\\Entity\\AbstractEntity', $this->interaction);
     }
 
     public function dataProviderAttributes()
     {
         return array(
-            array('date_posted', new \DateTime('2015-01-01 00:00:00')),
-            array('ticket', new Ticket()),
-            array('user', new User()),
+            array('datePosted', new \DateTime('2015-01-01 00:00:00')),
+            array('ticket', $this->getMockTicket()),
+            array('user',  $this->getMockUser()),
         );
     }
 
@@ -66,20 +73,15 @@ class InteractionTest extends TestCase
         $this->assertInstanceOf('Application\\Entity\\Interaction', $result);
     }
 
-    public function testCheckExistMethodToArray()
-    {
-        $this->assertTrue(method_exists('Application\\Entity\\Interaction', 'toArray'));
-    }
-
     public function testCheckMethodConstructSetFullMethods()
     {
         $array = array(
-            'id' => 1,
-            'date_posted' => new \DateTime('2015-01-01 00:00:00'),
+            'identity' => 1,
+            'datePosted' => new \DateTime('2015-01-01 00:00:00'),
             'description' => 'description_test',
-            'ticket' => new Ticket(),
-            'user' => new User(),
-            'active' => true
+            'ticket' => $this->getMockTicket(),
+            'user' => $this->getMockUser(),
+            'isActive' => true
         );
 
         $class = new Interaction($array);
@@ -91,23 +93,38 @@ class InteractionTest extends TestCase
 
     /**
      * @expectedException \RuntimeException
-     * @expectedExceptionMessage setId accept only positive integers greater than zero and
+     * @expectedExceptionMessage setIdentity accept only positive integers greater than zero and
      */
     public function testReturnsExceptionIfNotAnIntegerParameter()
     {
-        $class = new Interaction();
         for ($i=0; $i <= 2; $i++) {
             switch ($i) {
                 case 0:
-                    $class->setId('hello');
+                    $this->interaction->setIdentity('hello');
                     break;
                 case 1:
-                    $class->setId(-1);
+                    $this->interaction->setIdentity(-1);
                     break;
                 case 2:
-                    $class->setId(0);
+                    $this->interaction->setIdentity(0);
                     break;
             }
         }
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject
+     */
+    private function getMockUser()
+    {
+        return $this->getMockBuilder('\\Application\\Entity\\User')->getMock();
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject
+     */
+    private function getMockTicket()
+    {
+        return $this->getMockBuilder('\\Application\\Entity\\Ticket')->getMock();
     }
 }

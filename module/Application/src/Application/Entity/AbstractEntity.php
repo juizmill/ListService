@@ -3,17 +3,18 @@
 namespace Application\Entity;
 
 use Zend\Stdlib\Hydrator\ClassMethods;
+use Application\Entity\Interfaces\EntityInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Zend\Form\Annotation as Form;
 
 /**
  * Class AbstractEntity
+ *
  * @package Application\Entity
  * @ORM\MappedSuperclass
  * @Form\Hydrator("Zend\Stdlib\Hydrator\ClassMethods")
- * @SuppressWarnings(PHPMD)
  */
-abstract class AbstractEntity
+abstract class AbstractEntity implements EntityInterface
 {
     /**
      * @ORM\Id
@@ -22,98 +23,71 @@ abstract class AbstractEntity
      * @Form\Exclude()
      * @var $id integer
      */
-    protected $id;
-
-    /**
-     * @ORM\Column(name="description", type="text", nullable=false)
-     * @var $description string
-     */
-    protected $description;
+    protected $identity;
 
     /**
      * @ORM\Column(name="active", type="boolean", nullable=false, options={"default" = 1})
-     * @var $active boolean
+     * @var $isActive boolean
      */
-    protected $active = true;
+    protected $isActive = true;
 
     /**
      * @param array $options
      */
     public function __construct(Array $options = [])
     {
-        (new ClassMethods)->hydrate($options, $this);
+        (new ClassMethods(false))->hydrate($options, $this);
     }
 
     /**
-     * @return int
+     * {@inheritdoc}
      */
-    public function getId()
+    public function getIdentity()
     {
-        return $this->id;
+        return $this->identity;
     }
 
     /**
-     * @param $id
-     * @return $this
+     * {@inheritdoc}
      */
-    public function setId($id)
+    public function setIdentity($identity)
     {
-        if ((int) $id <= 0) {
-            throw new \RuntimeException(__FUNCTION__.' accept only positive integers greater than zero and');
+        if ((int)$identity <= 0) {
+            throw new \RuntimeException(__FUNCTION__ . ' accept only positive integers greater than zero and');
         }
 
-        $this->id = $id;
+        $this->identity = $identity;
 
         return $this;
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
-    public function getDescription()
+    public function isActive()
     {
-        return $this->description;
+        return $this->isActive;
     }
 
     /**
-     * @param $description
-     * @return $this
+     * {@inheritdoc}
      */
-    public function setDescription($description)
+    public function setActive($isActive)
     {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function getActive()
-    {
-        return $this->active;
-    }
-
-    /**
-     * @param $active
-     * @return $this
-     */
-    public function setActive($active)
-    {
-        if (! is_bool($active)) {
-            throw new \RuntimeException(__FUNCTION__.' accept only boolean');
+        if (!is_bool($isActive)) {
+            throw new \RuntimeException(__FUNCTION__ . ' accept only boolean');
         }
 
-        $this->active = (boolean) $active;
+        $this->isActive = (boolean)$isActive;
 
         return $this;
     }
 
     /**
-     * @return array
+     * {@inheritdoc}
      */
     public function toArray()
     {
-        return (new ClassMethods())->extract($this);
+        return (new ClassMethods(false))->extract($this);
     }
 }

@@ -2,32 +2,27 @@
 
 namespace Application\Entity;
 
+use Application\Entity\Traits\ManyToOneUserTrait;
 use DateTime;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Zend\Form\Annotation as Form;
+use Application\Entity\Traits\DescriptionTraint;
+use Application\Entity\User as UserApp;
 
 /**
  * Class Interaction
+ *
  * @package Application\Entity
  * @ORM\Table(name="interaction")
  * @ORM\Entity
  * @Form\Name("interaction")
  * @Form\Hydrator("Zend\Stdlib\Hydrator\ClassMethods")
- * @SuppressWarnings(PHPMD)
  */
 class Interaction extends AbstractEntity
 {
-    /**
-     * @Form\Required(true)
-     * @Form\Validator({"name":"NotEmpty"})
-     * @Form\Filter({"name":"StringTrim"})
-     * @Form\Filter({"name":"StripTags"})
-     * @Form\Validator({"name":"StringLength"})
-     * @Form\Attributes({"type":"text", "class":"form-control"})
-     * @Form\Options({"label":"Description:"})
-     */
-    protected $description;
+    use DescriptionTraint;
+    use ManyToOneUserTrait;
 
     /**
      * @Gedmo\Timestampable(on="create")
@@ -35,7 +30,7 @@ class Interaction extends AbstractEntity
      * @Form\Exclude()
      * @var $date_posted datetime
      */
-    private $date_posted;
+    private $datePosted;
 
     /**
      * @ORM\ManyToOne(targetEntity="Application\Entity\Ticket")
@@ -48,30 +43,20 @@ class Interaction extends AbstractEntity
     private $ticket;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Application\Entity\User")
-     * @ORM\JoinColumns({
-     *     @ORM\JoinColumn(name="user", referencedColumnName="id")
-     * })
-     * @Form\Exclude()
-     * @var $user \Application\Entity\User
-     */
-    private $user;
-
-    /**
      * @return \DateTime
      */
     public function getDatePosted()
     {
-        return $this->date_posted;
+        return $this->datePosted;
     }
 
     /**
-     * @param $date_posted
+     * @param $datePosted
      * @return $this
      */
-    public function setDatePosted($date_posted)
+    public function setDatePosted($datePosted)
     {
-        $this->date_posted = $date_posted;
+        $this->datePosted = $datePosted;
 
         return $this;
     }
@@ -91,25 +76,6 @@ class Interaction extends AbstractEntity
     public function setTicket(Ticket $ticket = null)
     {
         $this->ticket = $ticket;
-
-        return $this;
-    }
-
-    /**
-     * @return \Application\Entity\User
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
-
-    /**
-     * @param \Application\Entity\User $user
-     * @return $this
-     */
-    public function setUser(User $user)
-    {
-        $this->user = $user;
 
         return $this;
     }

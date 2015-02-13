@@ -21,8 +21,7 @@
             </exclude>
         </whitelist>
     </filter>
-<!--     <logging>
+    <logging>
         <log type="coverage-html" target="_reports/coverage" title="Application Test Suite" charset="UTF-8" yui="true" highlight="true" lowUpperBound="35" highLowerBound="70"/>
-        <log type="testdox-text" target="_reports/testdox/executed.txt"/>
-    </logging> -->
+    </logging>
 </phpunit>

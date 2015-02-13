@@ -3,29 +3,24 @@
 namespace Application\Entity;
 
 use DateTime;
+use Application\Entity\Traits\ManyToOnePriorityTrait;
+use Application\Entity\Traits\ManyToOneUserTrait;
 use Doctrine\ORM\Mapping as ORM;
-use Zend\Stdlib\Hydrator\ClassMethods;
 use Zend\Form\Annotation as Form;
 
 /**
  * Class Ticket
+ *
  * @package Application\Entity
  * @ORM\Table(name="ticket")
  * @ORM\Entity
  * @Form\Name("ticket")
  * @Form\Hydrator("Zend\Stdlib\Hydrator\ClassMethods")
- * @SuppressWarnings(PHPMD)
  */
-class Ticket
+class Ticket extends AbstractEntity
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @Form\Exclude()
-     * @var $id integer
-     */
-    private $id;
+    use ManyToOnePriorityTrait;
+    use ManyToOneUserTrait;
 
     /**
      * @ORM\Column(name="title", type="string", length=60, nullable=false)
@@ -36,30 +31,30 @@ class Ticket
      * @Form\Validator({"name":"StringLength"})
      * @Form\Attributes({"type":"text", "class":"form-control"})
      * @Form\Options({"label":"Title:"})
-     * @var $description string
+     * @var $title string
      */
     private $title;
 
     /**
      * @ORM\Column(name="date_start", type="datetime", nullable=true)
      * @Form\Exclude()
-     * @var $date_start datetime
+     * @var $dateStart datetime
      */
-    private $date_start;
+    private $dateStart;
 
     /**
      * @ORM\Column(name="date_end", type="datetime", nullable=true)
      * @Form\Exclude()
-     * @var $date_end datetime
+     * @var $dateEnd datetime
      */
-    private $date_end;
+    private $dateEnd;
 
     /**
      * @ORM\Column(name="date_estimated", type="datetime", nullable=true)
      * @Form\Exclude()
-     * @var $date_estimated datetime
+     * @var $dateEstimated datetime
      */
-    private $date_estimated;
+    private $dateEstimated;
 
     /**
      * @ORM\Column(name="sought", type="string", length=45, nullable=false)
@@ -73,64 +68,6 @@ class Ticket
      * @var $sought string
      */
     private $sought;
-
-    /**
-     * @ORM\Column(name="active", type="boolean", nullable=false)
-     * @Form\Exclude()
-     * @var $active bool
-     */
-    private $active = true;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Application\Entity\Priority")
-     * @ORM\JoinColumns({
-     *     @ORM\JoinColumn(name="priority", referencedColumnName="id")
-     * })
-     * @Form\Exclude()
-     * @var $priority Priority
-     */
-    private $priority;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Application\Entity\User")
-     * @ORM\JoinColumns({
-     *     @ORM\JoinColumn(name="user", referencedColumnName="id")
-     * })
-     * @Form\Exclude()
-     * @var $user User
-     */
-    private $user;
-
-    /**
-     * @param array $options
-     */
-    public function __construct(Array $options = [])
-    {
-        (new ClassMethods())->hydrate($options, $this);
-    }
-
-    /**
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param $id
-     * @return $this
-     */
-    public function setId($id)
-    {
-        if ((int) $id <= 0) {
-            throw new \RuntimeException(__FUNCTION__.' accept only positive integers greater than zero and');
-        }
-
-        $this->id = $id;
-
-        return $this;
-    }
 
     /**
      * @return string
@@ -156,16 +93,16 @@ class Ticket
      */
     public function getDateStart()
     {
-        return $this->date_start;
+        return $this->dateStart;
     }
 
     /**
-     * @param $date_start
+     * @param $dateStart
      * @return $this
      */
-    public function setDateStart($date_start)
+    public function setDateStart($dateStart)
     {
-        $this->date_start = $date_start;
+        $this->dateStart = $dateStart;
 
         return $this;
     }
@@ -175,16 +112,16 @@ class Ticket
      */
     public function getDateEnd()
     {
-        return $this->date_end;
+        return $this->dateEnd;
     }
 
     /**
-     * @param $date_end
+     * @param $dateEnd
      * @return $this
      */
-    public function setDateEnd($date_end)
+    public function setDateEnd($dateEnd)
     {
-        $this->date_end = $date_end;
+        $this->dateEnd = $dateEnd;
 
         return $this;
     }
@@ -194,16 +131,16 @@ class Ticket
      */
     public function getDateEstimated()
     {
-        return $this->date_estimated;
+        return $this->dateEstimated;
     }
 
     /**
-     * @param $date_estimated
+     * @param $dateEstimated
      * @return $this
      */
-    public function setDateEstimated($date_estimated)
+    public function setDateEstimated($dateEstimated)
     {
-        $this->date_estimated = $date_estimated;
+        $this->dateEstimated = $dateEstimated;
 
         return $this;
     }
@@ -225,70 +162,5 @@ class Ticket
         $this->sought = $sought;
 
         return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function getActive()
-    {
-        return $this->active;
-    }
-
-    /**
-     * @param $active
-     * @return $this
-     */
-    public function setActive($active)
-    {
-        $this->active = $active;
-
-        return $this;
-    }
-
-    /**
-     * @return Priority
-     */
-    public function getPriority()
-    {
-        return $this->priority;
-    }
-
-    /**
-     * @param $priority
-     * @return $this
-     */
-    public function setPriority($priority)
-    {
-        $this->priority = $priority;
-
-        return $this;
-    }
-
-    /**
-     * @return User
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
-
-    /**
-     * @param $user
-     * @return $this
-     */
-    public function setUser($user)
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * @return array
-     */
-    public function toArray()
-    {
-        return (new ClassMethods())->extract($this);
     }
 }
