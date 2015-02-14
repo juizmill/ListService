@@ -4,6 +4,7 @@ namespace ApplicationTest\Model;
 
 use Application\Entity\Interfaces\EntityInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Zend\Form\Annotation as Form;
 
 /**
  * Class ExempleEntity
@@ -11,6 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @package ApplicationTest\Model
  * @ORM\Table(name="exemple")
  * @ORM\Entity
+ * @Form\Name("exemple")
+ * @Form\Hydrator("Zend\Stdlib\Hydrator\ClassMethods")
  */
 class ExempleEntity implements EntityInterface
 {
@@ -25,6 +28,7 @@ class ExempleEntity implements EntityInterface
 
     /**
      * @ORM\Column(name="active", type="boolean", nullable=false, options={"default" = 1})
+     * @Form\Type("Zend\Form\Element\Checkbox")
      * @var $isActive boolean
      */
     private $isActive;

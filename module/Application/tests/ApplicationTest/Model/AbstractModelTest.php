@@ -71,7 +71,7 @@ class AbstractModelTest extends TestCase
     private function getMockAbstractModel()
     {
         $mock = $this->getMockForAbstractClass('\\Application\\Model\\AbstractModel', [
-            '__construct' => $this->getMockEntityManager(), get_class($this->classExemple)
+            $this->getMockEntityManager(), get_class($this->classExemple)
         ]);
 
         $mock->expects($this->any())
