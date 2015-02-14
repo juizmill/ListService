@@ -21,7 +21,7 @@ abstract class AbstractEntity implements EntityInterface
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * @Form\Exclude()
-     * @var $id integer
+     * @var $identity integer
      */
     protected $identity;
 

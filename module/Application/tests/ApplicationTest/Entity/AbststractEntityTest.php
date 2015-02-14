@@ -11,8 +11,6 @@ use ApplicationTest\Framework\TestCase;
  */
 class AbststractEntityTest extends TestCase
 {
-    protected $traceError = true;
-
     public function testClasseExist()
     {
         $this->assertTrue(class_exists('Application\\Entity\\AbstractEntity'));
