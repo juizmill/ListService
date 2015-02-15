@@ -20,8 +20,8 @@ class AbstractModel implements ModelInterface
     protected $entity;
 
     /**
-     * @param \Doctrine\ORM\EntityManager $entityManager
-     * @param                             $entity
+     * @param EntityManager $entityManager
+     * @param string        $entity
      */
     public function __construct(EntityManager $entityManager, $entity)
     {
@@ -37,7 +37,7 @@ class AbstractModel implements ModelInterface
      */
     public function save(EntityInterface $entityInterface)
     {
-        if (! is_null($entityInterface->getIdentity())) {
+        if (!is_null($entityInterface->getIdentity())) {
             $this->entityManager->merge($entityInterface);
         } else {
             $this->entityManager->persist($entityInterface);
@@ -53,11 +53,27 @@ class AbstractModel implements ModelInterface
      */
     public function remove($identity)
     {
-        $entity = $this->entityManager->getReference($this->entity, (int) $identity);
+        $entity = $this->getReference($identity);
 
         $this->entityManager->remove($entity);
         $this->entityManager->flush($entity);
 
         return $entity;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getRepository()
+    {
+        return $this->entityManager->getRepository($this->entity);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getReference($identity)
+    {
+        return $this->entityManager->getReference($this->entity, $identity);
     }
 }

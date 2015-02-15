@@ -22,4 +22,16 @@ interface ModelInterface
      * @return EntityInterface
      */
     public function remove($identity);
+
+    /**
+     * @return \Doctrine\ORM\EntityRepository
+     */
+    public function getRepository();
+
+    /**
+     * @param int $identity
+     * @return bool|\Doctrine\Common\Proxy\Proxy|null|object
+     * @throws \Doctrine\ORM\ORMException
+     */
+    public function getReference($identity);
 }
