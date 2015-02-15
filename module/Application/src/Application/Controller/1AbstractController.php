@@ -17,7 +17,7 @@ use Zend\Paginator\Paginator;
  * @method object|Request getRequest()
  * @SuppressWarnings(PHPMD)
  */
-abstract class AbstractController extends AbstractActionController
+abstract class AbstractController1 extends AbstractActionController
 {
     private $em;
     public $itensPerPage = 20;

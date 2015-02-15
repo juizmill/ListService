@@ -68,7 +68,7 @@ class AbstractFormHandleTest extends TestCase
             new ExempleEntity(),
             $this->getMockModel()
         ));
-        $this->assertInstanceOf('\Zend\Form\Form', $class->handle($this->getMockRequest()));
+        $this->assertInstanceOf('\Zend\Form\Form', $class->handle(new Request()));
 
         $request = new Request();
         $request->setMethod('POST')

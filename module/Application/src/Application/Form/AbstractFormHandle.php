@@ -3,6 +3,7 @@
 namespace Application\Form;
 
 use Application\Entity\Interfaces\EntityInterface;
+use Application\Form\Interfaces\FormHandleInterface;
 use Application\Model\Interfaces\ModelInterface;
 use Zend\Form\Annotation\AnnotationBuilder;
 use Zend\Form\FormInterface;
@@ -13,7 +14,7 @@ use Zend\Http\Request;
  *
  * @package Application\Form
  */
-class AbstractFormHandle
+class AbstractFormHandle implements FormHandleInterface
 {
     protected $model;
     protected $form;
@@ -33,8 +34,7 @@ class AbstractFormHandle
     }
 
     /**
-     * @param \Zend\Http\Request $request
-     * @return \Application\Entity\Interfaces\EntityInterface|\Zend\Form\FormInterface
+     * {@inheritdoc}
      */
     public function handle(Request $request)
     {
@@ -53,7 +53,7 @@ class AbstractFormHandle
     }
 
     /**
-     * @return \Application\Model\Interfaces\ModelInterface
+     * {@inheritdoc}
      */
     public function getModel()
     {
@@ -61,8 +61,7 @@ class AbstractFormHandle
     }
 
     /**
-     * @param \Application\Model\Interfaces\ModelInterface $model
-     * @return $this
+     * {@inheritdoc}
      */
     public function setModel(ModelInterface $model)
     {
@@ -71,7 +70,7 @@ class AbstractFormHandle
     }
 
     /**
-     * @return \Zend\Form\FormInterface
+     * {@inheritdoc}
      */
     public function getForm()
     {
@@ -79,8 +78,7 @@ class AbstractFormHandle
     }
 
     /**
-     * @param \Zend\Form\FormInterface $form
-     * @return $this
+     * {@inheritdoc}
      */
     public function setForm(FormInterface $form)
     {
@@ -89,7 +87,7 @@ class AbstractFormHandle
     }
 
     /**
-     * @return \Application\Entity\Interfaces\EntityInterface
+     * {@inheritdoc}
      */
     public function getEntity()
     {
@@ -97,8 +95,7 @@ class AbstractFormHandle
     }
 
     /**
-     * @param \Application\Entity\Interfaces\EntityInterface $entity
-     * @return $this
+     * {@inheritdoc}
      */
     public function setEntity(EntityInterface $entity)
     {
