@@ -27,6 +27,7 @@ tools:
         enabled: true
         config:
             standard: PSR2
+        standard: PEAR
 filter:
     paths:
         - 'module/Application/src/Application/*'
