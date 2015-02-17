@@ -73,7 +73,7 @@ class AbstractController extends AbstractActionController
 
         if (!$handle instanceof Form) {
             $this->flashMessenger()->addSuccessMessage('Successfully registered!');
-            return $this->redirect()->toRoute($this->route, ['controller' => $this->controller, 'action' => 'index']);
+            return $this->redirect();
         }
 
         return new ViewModel(['form' => $handle]);
@@ -89,10 +89,7 @@ class AbstractController extends AbstractActionController
         $entity = $this->model->getRepository()->find($identity);
 
         if (!$entity) {
-            return $this->redirect()->toRoute($this->route, [
-                'controller' => $this->controller,
-                'action' => 'index'
-            ]);
+            return $this->redirect();
         }
 
         $request = $this->getRequest();
@@ -132,6 +129,14 @@ class AbstractController extends AbstractActionController
         }
 
         $this->flashMessenger()->addInfoMessage('Denied operation.');
+        return $this->returnIndex();
+    }
+
+    /**
+     * @return \Zend\Http\Response
+     */
+    private function returnIndex()
+    {
         return $this->redirect()->toRoute($this->route, [
             'controller' => $this->controller,
             'action' => 'index'
