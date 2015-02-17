@@ -6,7 +6,6 @@ use ApplicationTest\Framework\TestCase;
 use ApplicationTest\Model\ExempleEntity;
 use ReflectionClass;
 use Zend\Form\Annotation\AnnotationBuilder;
-use Zend\Stdlib\Parameters;
 
 /**
  * Class AbstractControllerTest
@@ -94,56 +93,18 @@ class AbstractControllerTest extends TestCase
         $this->assertInstanceOf('\\Zend\\Paginator\\Paginator', $action->getVariable('data'));
     }
 
-    /**
-     * @expectedException \Zend\Mvc\Exception\DomainException
-     */
     public function testReturnNewAction()
     {
         /**
          * @var $action \Zend\View\Model\ViewModel
          * @var $request \Zend\Http\Request
-         * @var $response \Zend\Http\PhpEnvironment\Response
          */
         $controller = $this->getMockAbstractController();
-        $response = $controller->getResponse();
         $action = $controller->newAction();
 
         $this->assertInstanceOf('\\Zend\\View\\Model\\ViewModel', $action);
         $this->assertInstanceOf('\\Zend\\Form\\Form', $action->getVariable('form'));
-
-        $request = $controller->getRequest();
-        $request->setMethod('POST')
-            ->setPost(new Parameters(
-                ['isActive' => true]
-            ));
-
-        $controller->dispatch($request, $response);
     }
-
-
-    public function testReturnEditAction()
-    {
-        /**
-         * @var $action \Zend\View\Model\ViewModel
-         * @var $request \Zend\Http\Request
-         * @var $response \Zend\Http\PhpEnvironment\Response
-         */
-        $controller = $this->getMockAbstractController();
-        $response = $controller->getResponse();
-        $action = $controller->editAction();
-
-        $this->assertInstanceOf('\\Zend\\View\\Model\\ViewModel', $action);
-        $this->assertInstanceOf('\\Zend\\Form\\Form', $action->getVariable('form'));
-
-//        $request = $controller->getRequest();
-//        $request->setMethod('POST')
-//            ->setPost(new Parameters(
-//                ['isActive' => true]
-//            ));
-//
-//        $controller->dispatch($request, $response);
-    }
-
 
     /**
      * @return \Application\Controller\AbstractController

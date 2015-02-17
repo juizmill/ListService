@@ -16,9 +16,10 @@ interface FormHandleInterface
 {
     /**
      * @param \Zend\Http\Request $request
+     * @param null               $identity
      * @return \Application\Entity\Interfaces\EntityInterface|\Zend\Form\FormInterface
      */
-    public function handle(Request $request);
+    public function handle(Request $request, $identity = null);
 
     /**
      * @return \Application\Model\Interfaces\ModelInterface

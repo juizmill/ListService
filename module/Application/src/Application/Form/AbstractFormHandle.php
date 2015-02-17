@@ -36,7 +36,7 @@ class AbstractFormHandle implements FormHandleInterface
     /**
      * {@inheritdoc}
      */
-    public function handle(Request $request)
+    public function handle(Request $request, $identity = null)
     {
         if ($request->isPost()) {
             $this->getForm()->setData($request->getPost()->toArray());
@@ -45,6 +45,10 @@ class AbstractFormHandle implements FormHandleInterface
         if ($request->isPost() and $this->getForm()->isValid()) {
             $hydrator = $this->getForm()->getHydrator();
             $hydrator->hydrate($this->getForm()->getData(), $this->getEntity());
+
+            if (!is_null($identity)) {
+                $this->getEntity()->setIdentity($identity);
+            }
 
             return $this->getModel()->save($this->getEntity());
         }

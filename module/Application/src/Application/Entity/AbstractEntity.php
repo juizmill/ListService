@@ -27,6 +27,7 @@ abstract class AbstractEntity implements EntityInterface
 
     /**
      * @ORM\Column(name="active", type="boolean", nullable=false, options={"default" = 1})
+     * @Form\Exclude()
      * @var $isActive boolean
      */
     protected $isActive = true;

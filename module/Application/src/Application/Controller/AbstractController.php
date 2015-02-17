@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Criteria;
 use Zend\Paginator\Paginator;
 use DoctrineModule\Paginator\Adapter\Selectable;
 use Zend\Mvc\Controller\AbstractActionController;
+use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
 use Zend\Form\Form;
 
@@ -25,11 +26,11 @@ class AbstractController extends AbstractActionController
     protected $itemPerPage;
 
     /**
-     * @param ModelInterface $model
-     * @param FormHandleInterface  $form
-     * @param string         $route
-     * @param string         $controller
-     * @param int            $itemPerPage
+     * @param ModelInterface      $model
+     * @param FormHandleInterface $form
+     * @param string              $route
+     * @param string              $controller
+     * @param int                 $itemPerPage
      */
     public function __construct(
         ModelInterface $model,
@@ -70,7 +71,8 @@ class AbstractController extends AbstractActionController
         $request = $this->getRequest();
         $handle = $this->form->handle($request);
 
-        if (! $handle instanceof Form) {
+        if (!$handle instanceof Form) {
+            $this->flashMessenger()->addSuccessMessage('Successfully registered!');
             return $this->redirect()->toRoute($this->route, ['controller' => $this->controller, 'action' => 'index']);
         }
 
@@ -82,14 +84,57 @@ class AbstractController extends AbstractActionController
      */
     public function editAction()
     {
-        $request = $this->getRequest();
-        $handle = $this->form->handle($request);
+        $identity = $this->params()->fromRoute('id', 0);
 
-        return new ViewModel(['form' => $handle]);
+        $entity = $this->model->getRepository()->find($identity);
+
+        if (!$entity) {
+            return $this->redirect()->toRoute($this->route, [
+                'controller' => $this->controller,
+                'action' => 'index'
+            ]);
+        }
+
+        $request = $this->getRequest();
+        $handle = $this->form->handle($request, $identity);
+
+        if (!$handle instanceof Form) {
+            $this->flashMessenger()->addSuccessMessage('Updated successfully!');
+            return $this->redirect()->toRoute($this->route, [
+                'controller' => $this->controller,
+                'action' => 'edit',
+                'id' => $identity
+            ]);
+        }
+
+        $this->form->getForm()->setData($entity->toArray());
+
+        return new ViewModel(['form' => $handle, 'id' => $identity]);
     }
 
+    /**
+     * @return \Zend\View\Model\JsonModel
+     */
     public function deleteAction()
     {
+        if ($this->getRequest()->isXmlHttpRequest()) {
+            $identity = $this->params()->fromRoute('id', 0);
+            $delete = $this->model->remove($identity);
 
+            $jsonModel = new JsonModel();
+
+            if ($delete) {
+                return $jsonModel->setVariables([true]);
+            } else {
+                return $jsonModel->setVariables([false]);
+            }
+
+        }
+
+        $this->flashMessenger()->addInfoMessage('Denied operation.');
+        return $this->redirect()->toRoute($this->route, [
+            'controller' => $this->controller,
+            'action' => 'index'
+        ]);
     }
 }
