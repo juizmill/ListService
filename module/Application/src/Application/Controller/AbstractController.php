@@ -71,14 +71,12 @@ class AbstractController extends AbstractActionController
         $request = $this->getRequest();
         $handle = $this->form->handle($request);
 
-        $view = new ViewModel(['form' => $this->form->getForm()]);
-
         if (!$handle instanceof Form) {
             $this->flashMessenger()->addSuccessMessage('Successfully registered!');
-            $view = $this->returnIndex();
+            return $this->returnIndex();
+        } else {
+            return new ViewModel(['form' => $this->form->getForm()]);
         }
-
-        return $view;
     }
 
     /**
