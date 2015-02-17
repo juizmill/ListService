@@ -73,10 +73,10 @@ class AbstractController extends AbstractActionController
 
         if (!$handle instanceof Form) {
             $this->flashMessenger()->addSuccessMessage('Successfully registered!');
-            return $this->redirect();
+            return $this->returnIndex();
         }
 
-        return new ViewModel(['form' => $handle]);
+        return new ViewModel(['form' => $this->form->getForm()]);
     }
 
     /**
@@ -89,7 +89,7 @@ class AbstractController extends AbstractActionController
         $entity = $this->model->getRepository()->find($identity);
 
         if (!$entity) {
-            return $this->redirect();
+            return $this->returnIndex();
         }
 
         $request = $this->getRequest();
@@ -106,7 +106,7 @@ class AbstractController extends AbstractActionController
 
         $this->form->getForm()->setData($entity->toArray());
 
-        return new ViewModel(['form' => $handle, 'id' => $identity]);
+        return new ViewModel(['form' => $this->form->getForm(), 'id' => $identity]);
     }
 
     /**
