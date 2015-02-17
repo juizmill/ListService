@@ -64,7 +64,7 @@ class AbstractController extends AbstractActionController
     }
 
     /**
-     * @return \Zend\View\Model\ViewModel
+     * @return \Zend\Http\Response|\Zend\View\Model\ViewModel
      */
     public function newAction()
     {
@@ -110,7 +110,7 @@ class AbstractController extends AbstractActionController
     }
 
     /**
-     * @return \Zend\View\Model\JsonModel
+     * @return \Zend\Http\Response|\Zend\View\Model\ViewModel
      */
     public function deleteAction()
     {
