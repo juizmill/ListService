@@ -2,52 +2,77 @@
 
 namespace ApplicationTest\Controller;
 
+use ApplicationTest\Framework\ApplicationMocks;
 use ApplicationTest\Framework\TestCaseController;
-use Application\Controller\PriorityController;
+use Application\Controller\TicketController;
 use Zend\Http\Request;
 use Zend\Mvc\MvcEvent;
 use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
-use Application\Entity\Priority;
+use Application\Entity\Ticket;
+use Application\Entity\User;
 
 /**
- * Class PriorityControllerTest
+ * Class TicketControllerTest
  *
  * @package ApplicationTest\Controller
  */
-class PriorityControllerTest extends TestCaseController
+class TicketControllerTest extends TestCaseController
 {
+    use ApplicationMocks;
+
     protected $traceError = true;
     public $isORM = true;
 
+    public function creatadUser()
+    {
+        $user = new User;
+        $user->setEmail('teste@gmail.com')
+            ->setUserName('teste')
+            ->setPassword('12345')
+            ->setDisplayName('teste_display_name')
+            ->setState(true);
+        $this->getEm()->persist($user);
+        $this->getEm()->flush();
+    }
+
     public function setupDB()
     {
-        $priority = new Priority;
-        $priority->setDescription('teste_priority')->setActive(true);
-        $this->getEm()->persist($priority);
+        $this->creatadUser();
+        $user = $this->getEm()->getRepository('Application\Entity\User')->find(1);
+
+        $this->creatadUser();
+        $ticket = new Ticket;
+        $ticket->setTitle('teste_ticket')
+            ->setSought('test_sought')
+            ->setUser($user);
+        $this->getEm()->persist($ticket);
 
         $this->getEm()->flush();
     }
 
-    public function testClasseExist()
+    private function controllerClass()
     {
-        $this->assertTrue(class_exists('Application\\Controller\\PriorityController'));
-        $this->assertInstanceOf('Application\\Controller\\AbstractController', new PriorityController());
+        return new TicketController(
+            $this->getMockModel(),
+            $this->getMockFormHandle(),
+            'default',
+            'default'
+        );
     }
 
-    public function testConstructor()
+    /**
+     *
+     */
+    public function testClasseExist()
     {
-        $controller = new PriorityController();
-
-        $this->assertEquals('Application\\Entity\\Priority', $controller->entity);
-        $this->assertEquals('priority', $controller->controller);
-        $this->assertEquals('priority.form', $controller->form);
-        $this->assertEquals('priority', $controller->route);
+        $this->assertTrue(class_exists('Application\\Controller\\TicketController'));
+        $this->assertInstanceOf('Application\\Controller\\AbstractController', $this->controllerClass());
     }
 
     public function testErro404()
     {
-        $this->dispatch('/priority_error');
+        $this->dispatch('/ticket_error');
         $this->assertResponseStatusCode(404);
     }
 
@@ -55,13 +80,13 @@ class PriorityControllerTest extends TestCaseController
     {
         $this->setupDB();
 
-        $this->dispatch('/priority');
+        $this->dispatch('/ticket');
         $this->assertResponseStatusCode(200);
 
         $this->assertModuleName('Application');
-        $this->assertControllerName('Application\controller\Priority');
-        $this->assertControllerClass('PriorityController');
-        $this->assertMatchedRouteName('priority');
+        $this->assertControllerName('Application\controller\Ticket');
+        $this->assertControllerClass('TicketController');
+        $this->assertMatchedRouteName('ticket');
 
         // get and assert mvc event
         $mvcEvent = $this->getApplication()->getMvcEvent();
@@ -81,25 +106,25 @@ class PriorityControllerTest extends TestCaseController
 
         //test parameter response.
         foreach ($var['data'] as $value) {
-            $this->assertEquals('teste_priority', $value->getDescription());
+            $this->assertEquals('teste_ticket', $value->getTitle());
         }
     }
 
     public function testIndexActionRoutePagination()
     {
-        $this->dispatch('/priority/page/1');
+        $this->dispatch('/ticket/page/1');
         $this->assertResponseStatusCode(200);
     }
 
     public function testNewAction()
     {
-        $this->dispatch('/priority/new');
+        $this->dispatch('/ticket/new');
         $this->assertResponseStatusCode(200);
 
         $this->assertModuleName('Application');
-        $this->assertControllerName('Application\controller\Priority');
-        $this->assertControllerClass('PriorityController');
-        $this->assertMatchedRouteName('priority');
+        $this->assertControllerName('Application\controller\Ticket');
+        $this->assertControllerClass('TicketController');
+        $this->assertMatchedRouteName('ticket');
 
         //get and assert mvc event
         $mvcEvent = $this->getApplication()->getMvcEvent();
@@ -120,30 +145,35 @@ class PriorityControllerTest extends TestCaseController
 
     public function testMethodPostInNewAction()
     {
-        $this->dispatch('/priority/new', Request::METHOD_POST, array(
-                'description' => 'test_new_description',
+        $this->creatadUser();
+        $user = $this->getEm()->getRepository('Application\Entity\User')->find(1);
+
+        $this->dispatch('/ticket/new', Request::METHOD_POST, array(
+                'title' => 'test_new_title',
+                'sought' => 'test_sought',
+                'user' => $user
         ));
 
-        $entity = $this->getEm()->getRepository('Application\Entity\Priority')->find(1);
-        $this->assertEquals('test_new_description', $entity->getDescription());
+        $entity = $this->getEm()->getRepository('Application\Entity\Ticket')->find(1);
+        $this->assertEquals('test_new_title', $entity->getTitle());
 
         $request = $this->getRequest();
         $this->assertEquals($request->getMethod(), Request::METHOD_POST);
 
-        $this->assertRedirectTo('/priority');
+        $this->assertRedirectTo('/ticket');
     }
 
     public function testEditAction()
     {
         $this->setupDB();
 
-        $this->dispatch('/priority/edit/1');
+        $this->dispatch('/ticket/edit/1');
         $this->assertResponseStatusCode(200);
 
         $this->assertModuleName('Application');
-        $this->assertControllerName('Application\controller\Priority');
-        $this->assertControllerClass('PriorityController');
-        $this->assertMatchedRouteName('priority');
+        $this->assertControllerName('Application\controller\Ticket');
+        $this->assertControllerClass('TicketController');
+        $this->assertMatchedRouteName('ticket');
 
         //get and assert mvc event
         $mvcEvent = $this->getApplication()->getMvcEvent();
@@ -166,54 +196,56 @@ class PriorityControllerTest extends TestCaseController
     {
         $this->setupDB();
 
-        $this->dispatch('/priority/edit/19999999');
+        $this->dispatch('/ticket/edit/19999999');
         $this->assertResponseStatusCode(302);
 
         $this->assertModuleName('Application');
-        $this->assertControllerName('Application\controller\Priority');
-        $this->assertControllerClass('PriorityController');
-        $this->assertMatchedRouteName('priority');
+        $this->assertControllerName('Application\controller\Ticket');
+        $this->assertControllerClass('TicketController');
+        $this->assertMatchedRouteName('ticket');
 
-        $this->assertRedirectTo('/priority');
+        $this->assertRedirectTo('/ticket');
     }
 
     public function testMethodPostInEditAction()
     {
         $this->setupDB();
 
-        $this->dispatch('/priority/edit/1', Request::METHOD_POST, array(
-            'description' => 'test_description_edit',
+        $this->dispatch('/ticket/edit/1', Request::METHOD_POST, array(
+            'title' => 'test_title_edit',
+            'sought' => 'test_sought_edit'
         ));
 
-        $entity = $this->getEm()->getRepository('Application\\Entity\\Priority')->find(1);
-        $this->assertEquals('test_description_edit', $entity->getDescription());
+        $entity = $this->getEm()->getRepository('Application\\Entity\\Ticket')->find(1);
+
+        $this->assertEquals('test_title_edit', $entity->getTitle());
 
         $request = $this->getRequest();
         $this->assertEquals($request->getMethod(), Request::METHOD_POST);
 
-        $this->assertRedirectTo('/priority/edit/1');
+        $this->assertRedirectTo('/ticket/edit/1');
     }
 
     public function testRedirectDeleteActionIfNotXmlHttpRequest()
     {
         $this->setupDB();
 
-        $this->dispatch('/priority/delete/1');
+        $this->dispatch('/ticket/delete/1');
         $this->assertResponseStatusCode(302);
-        $this->assertRedirectTo('/priority');
+        $this->assertRedirectTo('/ticket');
     }
 
     public function testDeleteAction()
     {
         $this->setupDB();
 
-        $this->dispatch('/priority/delete/1', Request::METHOD_GET, array(), true);
+        $this->dispatch('/ticket/delete/1', Request::METHOD_GET, array(), true);
         $this->assertResponseStatusCode(200);
 
         $this->assertModuleName('Application');
-        $this->assertControllerName('Application\controller\Priority');
-        $this->assertControllerClass('PriorityController');
-        $this->assertMatchedRouteName('priority');
+        $this->assertControllerName('Application\controller\Ticket');
+        $this->assertControllerClass('TicketController');
+        $this->assertMatchedRouteName('ticket');
 
         // get and assert mvc event
         $mvcEvent = $this->getApplication()->getMvcEvent();
@@ -229,7 +261,7 @@ class PriorityControllerTest extends TestCaseController
 
         $this->assertTrue($var[0]);
 
-        $this->dispatch('/priority/delete/3', Request::METHOD_GET, array(), true);
+        $this->dispatch('/ticket/delete/3', Request::METHOD_GET, array(), true);
         $mvcEvent = $this->getApplication()->getMvcEvent();
 
         // get and assert view controller

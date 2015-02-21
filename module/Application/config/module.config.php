@@ -91,14 +91,11 @@ return array(
         ),
     ),
     'controllers' => array(
-        'invokables' => array(
-            //__NAMESPACE__ . '\\Controller\\Category' => __NAMESPACE__ . '\\Controller\\CategoryController',
-            __NAMESPACE__ . '\\Controller\\Priority' => __NAMESPACE__ . '\\Controller\\PriorityController',
-            __NAMESPACE__ . '\\Controller\\Interaction' => __NAMESPACE__ . '\\Controller\\InteractionController',
-            __NAMESPACE__ . '\\Controller\\Ticket' => __NAMESPACE__ . '\\Controller\\TicketController',
-        ),
         'factories' => array(
             __NAMESPACE__ . '\\Controller\\Category' => __NAMESPACE__ . '\\Controller\\Factories\\Category',
+            __NAMESPACE__ . '\\Controller\\Priority' => __NAMESPACE__ . '\\Controller\\Factories\\Priority',
+            __NAMESPACE__ . '\\Controller\\Ticket' => __NAMESPACE__ . '\\Controller\\Factories\\Ticket',
+            __NAMESPACE__ . '\\Controller\\Interaction' => __NAMESPACE__ . '\\Controller\\Factories\\Interaction',
         ),
     ),
     'view_manager' => array(
@@ -141,10 +138,11 @@ return array(
                 ),
             ),
         ),
-        'fixture' => array(
-            __NAMESPACE__ . '_fixture' => __DIR__ . '/../src/' . __NAMESPACE__ . '/Fixture',
-        ),
     ),
+    'data-fixture' => array(
+        __NAMESPACE__ . '_fixture' => __DIR__ . '/../src/' . __NAMESPACE__ . '/Fixture',
+    ),
+
     // Placeholder for console routes
     'console' => array(
         'router' => array(

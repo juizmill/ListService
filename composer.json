@@ -20,11 +20,12 @@
         "php": ">=5.4",
         "zendframework/zendframework": "2.3.*",
         "doctrine/common": ">=2.1",
-        "doctrine/doctrine-orm-module": "0.9.*@dev",
-        "hounddog/doctrine-data-fixture-module": "dev-master",
+        "doctrine/doctrine-orm-module": "0.9.*",
+        "doctrine/data-fixtures": "1.0.*@dev",
         "zf-commons/zfc-user-doctrine-orm": "1.0.0",
-        "bjyoungblood/bjy-authorize": "1.5.*@dev",
-        "gedmo/doctrine-extensions": "2.3.*@dev"
+        "bjyoungblood/bjy-authorize": "1.5.*",
+        "gedmo/doctrine-extensions": "2.3.*",
+        "hounddog/doctrine-data-fixture-module": "0.0.*"
     },
     "minimum-stability": "dev",
     "require-dev": {
