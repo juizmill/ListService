@@ -57,14 +57,6 @@ class AbstractModelTest extends TestCase
         $this->assertEquals($this->classExemple, $save);
     }
 
-    public function testCheckIfRemove()
-    {
-        $model = $this->getMockAbstractModel();
-        $remove = $model->remove(1);
-
-        $this->assertNull($remove);
-    }
-
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject
      */

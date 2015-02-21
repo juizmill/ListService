@@ -12,6 +12,11 @@ use Application\Entity\Interaction;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 
+use Application\Model\Category as CategoryModel;
+use Application\Controller\CategoryController;
+use Application\Form\Category as CategoryForm;
+
+
 /**
  * Class Module
  *
@@ -144,4 +149,34 @@ class Module
             )
         );
     }
+
+//    /**
+//     * @return array
+//     */
+//    public function getControllerConfig()
+//    {
+//        return [
+//            'factories' => [
+//                'Application\\Controller\\CategoryController' => function ($sm) {
+//                    $entityManager = $sm->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+//                    $entity = '\\Application\\Entity\\Category';
+//
+//                    $model = new CategoryModel($entityManager, $entity);
+//
+//                    $form = new CategoryForm(
+//                        new AnnotationBuilder(),
+//                        new $entity,
+//                        $model
+//                    );
+//
+//                    return new CategoryController(
+//                        $model,
+//                        $form,
+//                        'category',
+//                        'category'
+//                    );
+//                }
+//            ]
+//        ];
+//    }
 }

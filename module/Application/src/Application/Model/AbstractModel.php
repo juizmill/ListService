@@ -43,7 +43,7 @@ class AbstractModel implements ModelInterface
             $this->entityManager->persist($entityInterface);
         }
 
-        $this->entityManager->flush($entityInterface);
+        $this->entityManager->flush();
 
         return $entityInterface;
     }
@@ -53,10 +53,12 @@ class AbstractModel implements ModelInterface
      */
     public function remove($identity)
     {
-        $entity = $this->getReference($identity);
+        $entity = $this->getRepository()->find((int)$identity);
 
-        $this->entityManager->remove($entity);
-        $this->entityManager->flush($entity);
+        if ($entity) {
+            $this->entityManager->remove($entity);
+            $this->entityManager->flush();
+        }
 
         return $entity;
     }

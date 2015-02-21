@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Criteria;
 use Zend\Paginator\Paginator;
 use DoctrineModule\Paginator\Adapter\Selectable;
 use Zend\Mvc\Controller\AbstractActionController;
+use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
 use Zend\Form\Form;
 
@@ -25,11 +26,11 @@ class AbstractController extends AbstractActionController
     protected $itemPerPage;
 
     /**
-     * @param ModelInterface $model
-     * @param FormHandleInterface  $form
-     * @param string         $route
-     * @param string         $controller
-     * @param int            $itemPerPage
+     * @param ModelInterface      $model
+     * @param FormHandleInterface $form
+     * @param string              $route
+     * @param string              $controller
+     * @param int                 $itemPerPage
      */
     public function __construct(
         ModelInterface $model,
@@ -63,20 +64,19 @@ class AbstractController extends AbstractActionController
     }
 
     /**
-     * @return \Zend\View\Model\ViewModel
+     * @return \Zend\Http\Response|\Zend\View\Model\ViewModel
      */
     public function newAction()
     {
         $request = $this->getRequest();
         $handle = $this->form->handle($request);
 
-        if (! $handle instanceof Form) {
-            //$translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
-            //$this->flashMessenger()->addSuccessMessage($translate('Successfully registered!'));
-            return $this->redirect()->toRoute($this->route, ['controller' => $this->controller, 'action' => 'index']);
+        if (!$handle instanceof Form) {
+            $this->flashMessenger()->addSuccessMessage('Successfully registered!');
+            return $this->returnIndex();
         }
 
-        return new ViewModel(['form' => $handle]);
+        return new ViewModel(['form' => $this->form->getForm()]);
     }
 
     /**
@@ -85,27 +85,61 @@ class AbstractController extends AbstractActionController
     public function editAction()
     {
         $identity = $this->params()->fromRoute('id', 0);
-        $entity = $this->model->getReference($identity);
+
+        $entity = $this->model->getRepository()->find($identity);
+
+        if (!$entity) {
+            return $this->returnIndex();
+        }
 
         $request = $this->getRequest();
-        $handle = $this->form->handle($request);
-        $handle->setData($entity->toArray());
+        $handle = $this->form->handle($request, $identity);
 
-        if (! $handle instanceof Form) {
-            $translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
-            $this->flashMessenger()->addSuccessMessage($translate('Updated successfully!'));
-            return $this->redirect()->toRoute($this->route,[
+        if (!$handle instanceof Form) {
+            $this->flashMessenger()->addSuccessMessage('Updated successfully!');
+            return $this->redirect()->toRoute($this->route, [
                 'controller' => $this->controller,
                 'action' => 'edit',
                 'id' => $identity
             ]);
         }
 
-        return new ViewModel(['form' => $handle, 'id' => $identity]);
+        $this->form->getForm()->setData($entity->toArray());
+
+        return new ViewModel(['form' => $this->form->getForm(), 'id' => $identity]);
     }
 
+    /**
+     * @return \Zend\Http\Response|\Zend\View\Model\ViewModel
+     */
     public function deleteAction()
     {
+        if ($this->getRequest()->isXmlHttpRequest()) {
+            $identity = $this->params()->fromRoute('id', 0);
+            $delete = $this->model->remove($identity);
 
+            $jsonModel = new JsonModel();
+
+            if ($delete) {
+                return $jsonModel->setVariables([true]);
+            } else {
+                return $jsonModel->setVariables([false]);
+            }
+
+        }
+
+        $this->flashMessenger()->addInfoMessage('Denied operation.');
+        return $this->returnIndex();
+    }
+
+    /**
+     * @return \Zend\Http\Response
+     */
+    private function returnIndex()
+    {
+        return $this->redirect()->toRoute($this->route, [
+            'controller' => $this->controller,
+            'action' => 'index'
+        ]);
     }
 }
