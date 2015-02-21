@@ -2,54 +2,55 @@
 
 namespace ApplicationTest\Controller;
 
+use ApplicationTest\Framework\ApplicationMocks;
 use ApplicationTest\Framework\TestCaseController;
-use Application\Controller\InteractionController;
+use Application\Controller\PriorityController;
 use Zend\Http\Request;
 use Zend\Mvc\MvcEvent;
 use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
-use Application\Entity\Interaction;
+use Application\Entity\Priority;
 
 /**
- * Class InteractionControllerTest
+ * Class PriorityControllerTest
  *
  * @package ApplicationTest\Controller
  */
-class InteractionControllerTest extends TestCaseController
+class PriorityControllerTest extends TestCaseController
 {
+    use ApplicationMocks;
+
     protected $traceError = true;
     public $isORM = true;
 
     public function setupDB()
     {
-        $user = $this->getEm()->getReference('Application\Entity\User', 1);
-
-        $interaction = new Interaction;
-        $interaction->setDescription('teste_interaction')->setUser($user);
-        $this->getEm()->persist($interaction);
+        $priority = new Priority;
+        $priority->setDescription('teste_priority')->setActive(true);
+        $this->getEm()->persist($priority);
 
         $this->getEm()->flush();
     }
 
-    public function testClasseExist()
+    private function controllerClass()
     {
-        $this->assertTrue(class_exists('Application\\Controller\\InteractionController'));
-        $this->assertInstanceOf('Application\\Controller\\AbstractController', new InteractionController());
+        return new PriorityController(
+            $this->getMockModel(),
+            $this->getMockFormHandle(),
+            'default',
+            'default'
+        );
     }
 
-    public function testConstructor()
+    public function testClasseExist()
     {
-        $controller = new InteractionController();
-
-        $this->assertEquals('Application\\Entity\\Interaction', $controller->entity);
-        $this->assertEquals('interaction', $controller->controller);
-        $this->assertEquals('interaction.form', $controller->form);
-        $this->assertEquals('interaction', $controller->route);
+        $this->assertTrue(class_exists('Application\\Controller\\PriorityController'));
+        $this->assertInstanceOf('Application\\Controller\\AbstractController', $this->controllerClass());
     }
 
     public function testErro404()
     {
-        $this->dispatch('/interaction_error');
+        $this->dispatch('/priority_error');
         $this->assertResponseStatusCode(404);
     }
 
@@ -57,13 +58,13 @@ class InteractionControllerTest extends TestCaseController
     {
         $this->setupDB();
 
-        $this->dispatch('/interaction');
+        $this->dispatch('/priority');
         $this->assertResponseStatusCode(200);
 
         $this->assertModuleName('Application');
-        $this->assertControllerName('Application\controller\Interaction');
-        $this->assertControllerClass('InteractionController');
-        $this->assertMatchedRouteName('interaction');
+        $this->assertControllerName('Application\controller\Priority');
+        $this->assertControllerClass('PriorityController');
+        $this->assertMatchedRouteName('priority');
 
         // get and assert mvc event
         $mvcEvent = $this->getApplication()->getMvcEvent();
@@ -83,25 +84,25 @@ class InteractionControllerTest extends TestCaseController
 
         //test parameter response.
         foreach ($var['data'] as $value) {
-            $this->assertEquals('teste_interaction', $value->getDescription());
+            $this->assertEquals('teste_priority', $value->getDescription());
         }
     }
 
     public function testIndexActionRoutePagination()
     {
-        $this->dispatch('/interaction/page/1');
+        $this->dispatch('/priority/page/1');
         $this->assertResponseStatusCode(200);
     }
 
     public function testNewAction()
     {
-        $this->dispatch('/interaction/new');
+        $this->dispatch('/priority/new');
         $this->assertResponseStatusCode(200);
 
         $this->assertModuleName('Application');
-        $this->assertControllerName('Application\controller\Interaction');
-        $this->assertControllerClass('InteractionController');
-        $this->assertMatchedRouteName('interaction');
+        $this->assertControllerName('Application\controller\Priority');
+        $this->assertControllerClass('PriorityController');
+        $this->assertMatchedRouteName('priority');
 
         //get and assert mvc event
         $mvcEvent = $this->getApplication()->getMvcEvent();
@@ -122,30 +123,30 @@ class InteractionControllerTest extends TestCaseController
 
     public function testMethodPostInNewAction()
     {
-        $this->dispatch('/interaction/new', Request::METHOD_POST, array(
+        $this->dispatch('/priority/new', Request::METHOD_POST, array(
                 'description' => 'test_new_description',
         ));
 
-        $entity = $this->getEm()->getRepository('Application\Entity\Interaction')->find(1);
+        $entity = $this->getEm()->getRepository('Application\Entity\Priority')->find(1);
         $this->assertEquals('test_new_description', $entity->getDescription());
 
         $request = $this->getRequest();
         $this->assertEquals($request->getMethod(), Request::METHOD_POST);
 
-        $this->assertRedirectTo('/interaction');
+        $this->assertRedirectTo('/priority');
     }
 
     public function testEditAction()
     {
         $this->setupDB();
 
-        $this->dispatch('/interaction/edit/1');
+        $this->dispatch('/priority/edit/1');
         $this->assertResponseStatusCode(200);
 
         $this->assertModuleName('Application');
-        $this->assertControllerName('Application\controller\Interaction');
-        $this->assertControllerClass('InteractionController');
-        $this->assertMatchedRouteName('interaction');
+        $this->assertControllerName('Application\controller\Priority');
+        $this->assertControllerClass('PriorityController');
+        $this->assertMatchedRouteName('priority');
 
         //get and assert mvc event
         $mvcEvent = $this->getApplication()->getMvcEvent();
@@ -168,54 +169,54 @@ class InteractionControllerTest extends TestCaseController
     {
         $this->setupDB();
 
-        $this->dispatch('/interaction/edit/19999999');
+        $this->dispatch('/priority/edit/19999999');
         $this->assertResponseStatusCode(302);
 
         $this->assertModuleName('Application');
-        $this->assertControllerName('Application\controller\Interaction');
-        $this->assertControllerClass('InteractionController');
-        $this->assertMatchedRouteName('interaction');
+        $this->assertControllerName('Application\controller\Priority');
+        $this->assertControllerClass('PriorityController');
+        $this->assertMatchedRouteName('priority');
 
-        $this->assertRedirectTo('/interaction');
+        $this->assertRedirectTo('/priority');
     }
 
     public function testMethodPostInEditAction()
     {
         $this->setupDB();
 
-        $this->dispatch('/interaction/edit/1', Request::METHOD_POST, array(
+        $this->dispatch('/priority/edit/1', Request::METHOD_POST, array(
             'description' => 'test_description_edit',
         ));
 
-        $entity = $this->getEm()->getRepository('Application\\Entity\\Interaction')->find(1);
+        $entity = $this->getEm()->getRepository('Application\\Entity\\Priority')->find(1);
         $this->assertEquals('test_description_edit', $entity->getDescription());
 
         $request = $this->getRequest();
         $this->assertEquals($request->getMethod(), Request::METHOD_POST);
 
-        $this->assertRedirectTo('/interaction/edit/1');
+        $this->assertRedirectTo('/priority/edit/1');
     }
 
     public function testRedirectDeleteActionIfNotXmlHttpRequest()
     {
         $this->setupDB();
 
-        $this->dispatch('/interaction/delete/1');
+        $this->dispatch('/priority/delete/1');
         $this->assertResponseStatusCode(302);
-        $this->assertRedirectTo('/interaction');
+        $this->assertRedirectTo('/priority');
     }
 
     public function testDeleteAction()
     {
         $this->setupDB();
 
-        $this->dispatch('/interaction/delete/1', Request::METHOD_GET, array(), true);
+        $this->dispatch('/priority/delete/1', Request::METHOD_GET, array(), true);
         $this->assertResponseStatusCode(200);
 
         $this->assertModuleName('Application');
-        $this->assertControllerName('Application\controller\Interaction');
-        $this->assertControllerClass('InteractionController');
-        $this->assertMatchedRouteName('interaction');
+        $this->assertControllerName('Application\controller\Priority');
+        $this->assertControllerClass('PriorityController');
+        $this->assertMatchedRouteName('priority');
 
         // get and assert mvc event
         $mvcEvent = $this->getApplication()->getMvcEvent();
@@ -231,7 +232,7 @@ class InteractionControllerTest extends TestCaseController
 
         $this->assertTrue($var[0]);
 
-        $this->dispatch('/interaction/delete/3', Request::METHOD_GET, array(), true);
+        $this->dispatch('/priority/delete/3', Request::METHOD_GET, array(), true);
         $mvcEvent = $this->getApplication()->getMvcEvent();
 
         // get and assert view controller

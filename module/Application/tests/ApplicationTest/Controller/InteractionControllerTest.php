@@ -2,26 +2,30 @@
 
 namespace ApplicationTest\Controller;
 
+use Application\Entity\Ticket;
+use Application\Entity\User;
+use ApplicationTest\Framework\ApplicationMocks;
 use ApplicationTest\Framework\TestCaseController;
-use Application\Controller\TicketController;
+use Application\Controller\InteractionController;
 use Zend\Http\Request;
 use Zend\Mvc\MvcEvent;
 use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
-use Application\Entity\Ticket;
-use Application\Entity\User;
+use Application\Entity\Interaction;
 
 /**
- * Class TicketControllerTest
+ * Class InteractionControllerTest
  *
  * @package ApplicationTest\Controller
  */
-class TicketControllerTest extends TestCaseController
+class InteractionControllerTest extends TestCaseController
 {
+    use ApplicationMocks;
+
     protected $traceError = true;
     public $isORM = true;
 
-    public function creatadUser()
+    public function setupDB()
     {
         $user = new User;
         $user->setEmail('teste@gmail.com')
@@ -31,45 +35,42 @@ class TicketControllerTest extends TestCaseController
             ->setState(true);
         $this->getEm()->persist($user);
         $this->getEm()->flush();
-    }
 
-    public function setupDB()
-    {
-        $this->creatadUser();
-        $user = $this->getEm()->getRepository('Application\Entity\User')->find(1);
-
-        $this->creatadUser();
         $ticket = new Ticket;
         $ticket->setTitle('teste_ticket')
             ->setSought('test_sought')
             ->setUser($user);
         $this->getEm()->persist($ticket);
+        $this->getEm()->flush();
+
+        $interaction = new Interaction;
+        $interaction->setDescription('teste_interaction')
+            ->setUser($user)
+            ->setTicket($ticket);
+        $this->getEm()->persist($interaction);
 
         $this->getEm()->flush();
     }
 
-    /**
-     *
-     */
-    public function testClasseExist()
+    private function controllerClass()
     {
-        $this->assertTrue(class_exists('Application\\Controller\\TicketController'));
-        $this->assertInstanceOf('Application\\Controller\\AbstractController', new TicketController());
+        return new InteractionController(
+            $this->getMockModel(),
+            $this->getMockFormHandle(),
+            'default',
+            'default'
+        );
     }
 
-    public function testConstructor()
+    public function testClasseExist()
     {
-        $controller = new TicketController();
-
-        $this->assertEquals('Application\\Entity\\Ticket', $controller->entity);
-        $this->assertEquals('ticket', $controller->controller);
-        $this->assertEquals('ticket.form', $controller->form);
-        $this->assertEquals('ticket', $controller->route);
+        $this->assertTrue(class_exists('Application\\Controller\\InteractionController'));
+        $this->assertInstanceOf('Application\\Controller\\AbstractController', $this->controllerClass());
     }
 
     public function testErro404()
     {
-        $this->dispatch('/ticket_error');
+        $this->dispatch('/interaction_error');
         $this->assertResponseStatusCode(404);
     }
 
@@ -77,13 +78,13 @@ class TicketControllerTest extends TestCaseController
     {
         $this->setupDB();
 
-        $this->dispatch('/ticket');
+        $this->dispatch('/interaction');
         $this->assertResponseStatusCode(200);
 
         $this->assertModuleName('Application');
-        $this->assertControllerName('Application\controller\Ticket');
-        $this->assertControllerClass('TicketController');
-        $this->assertMatchedRouteName('ticket');
+        $this->assertControllerName('Application\controller\Interaction');
+        $this->assertControllerClass('InteractionController');
+        $this->assertMatchedRouteName('interaction');
 
         // get and assert mvc event
         $mvcEvent = $this->getApplication()->getMvcEvent();
@@ -103,25 +104,25 @@ class TicketControllerTest extends TestCaseController
 
         //test parameter response.
         foreach ($var['data'] as $value) {
-            $this->assertEquals('teste_ticket', $value->getTitle());
+            $this->assertEquals('teste_interaction', $value->getDescription());
         }
     }
 
     public function testIndexActionRoutePagination()
     {
-        $this->dispatch('/ticket/page/1');
+        $this->dispatch('/interaction/page/1');
         $this->assertResponseStatusCode(200);
     }
 
     public function testNewAction()
     {
-        $this->dispatch('/ticket/new');
+        $this->dispatch('/interaction/new');
         $this->assertResponseStatusCode(200);
 
         $this->assertModuleName('Application');
-        $this->assertControllerName('Application\controller\Ticket');
-        $this->assertControllerClass('TicketController');
-        $this->assertMatchedRouteName('ticket');
+        $this->assertControllerName('Application\controller\Interaction');
+        $this->assertControllerClass('InteractionController');
+        $this->assertMatchedRouteName('interaction');
 
         //get and assert mvc event
         $mvcEvent = $this->getApplication()->getMvcEvent();
@@ -142,35 +143,30 @@ class TicketControllerTest extends TestCaseController
 
     public function testMethodPostInNewAction()
     {
-        $this->creatadUser();
-        $user = $this->getEm()->getRepository('Application\Entity\User')->find(1);
-
-        $this->dispatch('/ticket/new', Request::METHOD_POST, array(
-                'title' => 'test_new_title',
-                'sought' => 'test_sought',
-                'user' => $user
+        $this->dispatch('/interaction/new', Request::METHOD_POST, array(
+                'description' => 'test_new_description',
         ));
 
-        $entity = $this->getEm()->getRepository('Application\Entity\Ticket')->find(1);
-        $this->assertEquals('test_new_title', $entity->getTitle());
+        $entity = $this->getEm()->getRepository('Application\Entity\Interaction')->find(1);
+        $this->assertEquals('test_new_description', $entity->getDescription());
 
         $request = $this->getRequest();
         $this->assertEquals($request->getMethod(), Request::METHOD_POST);
 
-        $this->assertRedirectTo('/ticket');
+        $this->assertRedirectTo('/interaction');
     }
 
     public function testEditAction()
     {
         $this->setupDB();
 
-        $this->dispatch('/ticket/edit/1');
+        $this->dispatch('/interaction/edit/1');
         $this->assertResponseStatusCode(200);
 
         $this->assertModuleName('Application');
-        $this->assertControllerName('Application\controller\Ticket');
-        $this->assertControllerClass('TicketController');
-        $this->assertMatchedRouteName('ticket');
+        $this->assertControllerName('Application\controller\Interaction');
+        $this->assertControllerClass('InteractionController');
+        $this->assertMatchedRouteName('interaction');
 
         //get and assert mvc event
         $mvcEvent = $this->getApplication()->getMvcEvent();
@@ -193,56 +189,57 @@ class TicketControllerTest extends TestCaseController
     {
         $this->setupDB();
 
-        $this->dispatch('/ticket/edit/19999999');
+        $this->dispatch('/interaction/edit/19999999');
         $this->assertResponseStatusCode(302);
 
         $this->assertModuleName('Application');
-        $this->assertControllerName('Application\controller\Ticket');
-        $this->assertControllerClass('TicketController');
-        $this->assertMatchedRouteName('ticket');
+        $this->assertControllerName('Application\controller\Interaction');
+        $this->assertControllerClass('InteractionController');
+        $this->assertMatchedRouteName('interaction');
 
-        $this->assertRedirectTo('/ticket');
+        $this->assertRedirectTo('/interaction');
     }
 
     public function testMethodPostInEditAction()
     {
         $this->setupDB();
 
-        $this->dispatch('/ticket/edit/1', Request::METHOD_POST, array(
-            'title' => 'test_title_edit',
-            'sought' => 'test_sought_edit'
+
+        $this->dispatch('/interaction/edit/1', Request::METHOD_POST, array(
+            'description' => 'test_description_edit',
         ));
 
-        $entity = $this->getEm()->getRepository('Application\\Entity\\Ticket')->find(1);
 
-        $this->assertEquals('test_title_edit', $entity->getTitle());
+
+        $entity = $this->getEm()->getRepository('Application\Entity\Interaction')->find(1);
+        $this->assertEquals('test_description_edit', $entity->getDescription());
 
         $request = $this->getRequest();
         $this->assertEquals($request->getMethod(), Request::METHOD_POST);
 
-        $this->assertRedirectTo('/ticket/edit/1');
+        $this->assertRedirectTo('/interaction/edit/1');
     }
 
     public function testRedirectDeleteActionIfNotXmlHttpRequest()
     {
         $this->setupDB();
 
-        $this->dispatch('/ticket/delete/1');
+        $this->dispatch('/interaction/delete/1');
         $this->assertResponseStatusCode(302);
-        $this->assertRedirectTo('/ticket');
+        $this->assertRedirectTo('/interaction');
     }
 
     public function testDeleteAction()
     {
         $this->setupDB();
 
-        $this->dispatch('/ticket/delete/1', Request::METHOD_GET, array(), true);
+        $this->dispatch('/interaction/delete/1', Request::METHOD_GET, array(), true);
         $this->assertResponseStatusCode(200);
 
         $this->assertModuleName('Application');
-        $this->assertControllerName('Application\controller\Ticket');
-        $this->assertControllerClass('TicketController');
-        $this->assertMatchedRouteName('ticket');
+        $this->assertControllerName('Application\controller\Interaction');
+        $this->assertControllerClass('InteractionController');
+        $this->assertMatchedRouteName('interaction');
 
         // get and assert mvc event
         $mvcEvent = $this->getApplication()->getMvcEvent();
@@ -258,7 +255,7 @@ class TicketControllerTest extends TestCaseController
 
         $this->assertTrue($var[0]);
 
-        $this->dispatch('/ticket/delete/3', Request::METHOD_GET, array(), true);
+        $this->dispatch('/interaction/delete/3', Request::METHOD_GET, array(), true);
         $mvcEvent = $this->getApplication()->getMvcEvent();
 
         // get and assert view controller

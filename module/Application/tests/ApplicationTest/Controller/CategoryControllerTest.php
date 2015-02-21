@@ -2,7 +2,8 @@
 
 namespace ApplicationTest\Controller;
 
-use ApplicationTest\Framework\ApplicationMocks;use ApplicationTest\Framework\TestCaseController;
+use ApplicationTest\Framework\ApplicationMocks;
+use ApplicationTest\Framework\TestCaseController;
 use Application\Controller\CategoryController;
 use Zend\Http\Request;
 use Zend\Mvc\MvcEvent;

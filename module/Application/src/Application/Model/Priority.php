@@ -3,10 +3,10 @@
 namespace Application\Model;
 
 /**
- * Class Category
+ * Class Priority
  *
  * @package Application\Model
  */
-class Category extends AbstractModel
+class Priority extends AbstractModel
 {
 }
