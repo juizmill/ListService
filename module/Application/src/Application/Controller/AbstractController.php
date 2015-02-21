@@ -71,6 +71,8 @@ class AbstractController extends AbstractActionController
         $handle = $this->form->handle($request);
 
         if (! $handle instanceof Form) {
+            //$translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
+            //$this->flashMessenger()->addSuccessMessage($translate('Successfully registered!'));
             return $this->redirect()->toRoute($this->route, ['controller' => $this->controller, 'action' => 'index']);
         }
 
@@ -82,10 +84,24 @@ class AbstractController extends AbstractActionController
      */
     public function editAction()
     {
+        $identity = $this->params()->fromRoute('id', 0);
+        $entity = $this->model->getReference($identity);
+
         $request = $this->getRequest();
         $handle = $this->form->handle($request);
+        $handle->setData($entity->toArray());
 
-        return new ViewModel(['form' => $handle]);
+        if (! $handle instanceof Form) {
+            $translate = $this->getServiceLocator()->get('viewhelpermanager')->get('translate');
+            $this->flashMessenger()->addSuccessMessage($translate('Updated successfully!'));
+            return $this->redirect()->toRoute($this->route,[
+                'controller' => $this->controller,
+                'action' => 'edit',
+                'id' => $identity
+            ]);
+        }
+
+        return new ViewModel(['form' => $handle, 'id' => $identity]);
     }
 
     public function deleteAction()

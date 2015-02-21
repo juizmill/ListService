@@ -134,6 +134,7 @@ class AbstractControllerTest extends TestCase
 
         $this->assertInstanceOf('\\Zend\\View\\Model\\ViewModel', $action);
         $this->assertInstanceOf('\\Zend\\Form\\Form', $action->getVariable('form'));
+        $this->assertTrue(is_numeric($action->getVariable('id')));
 
 //        $request = $controller->getRequest();
 //        $request->setMethod('POST')
@@ -154,6 +155,7 @@ class AbstractControllerTest extends TestCase
 
         $redirect = $this->getMockBuilder('\\Zend\Mvc\\Controller\\Plugin\\Redirect')->getMock();
         $repo = $this->getMockBuilder('\\Doctrine\\ORM\\EntityRepository')->disableOriginalConstructor()->getMock();
+        $serviceManager = $this->getMockBuilder('Zend\ServiceManager\ServiceManager')->getMock();
 
         $this->getMockBuilder('\\DoctrineModule\\Paginator\\Adapter\\Selectable')->disableOriginalConstructor();
 
@@ -161,7 +163,9 @@ class AbstractControllerTest extends TestCase
             'params',
             'fromRoute',
             'redirect',
-            'toRoute'
+            'toRoute',
+            'get',
+            'getServiceLocator'
         ], [
             $this->getMockAbstractModel(),
             $this->getMockFormHandle(),
@@ -169,6 +173,14 @@ class AbstractControllerTest extends TestCase
             'default',
             10
         ], '', true);
+
+        $controller->expects($this->any())
+            ->method('get')
+            ->will($this->returnValue(null));
+
+        $controller->expects($this->any())
+            ->method('getServiceLocator')
+            ->will($this->returnValue($serviceManager));
 
         $controller->expects($this->any())
             ->method('params')
