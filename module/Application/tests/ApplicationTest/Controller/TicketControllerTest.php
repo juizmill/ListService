@@ -2,6 +2,7 @@
 
 namespace ApplicationTest\Controller;
 
+use ApplicationTest\Framework\ApplicationMocks;
 use ApplicationTest\Framework\TestCaseController;
 use Application\Controller\TicketController;
 use Zend\Http\Request;
@@ -18,6 +19,8 @@ use Application\Entity\User;
  */
 class TicketControllerTest extends TestCaseController
 {
+    use ApplicationMocks;
+
     protected $traceError = true;
     public $isORM = true;
 
@@ -48,23 +51,23 @@ class TicketControllerTest extends TestCaseController
         $this->getEm()->flush();
     }
 
+    private function controllerClass()
+    {
+        return new TicketController(
+            $this->getMockModel(),
+            $this->getMockFormHandle(),
+            'default',
+            'default'
+        );
+    }
+
     /**
      *
      */
     public function testClasseExist()
     {
         $this->assertTrue(class_exists('Application\\Controller\\TicketController'));
-        $this->assertInstanceOf('Application\\Controller\\AbstractController', new TicketController());
-    }
-
-    public function testConstructor()
-    {
-        $controller = new TicketController();
-
-        $this->assertEquals('Application\\Entity\\Ticket', $controller->entity);
-        $this->assertEquals('ticket', $controller->controller);
-        $this->assertEquals('ticket.form', $controller->form);
-        $this->assertEquals('ticket', $controller->route);
+        $this->assertInstanceOf('Application\\Controller\\AbstractController', $this->controllerClass());
     }
 
     public function testErro404()

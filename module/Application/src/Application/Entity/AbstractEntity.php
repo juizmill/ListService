@@ -21,12 +21,13 @@ abstract class AbstractEntity implements EntityInterface
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * @Form\Exclude()
-     * @var $id integer
+     * @var $identity integer
      */
     protected $identity;
 
     /**
      * @ORM\Column(name="active", type="boolean", nullable=false, options={"default" = 1})
+     * @Form\Exclude()
      * @var $isActive boolean
      */
     protected $isActive = true;

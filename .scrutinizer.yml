@@ -20,13 +20,6 @@ tools:
             # Default:
             - '*.php'
         enabled: true
-    php_code_sniffer:
-        extensions:
-            - php
-        command: phpcs
-        enabled: true
-        config:
-            standard: PSR2
 filter:
     paths:
         - 'module/Application/src/Application/*'

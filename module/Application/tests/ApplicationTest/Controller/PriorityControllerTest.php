@@ -2,6 +2,7 @@
 
 namespace ApplicationTest\Controller;
 
+use ApplicationTest\Framework\ApplicationMocks;
 use ApplicationTest\Framework\TestCaseController;
 use Application\Controller\PriorityController;
 use Zend\Http\Request;
@@ -17,6 +18,8 @@ use Application\Entity\Priority;
  */
 class PriorityControllerTest extends TestCaseController
 {
+    use ApplicationMocks;
+
     protected $traceError = true;
     public $isORM = true;
 
@@ -29,20 +32,20 @@ class PriorityControllerTest extends TestCaseController
         $this->getEm()->flush();
     }
 
+    private function controllerClass()
+    {
+        return new PriorityController(
+            $this->getMockModel(),
+            $this->getMockFormHandle(),
+            'default',
+            'default'
+        );
+    }
+
     public function testClasseExist()
     {
         $this->assertTrue(class_exists('Application\\Controller\\PriorityController'));
-        $this->assertInstanceOf('Application\\Controller\\AbstractController', new PriorityController());
-    }
-
-    public function testConstructor()
-    {
-        $controller = new PriorityController();
-
-        $this->assertEquals('Application\\Entity\\Priority', $controller->entity);
-        $this->assertEquals('priority', $controller->controller);
-        $this->assertEquals('priority.form', $controller->form);
-        $this->assertEquals('priority', $controller->route);
+        $this->assertInstanceOf('Application\\Controller\\AbstractController', $this->controllerClass());
     }
 
     public function testErro404()

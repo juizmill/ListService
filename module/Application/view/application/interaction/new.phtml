@@ -1,1 +1,7 @@
-new
+<?php
+
+$form = $this->form;
+$form->setAttribute('action', $this->url('interaction', array('action' => 'new')))->prepare();
+echo $this->form()->openTag($form);
+echo $this->formCollection($form);
+echo $this->form()->closeTag();

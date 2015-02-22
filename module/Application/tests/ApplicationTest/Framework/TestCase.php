@@ -28,6 +28,9 @@ class TestCase extends PHPUnit_Framework_TestCase
 
     protected $pathDir;
 
+    /**
+     *
+     */
     public function setup()
     {
         parent::setUp();

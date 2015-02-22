@@ -25,5 +25,14 @@ return array(
         'ZfcBase',
         'ZfcUser',
         'ZfcUserDoctrineORM'
-    )
+    ),
+    'doctrine' => array(
+        'eventmanager' => array(
+            'orm_default' => array(
+                'subscribers' => array(
+                    'Gedmo\Timestampable\TimestampableListener',
+                ),
+            ),
+        ),
+    ),
 );

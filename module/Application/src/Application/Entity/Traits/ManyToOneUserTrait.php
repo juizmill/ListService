@@ -4,6 +4,7 @@ namespace Application\Entity\Traits;
 
 use Application\Entity\User as UserApp;
 use Doctrine\ORM\Mapping as ORM;
+use Zend\Form\Annotation as Form;
 
 /**
  * Class ManyToOneUserTrait
