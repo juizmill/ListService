@@ -19,7 +19,7 @@ interface ModelInterface
 
     /**
      * @param $identity
-     * @return EntityInterface|null
+     * @return object|null
      */
     public function remove($identity);
 
