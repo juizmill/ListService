@@ -25,7 +25,7 @@ class Interaction extends AbstractEntity
 
     /**
      * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(name="date_posted", type="datetime", nullable=false)
+     * @ORM\Column(name="date_posted", type="datetime", nullable=true)
      * @Form\Exclude()
      * @var $date_posted datetime
      */
