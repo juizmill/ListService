@@ -119,11 +119,7 @@ class AbstractController extends AbstractActionController
 
             $jsonModel = new JsonModel();
 
-            if ($delete) {
-                return $jsonModel->setVariables([true]);
-            } else {
-                return $jsonModel->setVariables([false]);
-            }
+            return $jsonModel->setVariables([$delete]);
 
         }
 
