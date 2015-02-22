@@ -55,8 +55,10 @@ class AbstractModel implements ModelInterface
     {
         $entity = $this->getReference($identity);
 
-        $this->entityManager->remove($entity);
-        $this->entityManager->flush();
+        if (! $entity) {
+            $this->entityManager->remove($entity);
+            $this->entityManager->flush();
+        }
 
         return $entity;
     }
