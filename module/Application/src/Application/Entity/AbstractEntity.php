@@ -53,7 +53,7 @@ abstract class AbstractEntity implements EntityInterface
      */
     public function setIdentity($identity)
     {
-        if ((int)$identity <= 0) {
+        if ((int) $identity <= 0) {
             throw new \RuntimeException(__FUNCTION__.' accept only positive integers greater than zero and');
         }
 
@@ -79,7 +79,7 @@ abstract class AbstractEntity implements EntityInterface
             throw new \RuntimeException(__FUNCTION__.' accept only boolean');
         }
 
-        $this->isActive = (boolean)$isActive;
+        $this->isActive = (boolean) $isActive;
 
         return $this;
     }
