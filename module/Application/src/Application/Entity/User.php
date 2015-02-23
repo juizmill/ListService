@@ -72,7 +72,7 @@ class User extends AbstractEntity implements UserInterface
     public function __construct(Array $options = [])
     {
         parent::__construct($options);
-        $this->setActiveKey(md5($this->email . date('Y-m-d H:m:s')));
+        $this->setActiveKey(md5($this->email.date('Y-m-d H:m:s')));
     }
 
     /**

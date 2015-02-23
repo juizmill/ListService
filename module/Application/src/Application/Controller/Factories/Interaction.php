@@ -18,10 +18,8 @@ class Interaction implements FactoryInterface
 {
 
     /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     * @return mixed
+     * @param \Zend\ServiceManager\ServiceLocatorInterface $serviceLocator
+     * @return \Application\Controller\InteractionController
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {

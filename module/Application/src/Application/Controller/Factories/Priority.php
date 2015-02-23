@@ -18,10 +18,8 @@ class Priority implements FactoryInterface
 {
 
     /**
-     * Create service
-     *
-     * @param ServiceLocatorInterface $serviceLocator
-     * @return mixed
+     * @param \Zend\ServiceManager\ServiceLocatorInterface $serviceLocator
+     * @return \Application\Controller\PriorityController
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
