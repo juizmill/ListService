@@ -2,10 +2,10 @@
 
 namespace Application\Fixture;
 
+use Application\Entity\Category;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Application\Entity\Category;
 
 /**
  * Class CategoryLoad
@@ -16,6 +16,7 @@ class CategoryLoad extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
      * Category load
+     *
      * @param \Doctrine\Common\Persistence\ObjectManager $manager
      */
     public function load(ObjectManager $manager)
@@ -38,9 +39,10 @@ class CategoryLoad extends AbstractFixture implements OrderedFixtureInterface
         $this->setReference('category2', $category1);
         $this->setReference('category3', $category2);
     }
+
     /**
-    * @return int
-    */
+     * @return int
+     */
     public function getOrder()
     {
         return 1;

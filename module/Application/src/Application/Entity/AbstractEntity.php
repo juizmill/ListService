@@ -2,10 +2,10 @@
 
 namespace Application\Entity;
 
-use Zend\Stdlib\Hydrator\ClassMethods;
 use Application\Entity\Interfaces\EntityInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Zend\Form\Annotation as Form;
+use Zend\Stdlib\Hydrator\ClassMethods;
 
 /**
  * Class AbstractEntity
@@ -53,7 +53,7 @@ abstract class AbstractEntity implements EntityInterface
      */
     public function setIdentity($identity)
     {
-        if ((int) $identity <= 0) {
+        if ((int)$identity <= 0) {
             throw new \RuntimeException(__FUNCTION__ . ' accept only positive integers greater than zero and');
         }
 
@@ -79,7 +79,7 @@ abstract class AbstractEntity implements EntityInterface
             throw new \RuntimeException(__FUNCTION__ . ' accept only boolean');
         }
 
-        $this->isActive = (boolean) $isActive;
+        $this->isActive = (boolean)$isActive;
 
         return $this;
     }

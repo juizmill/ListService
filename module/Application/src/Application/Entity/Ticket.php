@@ -2,9 +2,9 @@
 
 namespace Application\Entity;
 
-use DateTime;
 use Application\Entity\Traits\ManyToOnePriorityTrait;
 use Application\Entity\Traits\ManyToOneUserTrait;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Zend\Form\Annotation as Form;
 

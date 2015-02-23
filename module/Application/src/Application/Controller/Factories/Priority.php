@@ -2,12 +2,12 @@
 
 namespace Application\Controller\Factories;
 
+use Application\Controller\PriorityController;
+use Application\Form\Priority as PriorityForm;
+use Application\Model\Priority as PriorityModel;
 use Zend\Form\Annotation\AnnotationBuilder;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use Application\Controller\PriorityController;
-use Application\Model\Priority as PriorityModel;
-use Application\Form\Priority as PriorityForm;
 
 /**
  * Class Priority
@@ -25,7 +25,7 @@ class Priority implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        if (! $serviceLocator->has('Doctrine\ORM\EntityManager')) {
+        if (!$serviceLocator->has('Doctrine\ORM\EntityManager')) {
             $entityManager = $serviceLocator->getServiceLocator()->get('Doctrine\ORM\EntityManager');
         } else {
             $entityManager = $serviceLocator->get('Doctrine\ORM\EntityManager');

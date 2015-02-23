@@ -2,10 +2,10 @@
 
 namespace Application\Fixture;
 
+use Application\Entity\Ticket;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Application\Entity\Ticket;
 
 /**
  * Class TicketLoad
@@ -16,6 +16,7 @@ class TicketLoad extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
      * Category load
+     *
      * @param \Doctrine\Common\Persistence\ObjectManager $manager
      */
     public function load(ObjectManager $manager)
@@ -46,6 +47,7 @@ class TicketLoad extends AbstractFixture implements OrderedFixtureInterface
         $this->setReference('ticket2', $ticket1);
         $this->setReference('ticket3', $ticket2);
     }
+
     /**
      * @return int
      */

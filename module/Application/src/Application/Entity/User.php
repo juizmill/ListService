@@ -3,9 +3,9 @@
 namespace Application\Entity;
 
 use DateTime;
-use ZfcUser\Entity\UserInterface;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use ZfcUser\Entity\UserInterface;
 
 /**
  * Class User
@@ -84,7 +84,7 @@ class User extends AbstractEntity implements UserInterface
     }
 
     /**
-     * @param  int   $identity
+     * @param  int $identity
      * @return $this
      */
     public function setId($identity)
@@ -179,7 +179,7 @@ class User extends AbstractEntity implements UserInterface
     }
 
     /**
-     * @param  int   $state
+     * @param  int $state
      * @return $this
      */
     public function setState($state)

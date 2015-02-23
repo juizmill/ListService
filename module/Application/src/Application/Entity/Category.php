@@ -2,9 +2,9 @@
 
 namespace Application\Entity;
 
+use Application\Entity\Traits\DescriptionTraint;
 use Doctrine\ORM\Mapping as ORM;
 use Zend\Form\Annotation as Form;
-use Application\Entity\Traits\DescriptionTraint;
 
 /**
  * Class Category

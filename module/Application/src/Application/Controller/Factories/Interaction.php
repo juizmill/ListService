@@ -2,12 +2,12 @@
 
 namespace Application\Controller\Factories;
 
+use Application\Controller\InteractionController;
+use Application\Form\Interaction as InteractionForm;
+use Application\Model\Interaction as InteractionModel;
 use Zend\Form\Annotation\AnnotationBuilder;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use Application\Controller\InteractionController;
-use Application\Model\Interaction as InteractionModel;
-use Application\Form\Interaction as InteractionForm;
 
 /**
  * Class Interaction
@@ -25,7 +25,7 @@ class Interaction implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        if (! $serviceLocator->has('Doctrine\ORM\EntityManager')) {
+        if (!$serviceLocator->has('Doctrine\ORM\EntityManager')) {
             $entityManager = $serviceLocator->getServiceLocator()->get('Doctrine\ORM\EntityManager');
         } else {
             $entityManager = $serviceLocator->get('Doctrine\ORM\EntityManager');

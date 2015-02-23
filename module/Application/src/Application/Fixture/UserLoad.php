@@ -2,10 +2,10 @@
 
 namespace Application\Fixture;
 
+use Application\Entity\User;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Application\Entity\User;
 
 /**
  * Class UserLoad
@@ -16,6 +16,7 @@ class UserLoad extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
      * User load
+     *
      * @param \Doctrine\Common\Persistence\ObjectManager $manager
      */
     public function load(ObjectManager $manager)
@@ -47,9 +48,10 @@ class UserLoad extends AbstractFixture implements OrderedFixtureInterface
         $this->setReference('user2', $user2);
         $this->setReference('user3', $user3);
     }
+
     /**
-    * @return int
-    */
+     * @return int
+     */
     public function getOrder()
     {
         return 3;

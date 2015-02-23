@@ -2,12 +2,12 @@
 
 namespace Application\Controller\Factories;
 
+use Application\Controller\TicketController;
+use Application\Form\Ticket as TicketForm;
+use Application\Model\Ticket as TicketModel;
 use Zend\Form\Annotation\AnnotationBuilder;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use Application\Controller\TicketController;
-use Application\Model\Ticket as TicketModel;
-use Application\Form\Ticket as TicketForm;
 
 /**
  * Class Ticket
@@ -25,7 +25,7 @@ class Ticket implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        if (! $serviceLocator->has('Doctrine\ORM\EntityManager')) {
+        if (!$serviceLocator->has('Doctrine\ORM\EntityManager')) {
             $entityManager = $serviceLocator->getServiceLocator()->get('Doctrine\ORM\EntityManager');
         } else {
             $entityManager = $serviceLocator->get('Doctrine\ORM\EntityManager');

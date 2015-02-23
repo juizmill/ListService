@@ -2,12 +2,12 @@
 
 namespace Application\Controller\Factories;
 
+use Application\Controller\CategoryController;
+use Application\Form\Category as CategoryForm;
+use Application\Model\Category as CategoryModel;
 use Zend\Form\Annotation\AnnotationBuilder;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use Application\Controller\CategoryController;
-use Application\Model\Category as CategoryModel;
-use Application\Form\Category as CategoryForm;
 
 /**
  * Class Category
@@ -25,7 +25,7 @@ class Category implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        if (! $serviceLocator->has('Doctrine\ORM\EntityManager')) {
+        if (!$serviceLocator->has('Doctrine\ORM\EntityManager')) {
             $entityManager = $serviceLocator->getServiceLocator()->get('Doctrine\ORM\EntityManager');
         } else {
             $entityManager = $serviceLocator->get('Doctrine\ORM\EntityManager');
