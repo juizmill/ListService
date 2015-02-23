@@ -2,6 +2,7 @@
 
 namespace ApplicationTest\Controller;
 
+use ApplicationTest\Framework\ApplicationMocks;
 use ApplicationTest\Framework\TestCaseController;
 use Application\Controller\CategoryController;
 use Zend\Http\Request;
@@ -12,10 +13,13 @@ use Application\Entity\Category;
 
 /**
  * Class CategoryControllerTest
+ *
  * @package ApplicationTest\Controller
  */
 class CategoryControllerTest extends TestCaseController
 {
+    use ApplicationMocks;
+
     protected $traceError = true;
     public $isORM = true;
 
@@ -28,23 +32,20 @@ class CategoryControllerTest extends TestCaseController
         $this->getEm()->flush();
     }
 
-    /**
-     *
-     */
+    private function controllerClass()
+    {
+            return new CategoryController(
+                $this->getMockModel(),
+                $this->getMockFormHandle(),
+                'default',
+                'default'
+            );
+    }
+
     public function testClasseExist()
     {
         $this->assertTrue(class_exists('Application\\Controller\\CategoryController'));
-        $this->assertInstanceOf('Application\\Controller\\AbstractController', new CategoryController());
-    }
-
-    public function testConstructor()
-    {
-        $controller = new CategoryController();
-
-        $this->assertEquals('Application\\Entity\\Category', $controller->entity);
-        $this->assertEquals('category', $controller->controller);
-        $this->assertEquals('category.form', $controller->form);
-        $this->assertEquals('category', $controller->route);
+        $this->assertInstanceOf('Application\\Controller\\AbstractController', $this->controllerClass());
     }
 
     public function testErro404()
@@ -57,7 +58,7 @@ class CategoryControllerTest extends TestCaseController
     {
         $this->setupDB();
 
-        $result = $this->dispatch('/category');
+        $this->dispatch('/category');
         $this->assertResponseStatusCode(200);
 
         $this->assertModuleName('Application');
@@ -135,6 +136,21 @@ class CategoryControllerTest extends TestCaseController
         $this->assertRedirectTo('/category');
     }
 
+    public function testRedirectEditAction()
+    {
+        $this->setupDB();
+
+        $this->dispatch('/category/edit/35');
+        $this->assertResponseStatusCode(302);
+
+        $this->assertModuleName('Application');
+        $this->assertControllerName('Application\controller\Category');
+        $this->assertControllerClass('CategoryController');
+        $this->assertMatchedRouteName('category');
+
+        $this->assertRedirectTo('/category');
+    }
+
     public function testEditAction()
     {
         $this->setupDB();
@@ -164,20 +180,6 @@ class CategoryControllerTest extends TestCaseController
         $this->assertInstanceOf('Zend\\Form\\Form', $var['form']);
     }
 
-    public function testRedirectEditAction()
-    {
-        $this->setupDB();
-
-        $this->dispatch('/category/edit/19999999');
-        $this->assertResponseStatusCode(302);
-
-        $this->assertModuleName('Application');
-        $this->assertControllerName('Application\controller\Category');
-        $this->assertControllerClass('CategoryController');
-        $this->assertMatchedRouteName('category');
-
-        $this->assertRedirectTo('/category');
-    }
 
     public function testMethodPostInEditAction()
     {
@@ -229,17 +231,6 @@ class CategoryControllerTest extends TestCaseController
         //test variable in view
         $var = $viewModel->getVariables();
 
-        $this->assertTrue($var[0]);
-
-        $this->dispatch('/category/delete/3', Request::METHOD_GET, array(), true);
-        $mvcEvent = $this->getApplication()->getMvcEvent();
-
-        // get and assert view controller
-        $viewModel = $mvcEvent->getResult();
-
-        //test variable in view
-        $var = $viewModel->getVariables();
-        $this->assertFalse($var[0]);
-
+        $this->assertInstanceOf('Application\Entity\Category', $var[0]);
     }
 }

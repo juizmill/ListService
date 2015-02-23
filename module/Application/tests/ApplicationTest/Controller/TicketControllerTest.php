@@ -2,6 +2,7 @@
 
 namespace ApplicationTest\Controller;
 
+use ApplicationTest\Framework\ApplicationMocks;
 use ApplicationTest\Framework\TestCaseController;
 use Application\Controller\TicketController;
 use Zend\Http\Request;
@@ -13,13 +14,15 @@ use Application\Entity\User;
 
 /**
  * Class TicketControllerTest
+ *
  * @package ApplicationTest\Controller
  */
 class TicketControllerTest extends TestCaseController
 {
+    use ApplicationMocks;
+
     protected $traceError = true;
     public $isORM = true;
-
 
     public function creatadUser()
     {
@@ -48,23 +51,23 @@ class TicketControllerTest extends TestCaseController
         $this->getEm()->flush();
     }
 
+    private function controllerClass()
+    {
+        return new TicketController(
+            $this->getMockModel(),
+            $this->getMockFormHandle(),
+            'default',
+            'default'
+        );
+    }
+
     /**
      *
      */
     public function testClasseExist()
     {
         $this->assertTrue(class_exists('Application\\Controller\\TicketController'));
-        $this->assertInstanceOf('Application\\Controller\\AbstractController', new TicketController());
-    }
-
-    public function testConstructor()
-    {
-        $controller = new TicketController();
-
-        $this->assertEquals('Application\\Entity\\Ticket', $controller->entity);
-        $this->assertEquals('ticket', $controller->controller);
-        $this->assertEquals('ticket.form', $controller->form);
-        $this->assertEquals('ticket', $controller->route);
+        $this->assertInstanceOf('Application\\Controller\\AbstractController', $this->controllerClass());
     }
 
     public function testErro404()
@@ -77,7 +80,7 @@ class TicketControllerTest extends TestCaseController
     {
         $this->setupDB();
 
-        $result = $this->dispatch('/ticket');
+        $this->dispatch('/ticket');
         $this->assertResponseStatusCode(200);
 
         $this->assertModuleName('Application');
@@ -208,7 +211,6 @@ class TicketControllerTest extends TestCaseController
     {
         $this->setupDB();
 
-        $user = $this->getEm()->getRepository('Application\Entity\User')->find(1);
         $this->dispatch('/ticket/edit/1', Request::METHOD_POST, array(
             'title' => 'test_title_edit',
             'sought' => 'test_sought_edit'
@@ -257,17 +259,6 @@ class TicketControllerTest extends TestCaseController
         //test variable in view
         $var = $viewModel->getVariables();
 
-        $this->assertTrue($var[0]);
-
-        $this->dispatch('/ticket/delete/3', Request::METHOD_GET, array(), true);
-        $mvcEvent = $this->getApplication()->getMvcEvent();
-
-        // get and assert view controller
-        $viewModel = $mvcEvent->getResult();
-
-        //test variable in view
-        $var = $viewModel->getVariables();
-        $this->assertFalse($var[0]);
-
+        $this->assertInstanceOf('Application\Entity\Ticket', $var[0]);
     }
 }

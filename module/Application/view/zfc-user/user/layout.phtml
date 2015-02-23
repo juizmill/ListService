@@ -1,0 +1,30 @@
+<?php echo $this->doctype(); ?>
+<html class="bg-black">
+    <head lang="en">
+        <meta charset="UTF-8">
+        <?php echo $this->headTitle($this->translate('Login')); ?>
+
+        <?php echo $this->headMeta()
+            ->appendName('viewport', 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no')
+            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+        ?>
+
+        <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
+                        ->prependStylesheet($this->basePath() . '/css/AdminLTE.css')
+                        ->prependStylesheet($this->basePath() . '/css/ionicons.min.css')
+                        ->prependStylesheet($this->basePath() . '/css/font-awesome.min.css')
+                        ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css')
+        ?>
+    </head>
+    <body class="bg-black">
+        <div class="form-box" id="login-box">
+            <?php echo $this->content; ?>
+        </div>
+        <?php echo $this->headScript()
+            ->prependFile($this->basePath() . '/js/bootstrap.min.js')
+            ->prependFile($this->basePath() . '/js/jquery.min.js')
+            ->prependFile('https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js', 'text/javascript', array('conditional' => 'lt IEz 9',))
+            ->prependFile('https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js',   'text/javascript', array('conditional' => 'lt IE 9',));
+        ; ?>
+    </body>
+</html>

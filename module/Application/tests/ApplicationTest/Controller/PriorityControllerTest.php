@@ -2,6 +2,7 @@
 
 namespace ApplicationTest\Controller;
 
+use ApplicationTest\Framework\ApplicationMocks;
 use ApplicationTest\Framework\TestCaseController;
 use Application\Controller\PriorityController;
 use Zend\Http\Request;
@@ -12,36 +13,39 @@ use Application\Entity\Priority;
 
 /**
  * Class PriorityControllerTest
+ *
  * @package ApplicationTest\Controller
  */
 class PriorityControllerTest extends TestCaseController
 {
+    use ApplicationMocks;
+
     protected $traceError = true;
     public $isORM = true;
 
     public function setupDB()
     {
-        $Priority = new Priority;
-        $Priority->setDescription('teste_priority')->setActive(true);
-        $this->getEm()->persist($Priority);
+        $priority = new Priority;
+        $priority->setDescription('teste_priority')->setActive(true);
+        $this->getEm()->persist($priority);
 
         $this->getEm()->flush();
+    }
+
+    private function controllerClass()
+    {
+        return new PriorityController(
+            $this->getMockModel(),
+            $this->getMockFormHandle(),
+            'default',
+            'default'
+        );
     }
 
     public function testClasseExist()
     {
         $this->assertTrue(class_exists('Application\\Controller\\PriorityController'));
-        $this->assertInstanceOf('Application\\Controller\\AbstractController', new PriorityController());
-    }
-
-    public function testConstructor()
-    {
-        $controller = new PriorityController();
-
-        $this->assertEquals('Application\\Entity\\Priority', $controller->entity);
-        $this->assertEquals('priority', $controller->controller);
-        $this->assertEquals('priority.form', $controller->form);
-        $this->assertEquals('priority', $controller->route);
+        $this->assertInstanceOf('Application\\Controller\\AbstractController', $this->controllerClass());
     }
 
     public function testErro404()
@@ -54,7 +58,7 @@ class PriorityControllerTest extends TestCaseController
     {
         $this->setupDB();
 
-        $result = $this->dispatch('/priority');
+        $this->dispatch('/priority');
         $this->assertResponseStatusCode(200);
 
         $this->assertModuleName('Application');
@@ -226,17 +230,6 @@ class PriorityControllerTest extends TestCaseController
         //test variable in view
         $var = $viewModel->getVariables();
 
-        $this->assertTrue($var[0]);
-
-        $this->dispatch('/priority/delete/3', Request::METHOD_GET, array(), true);
-        $mvcEvent = $this->getApplication()->getMvcEvent();
-
-        // get and assert view controller
-        $viewModel = $mvcEvent->getResult();
-
-        //test variable in view
-        $var = $viewModel->getVariables();
-        $this->assertFalse($var[0]);
-
+        $this->assertInstanceOf('Application\Entity\Priority', $var[0]);
     }
 }

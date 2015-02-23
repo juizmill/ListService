@@ -3,136 +3,92 @@
 namespace Application\Entity;
 
 use Zend\Stdlib\Hydrator\ClassMethods;
+use Application\Entity\Interfaces\EntityInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Zend\Form\Annotation as Form;
 
 /**
  * Class AbstractEntity
+ *
  * @package Application\Entity
  * @ORM\MappedSuperclass
  * @Form\Hydrator("Zend\Stdlib\Hydrator\ClassMethods")
  */
-abstract class AbstractEntity
+abstract class AbstractEntity implements EntityInterface
 {
     /**
      * @ORM\Id
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * @Form\Exclude()
-     * @var $id integer
+     * @var $identity integer
      */
-    private $id;
-
-    /**
-     * @ORM\Column(name="description", type="text", nullable=false)
-     * @Form\Required(true)
-     * @Form\Validator({"name":"NotEmpty"})
-     * @Form\Filter({"name":"StringTrim"})
-     * @Form\Filter({"name":"StripTags"})
-     * @Form\Validator({"name":"StringLength"})
-     * @Form\Attributes({"type":"text", "class":"form-control"})
-     * @Form\Options({"label":"Description:"})
-     * @var $description string
-     */
-    private $description;
+    protected $identity;
 
     /**
      * @ORM\Column(name="active", type="boolean", nullable=false, options={"default" = 1})
-     * @var boolean
+     * @Form\Exclude()
+     * @var $isActive boolean
      */
-    private $active = true;
+    protected $isActive = true;
 
     /**
-     * construct
-     *
-     * @param array $options Receives an array
+     * @param array $options
      */
     public function __construct(Array $options = [])
     {
-        (new ClassMethods)->hydrate($options, $this);
+        (new ClassMethods(false))->hydrate($options, $this);
     }
 
     /**
-     * get id
-     *
-     * @return integer Return an integer
+     * {@inheritdoc}
      */
-    public function getId()
+    public function getIdentity()
     {
-        return $this->id;
+        return $this->identity;
     }
 
     /**
-     * set id
-     *
-     * @param integer $id Return an integer
-     * @return $this
+     * {@inheritdoc}
      */
-    public function setId($id)
+    public function setIdentity($identity)
     {
-        if ((int) $id <= 0) {
-            throw new \RuntimeException(__FUNCTION__.' accept only positive integers greater than zero and');
+        if ((int) $identity <= 0) {
+            throw new \RuntimeException(__FUNCTION__ . ' accept only positive integers greater than zero and');
         }
 
-        $this->id = $id;
+        $this->identity = $identity;
+
         return $this;
     }
 
     /**
-     * get description
-     *
-     * @return string Return long text
+     * {@inheritdoc}
      */
-    public function getDescription()
+    public function isActive()
     {
-        return $this->description;
+        return $this->isActive;
     }
 
     /**
-     * set description
-     *
-     * @param string $description Return long text
-     * @return $this
+     * {@inheritdoc}
      */
-    public function setDescription($description)
+    public function setActive($isActive)
     {
-        $this->description = $description;
-        return $this;
-    }
-
-    /**
-     * get active
-     *
-     * @return boolean Return a boolean
-     */
-    public function getActive()
-    {
-        return $this->active;
-    }
-
-    /**
-     * set active
-     *
-     * @param boolean $active Return a boolean
-     * @return $this
-     */
-    public function setActive($active)
-    {
-        if (! is_bool($active)) {
-            throw new \RuntimeException(__FUNCTION__.' accept only boolean');
+        if (!is_bool($isActive)) {
+            throw new \RuntimeException(__FUNCTION__ . ' accept only boolean');
         }
 
-        $this->active = (boolean) $active;
+        $this->isActive = (boolean) $isActive;
+
         return $this;
     }
 
     /**
-     * to array
-     *
-     * @return array Return array list
+     * {@inheritdoc}
      */
     public function toArray()
     {
-        return (new ClassMethods())->extract($this);
+        return (new ClassMethods(false))->extract($this);
     }
 }

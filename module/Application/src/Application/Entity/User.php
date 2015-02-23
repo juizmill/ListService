@@ -2,120 +2,100 @@
 
 namespace Application\Entity;
 
+use DateTime;
 use ZfcUser\Entity\UserInterface;
-use Zend\Stdlib\Hydrator\ClassMethods;
-use Zend\Crypt\Password\Bcrypt;
-use Zend\Math\Rand;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class User
+ *
  * @package Application\Entity
  * @ORM\Table(name="user")
  * @ORM\Entity
  */
-class User implements UserInterface
+class User extends AbstractEntity implements UserInterface
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @var $id integer
-     */
-    private $id;
-
-    /**
      * @ORM\Column(name="username", type="text", length=80, nullable=true)
-     * @var string
+     * @var $username string
      */
     private $username;
 
     /**
      * @ORM\Column(name="email", type="text", length=255, nullable=false)
-     * @var string
+     * @var $email string
      */
     private $email;
 
     /**
      * @ORM\Column(name="display_name", type="text", length=255, nullable=true)
-     * @var string
+     * @var $displayName string
      */
-    private $display_name;
+    private $displayName;
 
     /**
      * @ORM\Column(name="password", type="text", length=255, nullable=false)
-     * @var datetime
+     * @var $password string
      */
     private $password;
 
     /**
-     * @ORM\Column(name="state", type="boolean", nullable=false, options={"default" = 0})
-     * @var datetime
+     * @ORM\Column(name="state", type="integer", nullable=true)
+     * @var $state int
      */
     private $state;
 
     /**
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
-     * @var datetime
+     * @var $created_at datetime
      */
-    private $created_at;
+    private $createdAt;
 
     /**
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(name="updated_at", type="datetime", nullable=true)
-     * @var datetime
+     * @var $updated_at datetime
      */
-    private $updated_at;
+    private $updatedAt;
 
     /**
      * @ORM\Column(name="active_key", type="string", length=255, nullable=false)
      * @var $active_key string
      */
-    private $active_key;
+    private $activeKey;
 
     /**
-     * @ORM\Column(name="active", type="boolean", nullable=false, options={"default" = 1})
-     * @var boolean
-     */
-    private $active = true;
-
-    /**
-     * construct
+     * @param array $options
      */
     public function __construct(Array $options = [])
     {
+        parent::__construct($options);
         $this->setActiveKey(md5($this->email . date('Y-m-d H:m:s')));
-        (new ClassMethods)->hydrate($options, $this);
     }
 
     /**
-     * get id
-     *
-     * @return integer return integer
+     * @return int
      */
     public function getId()
     {
-        return $this->id;
+        return $this->identity;
     }
 
     /**
-     * set id
-     *
-     * @param integer $id Return integer
-     * @return $this;
+     * @param  int   $identity
+     * @return $this
      */
-    public function setId($id)
+    public function setId($identity)
     {
-        $this->id = $id;
+        $this->identity = $identity;
+
         return $this;
     }
 
     /**
-     * get username
-     *
-     * @return string  username
+     * @return string
      */
     public function getUsername()
     {
@@ -123,20 +103,18 @@ class User implements UserInterface
     }
 
     /**
-     * set username
-     *
-     * @param string $username Return username
+     * @param  string $username
+     * @return $this
      */
     public function setUsername($username)
     {
         $this->username = $username;
+
         return $this;
     }
 
     /**
-     * get email
-     *
-     * @return string Return string email
+     * @return string
      */
     public function getEmail()
     {
@@ -144,43 +122,37 @@ class User implements UserInterface
     }
 
     /**
-     * set email
-     *
-     * @param String $email Return string email
+     * @param  string $email
      * @return $this
      */
     public function setEmail($email)
     {
         $this->email = $email;
+
         return $this;
     }
 
     /**
-     * get display_name
-     *
-     * @return string return display name
+     * @return string
      */
     public function getDisplayName()
     {
-        return $this->display_name;
+        return $this->displayName;
     }
 
     /**
-     * set display_name
-     *
-     * @param string $display_name Return display name
+     * @param  string $displayName
      * @return $this
      */
-    public function setDisplayName($display_name)
+    public function setDisplayName($displayName)
     {
-        $this->display_name = $display_name;
+        $this->displayName = $displayName;
+
         return $this;
     }
 
     /**
-     * get password
-     *
-     * @return string return password
+     * @return \DateTime
      */
     public function getPassword()
     {
@@ -188,20 +160,18 @@ class User implements UserInterface
     }
 
     /**
-     * set password
-     *
-     * @param String $password  return password
+     * @param  string $password
+     * @return $this
      */
     public function setPassword($password)
     {
         $this->password = $password;
+
         return $this;
     }
 
     /**
-     * get state
-     *
-     * @return string Return state
+     * @return int
      */
     public function getState()
     {
@@ -209,110 +179,70 @@ class User implements UserInterface
     }
 
     /**
-     * set state
-     *
-     * @param String $state Return state
+     * @param  int   $state
+     * @return $this
      */
     public function setState($state)
     {
         $this->state = $state;
+
         return $this;
     }
 
     /**
-     * set created_at
-     *
-     * @return datetime date created
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
     /**
-     * set created_at
-     *
-     * @param datetime $created_at Date created
+     * @param $createdAt
      * @return $this
      */
-    public function setCreatedAt($created_at)
+    public function setCreatedAt($createdAt)
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
+
         return $this;
     }
 
     /**
-     * get updated_at
-     *
-     * @return datetime date updated
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
-        return $this->updated_at;
+        return $this->updatedAt;
     }
 
     /**
-     * set updated
-     *
-     * @param datetime $updated_at Date updated
+     * @param $updatedAt
      * @return $this
      */
-    public function setUpdatedAt($updated_at)
+    public function setUpdatedAt($updatedAt)
     {
-        $this->updated_at = $updated_at;
+        $this->updatedAt = $updatedAt;
+
         return $this;
     }
 
     /**
-     * @param string $active_key
+     * @param $activeKey
      * @return $this
      */
-    public function setActiveKey($active_key)
+    public function setActiveKey($activeKey)
     {
-        $this->active_key = $active_key;
+        $this->activeKey = $activeKey;
+
         return $this;
     }
 
     /**
-     * @return string active_key
+     * @return string
      */
     public function getActiveKey()
     {
-        return $this->active_key;
-    }
-    /**
-     * get active
-     *
-     * @return boolean Return a boolean
-     */
-    public function getActive()
-    {
-        return $this->active;
-    }
-
-    /**
-     * set active
-     *
-     * @param boolean $active Return a boolean
-     * @return $this
-     */
-    public function setActive($active)
-    {
-        if (! is_bool($active)) {
-            throw new \RuntimeException(__FUNCTION__.' accept only boolean');
-        }
-
-        $this->active = (boolean) $active;
-        return $this;
-    }
-
-    /**
-     * to array
-     *
-     * @return array Return array list
-     */
-    public function toArray()
-    {
-        return (new ClassMethods())->extract($this);
+        return $this->activeKey;
     }
 }

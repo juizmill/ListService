@@ -2,32 +2,27 @@
 
 namespace Application\Entity;
 
+use DateTime;
+use Application\Entity\Traits\ManyToOnePriorityTrait;
+use Application\Entity\Traits\ManyToOneUserTrait;
 use Doctrine\ORM\Mapping as ORM;
-use Zend\Stdlib\Hydrator\ClassMethods;
 use Zend\Form\Annotation as Form;
 
 /**
  * Class Ticket
+ *
  * @package Application\Entity
  * @ORM\Table(name="ticket")
  * @ORM\Entity
  * @Form\Name("ticket")
  * @Form\Hydrator("Zend\Stdlib\Hydrator\ClassMethods")
  */
-class Ticket
+class Ticket extends AbstractEntity
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @Form\Exclude()
-     * @var $id integer
-     */
-    private $id;
+    use ManyToOnePriorityTrait;
+    use ManyToOneUserTrait;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="title", type="string", length=60, nullable=false)
      * @Form\Required(true)
      * @Form\Validator({"name":"NotEmpty"})
@@ -36,37 +31,32 @@ class Ticket
      * @Form\Validator({"name":"StringLength"})
      * @Form\Attributes({"type":"text", "class":"form-control"})
      * @Form\Options({"label":"Title:"})
-     * @var $description string
+     * @var $title string
      */
     private $title;
 
     /**
-     * @var \DateTime
-     *
      * @ORM\Column(name="date_start", type="datetime", nullable=true)
      * @Form\Exclude()
+     * @var $dateStart datetime
      */
-    private $date_start;
+    private $dateStart;
 
     /**
-     * @var \DateTime
-     *
      * @ORM\Column(name="date_end", type="datetime", nullable=true)
      * @Form\Exclude()
+     * @var $dateEnd datetime
      */
-    private $date_end;
+    private $dateEnd;
 
     /**
-     * @var \DateTime
-     *
      * @ORM\Column(name="date_estimated", type="datetime", nullable=true)
      * @Form\Exclude()
+     * @var $dateEstimated datetime
      */
-    private $date_estimated;
+    private $dateEstimated;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="sought", type="string", length=45, nullable=false)
      * @Form\Required(true)
      * @Form\Validator({"name":"NotEmpty"})
@@ -75,69 +65,12 @@ class Ticket
      * @Form\Validator({"name":"StringLength"})
      * @Form\Attributes({"type":"text", "class":"form-control"})
      * @Form\Options({"label":"Sought:"})
-     * @var $description string
+     * @var $sought string
      */
     private $sought;
 
     /**
-     * @var boolean
-     *
-     * @ORM\Column(name="active", type="boolean", nullable=false)
-     * @Form\Exclude()
-     */
-    private $active = true;
-
-    /**
-     * @var object
-     *
-     * @ORM\ManyToOne(targetEntity="Application\Entity\Priority")
-     * @ORM\JoinColumns({
-     *     @ORM\JoinColumn(name="priority", referencedColumnName="id")
-     * })
-     * @Form\Exclude()
-     */
-    private $priority;
-
-    /**
-     * @var object
-     *
-     * @ORM\ManyToOne(targetEntity="Application\Entity\User")
-     * @ORM\JoinColumns({
-     *     @ORM\JoinColumn(name="user", referencedColumnName="id")
-     * })
-     * @Form\Exclude()
-     */
-    private $user;
-
-    public function __construct(Array $options = [])
-    {
-        (new ClassMethods())->hydrate($options, $this);
-    }
-
-    /**
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param int $id
-     * @return $this
-     */
-    public function setId($id)
-    {
-        if ((int) $id <= 0) {
-            throw new \RuntimeException(__FUNCTION__.' accept only positive integers greater than zero and');
-        }
-
-        $this->id = $id;
-        return $this;
-    }
-
-    /**
-     * @return mixed
+     * @return string
      */
     public function getTitle()
     {
@@ -145,71 +78,75 @@ class Ticket
     }
 
     /**
-     * @param mixed $title
+     * @param $title
      * @return $this
      */
     public function setTitle($title)
     {
         $this->title = $title;
+
         return $this;
     }
 
     /**
-     * @return mixed
+     * @return \DateTime
      */
     public function getDateStart()
     {
-        return $this->date_start;
+        return $this->dateStart;
     }
 
     /**
-     * @param mixed $date_start
+     * @param $dateStart
      * @return $this
      */
-    public function setDateStart($date_start)
+    public function setDateStart($dateStart)
     {
-        $this->date_start = $date_start;
+        $this->dateStart = $dateStart;
+
         return $this;
     }
 
     /**
-     * @return mixed
+     * @return \DateTime
      */
     public function getDateEnd()
     {
-        return $this->date_end;
+        return $this->dateEnd;
     }
 
     /**
-     * @param mixed $date_end
+     * @param $dateEnd
      * @return $this
      */
-    public function setDateEnd($date_end)
+    public function setDateEnd($dateEnd)
     {
-        $this->date_end = $date_end;
+        $this->dateEnd = $dateEnd;
+
         return $this;
     }
 
     /**
-     * @return mixed
+     * @return \DateTime
      */
     public function getDateEstimated()
     {
-        return $this->date_estimated;
+        return $this->dateEstimated;
     }
 
     /**
-     * @param mixed $date_estimated
+     * @param $dateEstimated
      * @return $this
      */
-    public function setDateEstimated($date_estimated)
+    public function setDateEstimated($dateEstimated)
     {
-        $this->date_estimated = $date_estimated;
+        $this->dateEstimated = $dateEstimated;
+
         return $this;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getSought()
     {
@@ -217,75 +154,13 @@ class Ticket
     }
 
     /**
-     * @param mixed $sought
+     * @param $sought
      * @return $this
      */
     public function setSought($sought)
     {
         $this->sought = $sought;
+
         return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getActive()
-    {
-        return $this->active;
-    }
-
-    /**
-     * @param mixed $active
-     * @return $this
-     */
-    public function setActive($active)
-    {
-        $this->active = $active;
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPriority()
-    {
-        return $this->priority;
-    }
-
-    /**
-     * @param mixed $priority
-     * @return $this
-     */
-    public function setPriority($priority)
-    {
-        $this->priority = $priority;
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
-
-    /**
-     * @param mixed $user
-     * @return $this
-     */
-    public function setUser($user)
-    {
-        $this->user = $user;
-        return $this;
-    }
-
-    /**
-     * @return array
-     * @return $this
-     */
-    public function toArray()
-    {
-        return (new ClassMethods())->extract($this);
     }
 }

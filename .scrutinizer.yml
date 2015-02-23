@@ -1,0 +1,37 @@
+tools:
+    php_sim: true
+    php_pdepend: true
+    php_analyzer: true
+    php_cs_fixer:
+        extensions:
+            - php
+        command: php-cs-fixer
+        enabled: true
+        config:
+            level: all
+    php_cpd:
+        command: phpcpd
+        # Minimum number of identical lines (default: 5)
+        min_lines: 5
+        # Minimum number of identical tokens (default: 70)
+        min_tokens: 70
+        # A list of names that should be scanned (default: '*.php')
+        names:
+            # Default:
+            - '*.php'
+        enabled: true
+filter:
+    paths:
+        - 'module/Application/src/Application/*'
+    excluded_paths:
+        - 'vendor/*'
+        - 'bin/*'
+        - 'doc/*'
+        - 'config/*'
+        - 'data/*'
+        - 'public/*'
+        - 'module/Application/src/Application/Fixture*'
+        - 'module/Application/tests/*'
+        - 'module/Application/language/*'
+        - 'module/Application/config/*'
+        - 'module/Application/view/*'
