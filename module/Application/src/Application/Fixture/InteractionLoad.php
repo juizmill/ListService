@@ -2,10 +2,10 @@
 
 namespace Application\Fixture;
 
+use Application\Entity\Interaction;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Application\Entity\Interaction;
 
 /**
  * Class InteractionLoad
@@ -16,6 +16,7 @@ class InteractionLoad extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
      * Interaction load
+     *
      * @param \Doctrine\Common\Persistence\ObjectManager $manager
      */
     public function load(ObjectManager $manager)
@@ -32,16 +33,17 @@ class InteractionLoad extends AbstractFixture implements OrderedFixtureInterface
                                       nois paga. Sapien in monti palavris qui num
                                       significa nadis i pareci latim. Interessantiss
                                       quisso pudia ce receita de bolis, mais bolis eu num gostis.')
-                ->setTicket($ticket)
-                ->setUser($user);
+            ->setTicket($ticket)
+            ->setUser($user);
         $manager->persist($interaction);
         $manager->flush();
 
         $this->setReference('interaction1', $interaction);
     }
+
     /**
-    * @return int
-    */
+     * @return int
+     */
     public function getOrder()
     {
         return 5;

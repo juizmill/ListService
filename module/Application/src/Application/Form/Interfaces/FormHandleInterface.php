@@ -3,9 +3,9 @@
 namespace Application\Form\Interfaces;
 
 use Application\Entity\Interfaces\EntityInterface;
+use Application\Model\Interfaces\ModelInterface;
 use Zend\Form\FormInterface;
 use Zend\Http\Request;
-use Application\Model\Interfaces\ModelInterface;
 
 /**
  * Class FormHandleInterface

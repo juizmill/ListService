@@ -2,10 +2,10 @@
 
 namespace Application\Fixture;
 
+use Application\Entity\Priority;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Application\Entity\Priority;
 
 /**
  * Class PriorityLoad
@@ -16,6 +16,7 @@ class PriorityLoad extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
      * Category load
+     *
      * @param \Doctrine\Common\Persistence\ObjectManager $manager
      */
     public function load(ObjectManager $manager)
@@ -38,9 +39,10 @@ class PriorityLoad extends AbstractFixture implements OrderedFixtureInterface
         $this->setReference('priority2', $priority1);
         $this->setReference('priority3', $priority2);
     }
+
     /**
-    * @return int
-    */
+     * @return int
+     */
     public function getOrder()
     {
         return 2;

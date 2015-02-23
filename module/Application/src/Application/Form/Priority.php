@@ -21,7 +21,7 @@ class Priority extends AbstractFormHandle
         $button->setLabel('save')
             ->setAttributes(array(
                 'class' => 'btn btn-primary',
-                'type'  => 'submit',
+                'type' => 'submit',
             ));
         $this->getForm()->add($button);
     }

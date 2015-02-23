@@ -2,12 +2,12 @@
 
 namespace Application\Entity;
 
+use Application\Entity\Traits\DescriptionTraint;
 use Application\Entity\Traits\ManyToOneUserTrait;
 use DateTime;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Zend\Form\Annotation as Form;
-use Application\Entity\Traits\DescriptionTraint;
 
 /**
  * Class Interaction

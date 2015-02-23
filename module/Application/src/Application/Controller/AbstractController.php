@@ -5,12 +5,12 @@ namespace Application\Controller;
 use Application\Form\Interfaces\FormHandleInterface;
 use Application\Model\Interfaces\ModelInterface;
 use Doctrine\Common\Collections\Criteria;
-use Zend\Paginator\Paginator;
 use DoctrineModule\Paginator\Adapter\Selectable;
+use Zend\Form\Form;
 use Zend\Mvc\Controller\AbstractActionController;
+use Zend\Paginator\Paginator;
 use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
-use Zend\Form\Form;
 
 /**
  * Class AbstractController
@@ -73,6 +73,7 @@ class AbstractController extends AbstractActionController
 
         if (!$handle instanceof Form) {
             $this->flashMessenger()->addSuccessMessage('Successfully registered!');
+
             return $this->returnIndex();
         }
 
@@ -98,6 +99,7 @@ class AbstractController extends AbstractActionController
 
         if (!$handle instanceof Form) {
             $this->flashMessenger()->addSuccessMessage('Updated successfully!');
+
             return $this->redirect()->toRoute($this->route, [
                 'controller' => $this->controller,
                 'action' => 'edit',
@@ -124,6 +126,7 @@ class AbstractController extends AbstractActionController
         }
 
         $this->flashMessenger()->addInfoMessage('Denied operation.');
+
         return $this->returnIndex();
     }
 

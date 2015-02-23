@@ -70,6 +70,7 @@ class AbstractFormHandle implements FormHandleInterface
     public function setModel(ModelInterface $model)
     {
         $this->model = $model;
+
         return $this;
     }
 
@@ -87,6 +88,7 @@ class AbstractFormHandle implements FormHandleInterface
     public function setForm(FormInterface $form)
     {
         $this->form = $form;
+
         return $this;
     }
 
@@ -104,6 +106,7 @@ class AbstractFormHandle implements FormHandleInterface
     public function setEntity(EntityInterface $entity)
     {
         $this->entity = $entity;
+
         return $this;
     }
 }
