@@ -9,6 +9,8 @@ use Zend\Form\Annotation as Form;
 /**
  * Class ManyToOnePriorityTrait
  *
+ * @ORM\Entity
+ * @Form\Hydrator("Zend\Stdlib\Hydrator\ClassMethods")
  * @package Application\Entity\Traits
  */
 trait ManyToOnePriorityTrait
