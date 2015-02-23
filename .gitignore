@@ -7,7 +7,5 @@
 composer.lock
 vendor
 bin
-*.sublime-project
-*.sublime-workspace
 .codeintel
 build
