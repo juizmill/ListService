@@ -2,20 +2,8 @@
 
 namespace Application;
 
-use Zend\Form\Annotation\AnnotationBuilder;
-use DoctrineModule\Validator\NoObjectExists;
-use Zend\Form\Factory;
-use Application\Entity\Category;
-use Application\Entity\Priority;
-use Application\Entity\Ticket;
-use Application\Entity\Interaction;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
-
-use Application\Model\Category as CategoryModel;
-use Application\Controller\CategoryController;
-use Application\Form\Category as CategoryForm;
-
 
 /**
  * Class Module
@@ -45,8 +33,8 @@ class Module
                 $routeMatch = $event->getRouteMatch();
                 $viewModel = $event->getResult();
 
-                if (($viewModel instanceof \Zend\View\Model\ViewModel) and
-                    ($routeMatch->getParam('action') == 'login') or
+                if (($viewModel instanceof \Zend\View\Model\ViewModel) &&
+                    ($routeMatch->getParam('action') == 'login') ||
                     ($routeMatch->getParam('action') == 'register')
                 ) {
                     $viewModel->setTerminal(true);
