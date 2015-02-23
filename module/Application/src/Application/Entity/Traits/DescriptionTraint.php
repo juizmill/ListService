@@ -2,14 +2,9 @@
 
 namespace Application\Entity\Traits;
 
-use Doctrine\ORM\Mapping as ORM;
-use Zend\Form\Annotation as Form;
-
 /**
  * Class DescriptionTraint
  *
- * @ORM\Entity
- * @Form\Hydrator("Zend\Stdlib\Hydrator\ClassMethods")
  * @package Application\Entity\Traits
  */
 trait DescriptionTraint

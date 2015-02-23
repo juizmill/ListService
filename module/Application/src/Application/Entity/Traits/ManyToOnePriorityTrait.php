@@ -3,14 +3,10 @@
 namespace Application\Entity\Traits;
 
 use Application\Entity\Priority;
-use Doctrine\ORM\Mapping as ORM;
-use Zend\Form\Annotation as Form;
 
 /**
  * Class ManyToOnePriorityTrait
  *
- * @ORM\Entity
- * @Form\Hydrator("Zend\Stdlib\Hydrator\ClassMethods")
  * @package Application\Entity\Traits
  */
 trait ManyToOnePriorityTrait

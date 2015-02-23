@@ -3,14 +3,10 @@
 namespace Application\Entity\Traits;
 
 use Application\Entity\User as UserApp;
-use Doctrine\ORM\Mapping as ORM;
-use Zend\Form\Annotation as Form;
 
 /**
  * Class ManyToOneUserTrait
  *
- * @ORM\Entity
- * @Form\Hydrator("Zend\Stdlib\Hydrator\ClassMethods")
  * @package Application\Entity\Traits
  */
 trait ManyToOneUserTrait
