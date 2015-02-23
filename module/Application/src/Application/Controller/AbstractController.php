@@ -86,13 +86,14 @@ class AbstractController extends AbstractActionController
     {
         $identity = $this->params()->fromRoute('id', 0);
 
-        $entity = $this->model->getRepository()->find($identity);
+        $entity = $this->model->getRepository()->findOneBy(['identity' => $identity]);
 
         if (!$entity) {
             return $this->returnIndex();
         }
 
         $request = $this->getRequest();
+        $this->form->getForm()->setData($entity->toArray());
         $handle = $this->form->handle($request, $identity);
 
         if (!$handle instanceof Form) {
@@ -103,8 +104,6 @@ class AbstractController extends AbstractActionController
                 'id' => $identity
             ]);
         }
-
-        $this->form->getForm()->setData($entity->toArray());
 
         return new ViewModel(['form' => $this->form->getForm(), 'id' => $identity]);
     }
@@ -120,11 +119,7 @@ class AbstractController extends AbstractActionController
 
             $jsonModel = new JsonModel();
 
-            if ($delete) {
-                return $jsonModel->setVariables([true]);
-            } else {
-                return $jsonModel->setVariables([false]);
-            }
+            return $jsonModel->setVariables([$delete]);
 
         }
 
@@ -135,7 +130,7 @@ class AbstractController extends AbstractActionController
     /**
      * @return \Zend\Http\Response
      */
-    private function returnIndex()
+    protected function returnIndex()
     {
         return $this->redirect()->toRoute($this->route, [
             'controller' => $this->controller,

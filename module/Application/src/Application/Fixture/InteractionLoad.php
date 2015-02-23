@@ -32,8 +32,8 @@ class InteractionLoad extends AbstractFixture implements OrderedFixtureInterface
                                       nois paga. Sapien in monti palavris qui num
                                       significa nadis i pareci latim. Interessantiss
                                       quisso pudia ce receita de bolis, mais bolis eu num gostis.')
-                ->setTicket($user)
-                ->setUser($ticket);
+                ->setTicket($ticket)
+                ->setUser($user);
         $manager->persist($interaction);
         $manager->flush();
 

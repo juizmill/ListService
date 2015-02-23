@@ -231,17 +231,6 @@ class CategoryControllerTest extends TestCaseController
         //test variable in view
         $var = $viewModel->getVariables();
 
-        $this->assertTrue($var[0]);
-
-        $this->dispatch('/category/delete/399', Request::METHOD_GET, array(), true);
-        $mvcEvent = $this->getApplication()->getMvcEvent();
-
-        // get and assert view controller
-        $viewModel = $mvcEvent->getResult();
-
-        //test variable in view
-        $var = $viewModel->getVariables();
-        $this->assertFalse($var[0]);
-
+        $this->assertInstanceOf('Application\Entity\Category', $var[0]);
     }
 }

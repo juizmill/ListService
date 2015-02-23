@@ -259,17 +259,6 @@ class TicketControllerTest extends TestCaseController
         //test variable in view
         $var = $viewModel->getVariables();
 
-        $this->assertTrue($var[0]);
-
-        $this->dispatch('/ticket/delete/3', Request::METHOD_GET, array(), true);
-        $mvcEvent = $this->getApplication()->getMvcEvent();
-
-        // get and assert view controller
-        $viewModel = $mvcEvent->getResult();
-
-        //test variable in view
-        $var = $viewModel->getVariables();
-        $this->assertFalse($var[0]);
-
+        $this->assertInstanceOf('Application\Entity\Ticket', $var[0]);
     }
 }
