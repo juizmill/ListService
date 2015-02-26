@@ -119,10 +119,7 @@ class AbstractController extends AbstractActionController
             $identity = $this->params()->fromRoute('id', 0);
             $delete = $this->model->remove($identity);
 
-            $jsonModel = new JsonModel();
-
-            return $jsonModel->setVariables([$delete]);
-
+            return new JsonModel([$delete]);
         }
 
         $this->flashMessenger()->addInfoMessage('Denied operation.');
