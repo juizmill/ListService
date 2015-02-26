@@ -12,5 +12,14 @@
  */
 
 return array(
-    // ...
+    'doctrine' => array(
+        'migrations_configuration' => array(
+            'orm_default' => array(
+                'directory' => __DIR__.'/../../data/migrations',
+                'name' => 'Migrations Application ListService',
+                'namespace' => 'Application\Entity',
+                'table' => 'migrations',
+            ),
+        ),
+    )
 );

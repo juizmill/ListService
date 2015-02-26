@@ -25,7 +25,8 @@
         "zf-commons/zfc-user-doctrine-orm": "1.0.0",
         "bjyoungblood/bjy-authorize": "1.5.*",
         "gedmo/doctrine-extensions": "2.3.*",
-        "hounddog/doctrine-data-fixture-module": "0.0.*"
+        "hounddog/doctrine-data-fixture-module": "0.0.*",
+        "doctrine/migrations": "~1.0@dev"
     },
     "minimum-stability": "dev",
     "require-dev": {
