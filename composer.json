@@ -27,7 +27,8 @@
         "gedmo/doctrine-extensions": "2.3.*",
         "hounddog/doctrine-data-fixture-module": "0.0.*",
         "doctrine/migrations": "~1.0@dev",
-        "acelaya/zf2-acmailer": "~4.0"
+        "acelaya/zf2-acmailer": "~4.0",
+        "symfony/filesystem": "~3.0@dev"
     },
     "minimum-stability": "dev",
     "require-dev": {
