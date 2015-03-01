@@ -15,7 +15,7 @@ trait SendEmailRecoveryPasswordTrait
     public function sendEmail(EventInterface $event)
     {
         /**
-         * @var $controller \Zend\Mvc\Controller\AbstractActionController
+         * @var $controller  \Zend\Mvc\Controller\AbstractActionController
          * @var $mailService \AcMailer\Service\MailService
          */
         $controller = $event->getTarget();

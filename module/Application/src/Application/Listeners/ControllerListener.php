@@ -22,7 +22,7 @@ class ControllerListener extends AbstractListenerAggregate
      */
     public function attach(EventManagerInterface $events)
     {
-        $sharedEvents      = $events->getSharedManager();
+        $sharedEvents = $events->getSharedManager();
 
         $this->listeners[] = $sharedEvents->attach(
             'Application\Controller\CategoryController',
