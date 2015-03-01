@@ -17,7 +17,7 @@
     ],
     "homepage": "http://framework.zend.com/",
     "require": {
-        "php": ">=5.4",
+        "php": ">=5.5",
         "zendframework/zendframework": "2.3.*",
         "doctrine/common": ">=2.1",
         "doctrine/doctrine-orm-module": "0.9.*",
