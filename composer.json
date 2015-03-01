@@ -28,7 +28,7 @@
         "hounddog/doctrine-data-fixture-module": "0.0.*",
         "doctrine/migrations": "~1.0@dev",
         "acelaya/zf2-acmailer": "~4.0",
-        "symfony/filesystem": "~3.0@dev"
+        "symfony/filesystem": "2.7.*@dev"
     },
     "minimum-stability": "dev",
     "require-dev": {
