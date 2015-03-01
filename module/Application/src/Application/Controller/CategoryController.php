@@ -9,5 +9,4 @@ namespace Application\Controller;
  */
 class CategoryController extends AbstractController
 {
-
 }

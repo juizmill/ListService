@@ -54,7 +54,7 @@
                     <div class="footer">
                         <?php echo $this->formButton($form->get('submit')->setAttributes(array('class' => 'btn bg-olive btn-block'))); ?>
 
-                        <p><a href="#"><?php echo $this->translate('I forgot my password'); ?></a></p>
+                        <p><a href="<?php echo $this->url('user'); ?>/recovery-password"><?php echo $this->translate('I forgot my password'); ?></a></p>
 
                         <?php if ($this->enableRegistration) : ?>
                         <?php echo $this->translate('Not registered?'); ?> <a href="<?php echo $this->url('zfcuser/register') . ($this->redirect ? '?redirect='.$this->escapeUrl($this->redirect) : '') ?>"><?php echo $this->translate('Sign up!'); ?></a>

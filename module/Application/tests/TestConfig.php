@@ -6,6 +6,7 @@ return array(
     'modules' => array(
         'DoctrineModule',
         'DoctrineORMModule',
+        'AcMailer',
         'ZfcBase',
         'ZfcUser',
         'ZfcUserDoctrineORM',
@@ -22,17 +23,9 @@ return array(
     ),
     //Configuração para não carregar as entidades dos módulos
     'not_load_entity' => array(
+        'AcMailer',
         'ZfcBase',
         'ZfcUser',
         'ZfcUserDoctrineORM'
-    ),
-    'doctrine' => array(
-        'eventmanager' => array(
-            'orm_default' => array(
-                'subscribers' => array(
-                    'Gedmo\Timestampable\TimestampableListener',
-                ),
-            ),
-        ),
     ),
 );

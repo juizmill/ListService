@@ -33,10 +33,9 @@
                 $form->setAttribute('role', 'form');
 
                     $this->formElementErrors()
-                    ->setMessageOpenFormat('<li class="text-danger">')
-                    ->setMessageCloseString('</li>')->render($form);
+                    ->setMessageOpenFormat('<small class="text-danger">')
+                    ->setMessageCloseString('</small>')->render($form);
             ?>
-
             <?php echo $this->form()->openTag($form) ?>
                     <div style="padding: 10px 20px; color: #444" class=" bg-gray">
 

@@ -16,6 +16,7 @@
                 <file>../Module.php</file>
                 <directory suffix=".php">./</directory>
                 <directory>../src/Application/Fixture</directory>
+                <directory>../src/Application/Listeners</directory>
                 <directory>../config</directory>
                 <directory>../tests</directory>
             </exclude>

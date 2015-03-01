@@ -8,6 +8,7 @@ use Zend\ServiceManager\ServiceManager;
 use Zend\Stdlib\ArrayUtils;
 use RuntimeException;
 
+ini_set('display_errors', true);
 error_reporting(E_ALL | E_STRICT);
 
 /**

@@ -69,6 +69,20 @@ return array(
                     ),
                 ),
             ),
+            'user' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/user[/:action][/:token]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'token' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults' => array(
+                        'controller' => __NAMESPACE__ . '\\Controller\\User',
+                        'action' => 'recovery-password',
+                    ),
+                ),
+            ),
         ),
     ),
     'service_manager' => array(
@@ -91,6 +105,9 @@ return array(
         ),
     ),
     'controllers' => array(
+        'invokables' => array(
+            __NAMESPACE__ . '\\Controller\\User' => __NAMESPACE__ . '\\Controller\\UserController',
+        ),
         'factories' => array(
             __NAMESPACE__ . '\\Controller\\Category' => __NAMESPACE__ . '\\Controller\\Factories\\Category',
             __NAMESPACE__ . '\\Controller\\Priority' => __NAMESPACE__ . '\\Controller\\Factories\\Priority',
