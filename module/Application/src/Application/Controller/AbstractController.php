@@ -2,6 +2,8 @@
 
 namespace Application\Controller;
 
+use Zend\Http\Request;
+use Zend\Http\PhpEnvironment\Response;
 use Application\Form\Interfaces\FormHandleInterface;
 use Application\Model\Interfaces\ModelInterface;
 use Doctrine\Common\Collections\Criteria;
@@ -16,6 +18,8 @@ use Zend\View\Model\ViewModel;
  * Class AbstractController
  *
  * @package Application\Controller
+ * @method Request getRequest()
+ * @method Response getResponse()
  */
 class AbstractController extends AbstractActionController
 {
