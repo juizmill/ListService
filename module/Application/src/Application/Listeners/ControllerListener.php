@@ -5,9 +5,6 @@ namespace Application\Listeners;
 use Zend\EventManager\EventManagerInterface;
 use Zend\EventManager\AbstractListenerAggregate;
 use Zend\Mvc\MvcEvent;
-use Application\Listeners\SendEmailRecoveryPasswordTrait;
-use Application\Listeners\ZfcUserTrait;
-use Application\Listeners\ContentHeaderTrait;
 
 /**
  * Class ControllerListener
