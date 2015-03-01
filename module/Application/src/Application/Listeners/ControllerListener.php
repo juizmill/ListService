@@ -9,7 +9,7 @@ use Zend\Mvc\MvcEvent;
 /**
  * Class ControllerListener
  *
- * @package Application\src\Application\Listeners
+ * @package Application\Listeners
  */
 class ControllerListener extends AbstractListenerAggregate
 {

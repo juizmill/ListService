@@ -8,7 +8,7 @@ use Zend\EventManager\EventInterface;
 /**
  * Trait SendEmailRecoveryPasswordTrait
  *
- * @package Application\src\Application\Listeners
+ * @package Application\Listeners
  */
 trait SendEmailRecoveryPasswordTrait
 {
