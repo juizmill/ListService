@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\Listeners;
+namespace Application\Listeners\Traits;
 
 use Zend\View\Model\ViewModel;
 use Zend\Mvc\MvcEvent;
@@ -8,7 +8,7 @@ use Zend\Mvc\MvcEvent;
 /**
  * Trait ZfcUserTrait
  *
- * @package Application\Listeners
+ * @package Application\Listeners\Traits
  */
 trait ZfcUserTrait
 {

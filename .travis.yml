@@ -12,12 +12,9 @@ matrix:
 before_script:
   - php composer.phar self-update
   - php composer.phar install --prefer-source --dev --no-interaction
-  - mkdir -p build/logs
-  - rm -rf module/Application/tests/phpunit.xml
-  - cp module/Application/tests/phpunit.xml.disc  module/Application/tests/phpunit.xml
-
 script:
-  - bin/phpunit -c module/Application/tests/
+  - bin/phpunit -c module/Application/tests/ --coverage-clover=coverage.clover
 
 after_script:
-  - bin/coveralls -v
+  - wget https://scrutinizer-ci.com/ocular.phar
+  - php ocular.phar code-coverage:upload --access-token="6c85a73c632cba80dea52b108761f3e96aa41c0ffaacbdd164a145c368f83285" --format=php-clover coverage.clover

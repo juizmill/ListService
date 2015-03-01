@@ -1,13 +1,13 @@
 <?php
 
-namespace Application\Listeners;
+namespace Application\Listeners\Traits;
 
 use Zend\EventManager\EventInterface;
 
 /**
  * Trait ContentHeaderTrait
  *
- * @package Application\Listeners
+ * @package Application\Listeners\Traits
  */
 trait ContentHeaderTrait
 {

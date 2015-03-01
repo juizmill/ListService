@@ -1,14 +1,13 @@
 <?php
 
-namespace Application\Listeners;
+namespace Application\Listeners\Traits;
 
-use Application\Mail\Mail;
 use Zend\EventManager\EventInterface;
 
 /**
  * Trait SendEmailRecoveryPasswordTrait
  *
- * @package Application\Listeners
+ * @package Application\Listeners\Traits
  */
 trait SendEmailRecoveryPasswordTrait
 {
