@@ -149,13 +149,13 @@ return array(
          * If this is not set, from option is used.
          * Default value is an empty string
          */
-        'smtp_user' => 'webpatte@gmail.com',
+        'smtp_user' => 'xxxxxx@gmail.com',
 
         /*
          * If Zend\Mail\Transport\Smtp adapter is used, this is the SMTP authentication credential.
          * Default value is an empty string
          */
-        'smtp_password' => 'trinidade22',
+        'smtp_password' => 'xxxxxx',
 
         /*
          * If Zend\Mail\Transport\Smtp adapter is used, this defines the SSL type to be used, 'ssl' or 'tls'.

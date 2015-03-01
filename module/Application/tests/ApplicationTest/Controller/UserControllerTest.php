@@ -92,18 +92,4 @@ class UserControllerTest extends TestCaseController
 
         $this->assertRedirectTo('/user/recovery-password');
     }
-
-    public function testCheckIfValidSend()
-    {
-        $this->dispatch('/user/recovery-password', Request::METHOD_POST, array(
-            'email' => 'teste@gmail.com',
-        ));
-
-        $this->assertResponseStatusCode(302);
-
-        $request = $this->getRequest();
-        $this->assertEquals($request->getMethod(), Request::METHOD_POST);
-
-        $this->assertRedirectTo('/user/recovery-password');
-    }
 }
