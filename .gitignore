@@ -1,4 +1,4 @@
-﻿nbproject
+nbproject
 ._*
 .~lock.*
 .buildpath
@@ -9,3 +9,7 @@ vendor
 bin
 .codeintel
 build
+.DS_Store
+.idea/
+error.log
+access.log
