@@ -1,0 +1,15 @@
+
+<?php
+//ADD password and Usser name for database
+return array(
+    'doctrine' => array(
+        'connection' => array(
+            'orm_default' => array(
+                'params' => array(
+                    'user'     => 'root',
+                    'password' => 'root',
+                )
+            )
+        )
+    ),
+);

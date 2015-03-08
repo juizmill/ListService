@@ -20,17 +20,16 @@
         "php": ">=5.4",
         "zendframework/zendframework": "2.3.*",
         "doctrine/common": ">=2.1",
-        "doctrine/doctrine-orm-module": "0.9.*",
-        "doctrine/data-fixtures": "1.0.*@dev",
+        "doctrine/doctrine-orm-module": "0.8.0",
+        "doctrine/data-fixtures": "1.0.0",
         "zf-commons/zfc-user-doctrine-orm": "1.0.0",
-        "bjyoungblood/bjy-authorize": "1.5.*",
+        "bjyoungblood/bjy-authorize": "1.4.0",
         "gedmo/doctrine-extensions": "2.3.*",
         "hounddog/doctrine-data-fixture-module": "0.0.*",
         "doctrine/migrations": "~1.0@dev",
         "acelaya/zf2-acmailer": "~4.0",
         "symfony/filesystem": "2.7.*@dev"
     },
-    "minimum-stability": "dev",
     "require-dev": {
         "phpunit/phpunit": "3.7.*",
         "zendframework/zend-developer-tools": "dev-master"
@@ -42,5 +41,6 @@
     "scripts": {
         "post-update-cmd": "php setting.php",
         "post-install-cmd": "php setting.php"
-    }
+    },
+    "minimum-stability": "stable"
 }

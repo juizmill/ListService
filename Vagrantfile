@@ -10,10 +10,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.synced_folder ".", "/vagrant", type: "nfs", mount_options: ['rw', 'vers=3', 'tcp', 'fsc']
   config.vm.network "private_network", ip: "10.0.1.10"
-  config.vm.hostname = “NOME DO HOST PARA ACESSAR NO NAVEGADOR"
+  config.vm.hostname = "listservice.dev"
 
   config.vm.provider :virtualbox do |virtualbox|
-    virtualbox.name = “NOME DA BOX“
+    virtualbox.name = "ListService"
     virtualbox.customize ["modifyvm", :id, "--cpus", "2"]
     virtualbox.customize ["modifyvm", :id, "--ioapic", "on"]
     # allocate max 90% CPU
@@ -35,7 +35,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
      config.hostmanager.manage_host = true
      config.hostmanager.ignore_private_ip = false
      config.hostmanager.include_offline = true
-     config.hostmanager.aliases = 'NOME DO HOST PARA ACESSAR NO NAVEGADOR'
+     config.hostmanager.aliases = 'listservice.dev'
    end
 
 end

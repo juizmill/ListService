@@ -13,3 +13,4 @@ build
 .idea/
 error.log
 access.log
+.vagrant
